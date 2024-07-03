@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_scan_stopped">Сканирование приостановлено</string>
+    <string name="text_enable_bluetooth_rationale">Включите bluetooth для начала сканирования</string>
+    <string name="text_enable_location_rationale">Для поиска Bluetooth устройств система требует наличия включенной геолокации, пожалуйста включите службы геолокации для начала сканирования</string>
+    <string name="text_enable_permissions_rationale">Для начала сканирования необходимо одобрить разрешения на использование Bluetooth</string>
+    <string name="label_grant_permissions">Одобрить разрешения</string>
+    <string name="label_scan_restart">Перезапустить сканирование</string>
+    <string name="label_settings">Настройки</string>
+    <string name="label_enable_bluetooth">Включить Bluetooth</string>
+</resources>

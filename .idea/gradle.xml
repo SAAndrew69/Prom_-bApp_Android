@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/build-source" name="build-source">
+                <projects>
+                  <project path="$PROJECT_DIR$/build-source" />
+                  <project path="$PROJECT_DIR$/build-source/plugins" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/build-source" />
+            <option value="$PROJECT_DIR$/build-source/plugins" />
+            <option value="$PROJECT_DIR$/components" />
+            <option value="$PROJECT_DIR$/components/authorization" />
+            <option value="$PROJECT_DIR$/components/authorization/api" />
+            <option value="$PROJECT_DIR$/components/authorization/impl" />
+            <option value="$PROJECT_DIR$/components/bottombar" />
+            <option value="$PROJECT_DIR$/components/bottombar/api" />
+            <option value="$PROJECT_DIR$/components/bottombar/impl" />
+            <option value="$PROJECT_DIR$/components/core" />
+            <option value="$PROJECT_DIR$/components/core/bluetooth" />
+            <option value="$PROJECT_DIR$/components/core/navigation" />
+            <option value="$PROJECT_DIR$/components/core/network" />
+            <option value="$PROJECT_DIR$/components/core/notification" />
+            <option value="$PROJECT_DIR$/components/core/storage" />
+            <option value="$PROJECT_DIR$/components/core/ui" />
+            <option value="$PROJECT_DIR$/components/core/ui/cardiogram" />
+            <option value="$PROJECT_DIR$/components/core/ui/theme" />
+            <option value="$PROJECT_DIR$/components/core/ui/topbar" />
+            <option value="$PROJECT_DIR$/components/core/util" />
+            <option value="$PROJECT_DIR$/components/deeplink" />
+            <option value="$PROJECT_DIR$/components/deeplink/api" />
+            <option value="$PROJECT_DIR$/components/measurement" />
+            <option value="$PROJECT_DIR$/components/measurement/api" />
+            <option value="$PROJECT_DIR$/components/measurement/impl" />
+            <option value="$PROJECT_DIR$/components/profile" />
+            <option value="$PROJECT_DIR$/components/profile/api" />
+            <option value="$PROJECT_DIR$/components/scanner" />
+            <option value="$PROJECT_DIR$/components/scanner/api" />
+            <option value="$PROJECT_DIR$/components/scanner/impl" />
+            <option value="$PROJECT_DIR$/components/singleactivity" />
+            <option value="$PROJECT_DIR$/components/singleactivity/api" />
+            <option value="$PROJECT_DIR$/components/singleactivity/impl" />
+          </set>
+        </option>
+        <option name="resolveExternalAnnotations" value="false" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

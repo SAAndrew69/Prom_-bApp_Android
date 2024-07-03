@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_authorize">Пожалуйста, авторизуйтесь</string>
+    <string name="label_password">Пароль</string>
+    <string name="label_email">E-mail</string>
+    <string name="text_incorrect_email">Неверный формат e-mail</string>
+    <string name="text_auth_error">Ошибка авторизации</string>
+    <string name="title_authrization">Авторизация</string>
+    <string name="label_authorize">Авторизоваться</string>
+    <string name="label_skip_authorization">Пропустить авторизацию</string>
+</resources>

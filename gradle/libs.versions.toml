@@ -1,0 +1,88 @@
+[versions]
+android-gradle = "8.2.0" # https://developer.android.com/studio/releases/gradle-plugin
+kotlin-general = "1.9.20" # https://kotlinlang.org/docs/releases.html#release-details
+
+agp = "8.2.0" # https://maven.google.com/web/index.html?q=android.app#com.android.application:com.android.application.gradle.plugin
+
+appcompat = "1.7.0" # https://developer.android.com/jetpack/androidx/releases/appcompat
+kotlin-immutable-collections = "0.3.5" # https://github.com/Kotlin/kotlinx.collections.immutable/releases
+
+compose-ui = "1.6.8" # https://developer.android.com/jetpack/androidx/releases/compose#versions
+compose-compiler = "1.5.4" # https://developer.android.com/jetpack/androidx/releases/compose#versions
+compose-accompanist = "0.32.0" # https://github.com/google/accompanist/releases
+compose-navigation = "2.7.7" # https://developer.android.com/jetpack/androidx/releases/navigation
+compose-material3 = "1.2.1" # https://mvnrepository.com/artifact/androidx.compose.material3/material3
+
+ble = "2.7.2" # https://github.com/NordicSemiconductor/Android-BLE-Library/releases
+ble-scan = "1.6.0" # https://github.com/NordicSemiconductor/Android-Scanner-Compat-Library/releases
+
+room = "2.6.1" # https://developer.android.com/jetpack/androidx/releases/room
+
+datastore = "1.1.1" # https://mvnrepository.com/artifact/androidx.datastore/datastore-preferences
+
+dagger = "2.49" # https://github.com/google/dagger/releases
+hilt-navigation-compose = "1.2.0" # https://mvnrepository.com/artifact/androidx.hilt/hilt-navigation-compose
+
+timber = "5.0.1"
+
+# Testing
+junit = "4.13.2"
+androidx-test-ext-junit = "1.1.5"
+espresso-core = "3.5.1"
+androidx-test-ext-junit115 = "1.1.5"
+material = "1.12.0"
+
+[libraries]
+# Gradle
+android-gradle = { module = "com.android.tools.build:gradle", version.ref = "android-gradle" }
+kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-general" }
+
+# UI
+compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose-ui" }
+compose-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-ui" }
+compose-accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "compose-accompanist" }
+compose-accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "compose-accompanist" }
+compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose-material3" }
+compose-window-size = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "compose-material3"}
+
+# Navigation
+compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "compose-navigation" }
+
+# Storage
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-ksp = { module = "androidx.room:room-compiler", version.ref = "room" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+
+
+# Dependency Injection
+dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
+dagger-kapt = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
+
+hilt = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger" }
+hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
+
+# BLE
+ble = { module = "no.nordicsemi.android:ble", version.ref = "ble" }
+ble-ktx = { module = "no.nordicsemi.android:ble-ktx", version.ref = "ble" }
+ble-scan = { module = "no.nordicsemi.android.support.v18:scanner", version.ref = "ble-scan" }
+
+# Log
+timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+
+# Utils
+appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+kotlin-immutable-collections = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlin-immutable-collections" }
+
+# Testing
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit115" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-general" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger"}

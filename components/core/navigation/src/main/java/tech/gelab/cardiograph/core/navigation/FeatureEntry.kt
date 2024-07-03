@@ -1,0 +1,29 @@
+package tech.gelab.cardiograph.core.navigation
+
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+
+interface FeatureEntry {
+
+    @Suppress("PropertyName")
+    val ROUTE: NavigationRoute
+
+}
+
+interface ComposableFeatureEntry : FeatureEntry {
+
+    fun NavGraphBuilder.composable(navController: NavController)
+
+}
+
+interface AggregateFeatureEntry : FeatureEntry {
+
+    fun NavGraphBuilder.navigation(navController: NavController)
+
+}
+
+interface DialogFeatureEntry : FeatureEntry {
+
+    fun NavGraphBuilder.dialog(navController: NavController)
+
+}
