@@ -10,6 +10,10 @@ class AuthServiceImpl @Inject constructor(): AuthService {
         TODO("Not yet implemented")
     }
 
+    override suspend fun signUp(email: String, password: String): Result<String> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun logOff(): Boolean {
         TODO("Not yet implemented")
     }

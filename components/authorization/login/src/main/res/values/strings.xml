@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_login">Вход в аккаунт</string>
+
+    <string name="label_authorize">Авторизоваться</string>
+    <string name="label_forgot_password">Забыл пароль</string>
+
+    <string name="text_password">Пароль</string>
+    <string name="text_check_input">Проверьте введённые данные</string>
+    <string name="text_auth_failure">Неверный логин или пароль. Проверьте корректность введенных данных</string>
+    <string name="label_skip_authorization">Продолжить без авторизации</string>
+</resources>

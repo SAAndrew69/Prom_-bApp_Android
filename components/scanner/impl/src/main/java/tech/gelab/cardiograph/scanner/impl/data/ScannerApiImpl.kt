@@ -20,8 +20,9 @@ import tech.gelab.cardiograph.bluetooth.LocationState
 import tech.gelab.cardiograph.bluetooth.ServicesStateProvider
 import tech.gelab.cardiograph.bluetooth.ktx.scan
 import tech.gelab.cardiograph.scanner.api.ScannerApi
+import javax.inject.Inject
 
-class ScannerApiImpl(
+class ScannerApiImpl @Inject constructor(
     private val servicesStateProvider: ServicesStateProvider,
 ) : ScannerApi {
 

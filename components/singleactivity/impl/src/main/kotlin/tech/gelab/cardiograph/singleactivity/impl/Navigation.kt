@@ -10,7 +10,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.createGraph
 import kotlinx.collections.immutable.ImmutableSet
-import tech.gelab.cardiograph.core.navigation.ComposableFeatureEntry
+import tech.gelab.cardiograph.core.ui.navigation.AggregateFeatureEntry
+import tech.gelab.cardiograph.core.ui.navigation.ComposableFeatureEntry
 
 @Composable
 fun Navigation(
@@ -18,12 +19,18 @@ fun Navigation(
     navController: NavHostController,
     startDestination: String,
     composableEntries: ImmutableSet<ComposableFeatureEntry>,
+    aggregateEntries: ImmutableSet<AggregateFeatureEntry>
 ) {
     val graph = remember(startDestination, composableEntries) {
         navController.createGraph(startDestination, null) {
             composableEntries.forEach {
                 with(it) {
                     composable(navController)
+                }
+            }
+            aggregateEntries.forEach {
+                with(it) {
+                    navigation(navController)
                 }
             }
         }

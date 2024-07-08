@@ -1,16 +1,20 @@
 package tech.gelab.cardiograph.singleactivity.impl
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.collections.immutable.toPersistentSet
-import tech.gelab.cardiograph.core.navigation.ComposableFeatureEntry
-import tech.gelab.cardiograph.core.navigation.NavigationRoute
+import tech.gelab.cardiograph.core.ui.navigation.AggregateFeatureEntry
+import tech.gelab.cardiograph.core.ui.navigation.ComposableFeatureEntry
+import tech.gelab.cardiograph.core.ui.navigation.LocalNavHostProvider
+import tech.gelab.cardiograph.core.ui.navigation.NavigationRoute
+import tech.gelab.cardiograph.ui.theme.CardiographAppTheme
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -18,32 +22,32 @@ import javax.inject.Inject
 class SingleActivity : ComponentActivity() {
 
     @Inject
-    internal lateinit var composableEntriessMutable: MutableSet<@JvmSuppressWildcards ComposableFeatureEntry>
+    internal lateinit var composableEntriesMutable: MutableSet<@JvmSuppressWildcards ComposableFeatureEntry>
+
+    @Inject
+    internal lateinit var aggregateEntriesMutable: MutableSet<@JvmSuppressWildcards AggregateFeatureEntry>
 
     private var globalNavController: NavHostController? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val composableEntries = composableEntriessMutable.toPersistentSet()
-
+        val composableEntries = composableEntriesMutable.toPersistentSet()
+        val aggregateEntries = aggregateEntriesMutable.toPersistentSet()
         Timber.i("onCreate: intent = $intent")
 
         setContent {
             val navControllerLocal = rememberNavController().also { globalNavController = it }
-
-            Navigation(
-                navController = navControllerLocal,
-                // TODO check if pair already exists
-                startDestination = NavigationRoute.AUTHORIZATION.name,
-                composableEntries = composableEntries
-            )
-
+            CardiographAppTheme {
+                CompositionLocalProvider(value = LocalNavHostProvider provides navControllerLocal) {
+                    Navigation(
+                        navController = navControllerLocal,
+                        // TODO check if pair already exists
+                        startDestination = NavigationRoute.WELCOME.name,
+                        composableEntries = composableEntries,
+                        aggregateEntries = aggregateEntries
+                    )
+                }
+            }
         }
     }
-
-    @Composable
-    fun Content() {
-
-    }
-
 }

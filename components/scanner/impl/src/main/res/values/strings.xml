@@ -8,4 +8,7 @@
     <string name="label_scan_restart">Перезапустить сканирование</string>
     <string name="label_settings">Настройки</string>
     <string name="label_enable_bluetooth">Включить Bluetooth</string>
+    <string name="label_cancel">Отмена</string>
+    <string name="title_device_search">Выбор устройства</string>
+    <string name="label_skip_connection">Продолжить без подключения</string>
 </resources>

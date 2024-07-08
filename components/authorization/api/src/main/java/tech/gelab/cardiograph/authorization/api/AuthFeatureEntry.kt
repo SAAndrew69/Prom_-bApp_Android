@@ -1,11 +1,11 @@
 package tech.gelab.cardiograph.authorization.api
 
-import tech.gelab.cardiograph.core.navigation.ComposableFeatureEntry
-import tech.gelab.cardiograph.core.navigation.NavigationRoute
+import tech.gelab.cardiograph.core.ui.navigation.ComposableFeatureEntry
+import tech.gelab.cardiograph.core.ui.navigation.NavigationRoute
 
 interface AuthFeatureEntry : ComposableFeatureEntry {
 
     override val ROUTE: NavigationRoute
-        get() = NavigationRoute.AUTHORIZATION
+        get() = NavigationRoute.WELCOME
 
 }

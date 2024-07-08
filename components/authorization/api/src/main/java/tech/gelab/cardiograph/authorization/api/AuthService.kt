@@ -11,6 +11,12 @@ interface AuthService {
     suspend fun authorize(email: String, password: String): Result<String>
 
     /**
+     * Tries to sign up with given email and password
+     * @return Result with token or Result with exception in case of failure
+     */
+    suspend fun signUp(email: String, password: String): Result<String>
+
+    /**
      * Log off from current profile
      * @return boolean representing success of the operation
      */

@@ -10,6 +10,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import timber.log.Timber
 
@@ -18,7 +19,7 @@ import timber.log.Timber
 class PermissionsModule {
 
     @[Provides Reusable MinSdk]
-    fun provideMinSdk(context: Context): Int{
+    fun provideMinSdk(@ApplicationContext context: Context): Int {
         val deviceSdk = Build.VERSION.SDK_INT
         val targetSdk = try {
             context.packageManager
@@ -31,7 +32,7 @@ class PermissionsModule {
     }
 
     @[Provides Reusable IsNeverForLocation]
-    fun provideIsNeverForLocation(context: Context): Boolean{
+    fun provideIsNeverForLocation(@ApplicationContext context: Context): Boolean {
         var result = false
         try {
             val packageInfo = context.packageManager.getPackageInfo(
@@ -59,7 +60,7 @@ class PermissionsModule {
     @[Provides Reusable BluetoothPermissions]
     fun provideRuntimePermissions(
         @MinSdk minSdk: Int,
-        @IsNeverForLocation isNeverForLocation: Boolean
+        @IsNeverForLocation isNeverForLocation: Boolean,
     ): Array<String> {
         return if (minSdk < Build.VERSION_CODES.M) {
             arrayOf()

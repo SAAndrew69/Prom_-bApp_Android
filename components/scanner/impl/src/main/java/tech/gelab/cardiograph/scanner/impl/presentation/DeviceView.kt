@@ -27,7 +27,7 @@ fun DeviceView(
         .clickable { onDeviceClick(discoveredDevice) }
         .padding(MaterialTheme.spacing.small),
         verticalAlignment = Alignment.CenterVertically) {
-        Icon(painter = painterResource(id = R.drawable.bluetooth), contentDescription = null)
+        Icon(painter = painterResource(id = R.drawable.icon_heartbeat), contentDescription = null)
         Spacer(modifier = Modifier.width(MaterialTheme.spacing.small))
         Text(text = discoveredDevice.name)
     }

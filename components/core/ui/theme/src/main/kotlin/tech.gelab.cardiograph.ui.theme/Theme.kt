@@ -2,7 +2,6 @@ package tech.gelab.cardiograph.ui.theme
 
 import android.app.Activity
 import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -22,9 +21,17 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
+    background = Grey100,
+    primary = Blue60,
+    primaryContainer = Blue60,
     secondary = PurpleGrey40,
-    tertiary = Pink40
+    secondaryContainer = Grey95,
+    surface = Grey100,
+    tertiary = Blue25,
+    onSurface = Grey30,
+    onSurfaceVariant = Grey60,
+    outline = Grey70,
+    error = Red40
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -39,9 +46,9 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun CardiographAppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean = false,
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -65,6 +72,7 @@ fun CardiographAppTheme(
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
+        shapes = Shapes,
         content = content
     )
 }

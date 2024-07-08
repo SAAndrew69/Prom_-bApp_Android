@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_measure">Измерение</string>
+    <string name="label_reports">Отчёты</string>
+    <string name="label_profile">Профиль</string>
+    <string name="label_measure_preparation">Подготовка к измерению</string>
+    <string name="title_measure_preparation">Подготовка к измерению</string>
+    <string name="title_default" />
+    <string name="title_reports">Отчёты</string>
+    <string name="title_profile">Профиль</string>
+</resources>

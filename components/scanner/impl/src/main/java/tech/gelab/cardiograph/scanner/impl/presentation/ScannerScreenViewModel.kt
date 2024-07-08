@@ -1,86 +1,99 @@
 package tech.gelab.cardiograph.scanner.impl.presentation
 
 import androidx.activity.result.ActivityResult
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.update
 import tech.gelab.cardiograph.bluetooth.BluetoothState
 import tech.gelab.cardiograph.bluetooth.LocationState
 import tech.gelab.cardiograph.bluetooth.ServicesStateProvider
 import tech.gelab.cardiograph.core.util.ResourceProvider
 import tech.gelab.cardiograph.scanner.api.ScannerApi
 import tech.gelab.cardiograph.scanner.impl.R
-import tech.gelab.cardiograph.scanner.impl.domain.ScannerScreenEventHandler
-import tech.gelab.cardiograph.scanner.impl.model.ScannerScreenState
+import tech.gelab.cardiograph.scanner.impl.domain.model.action.ScannerScreenAction
+import tech.gelab.cardiograph.scanner.impl.domain.model.event.ScannerScreenEvent
+import tech.gelab.cardiograph.scanner.impl.domain.model.state.ScannerScreenState
+import tech.gelab.cardiograph.scanner.impl.domain.usecase.DeviceClickUseCase
+import tech.gelab.cardiograph.ui.ktx.viewmodel.BaseViewModel
 import timber.log.Timber
+import javax.inject.Inject
 
 @HiltViewModel
-class ScannerScreenViewModel @AssistedInject constructor(
-    @Assisted private val scannerScreenEventHandler: ScannerScreenEventHandler,
+class ScannerScreenViewModel @Inject constructor(
     private val servicesStateProvider: ServicesStateProvider,
     private val scannerApi: ScannerApi,
-    private val resourceProvider: ResourceProvider
-) : ViewModel() {
+    private val resourceProvider: ResourceProvider,
+    private val deviceClickUseCase: DeviceClickUseCase,
+) : BaseViewModel<ScannerScreenState, ScannerScreenAction, ScannerScreenEvent>(
+    getInitialScreenState(
+        servicesStateProvider
+    )
+) {
 
-    private val _scannerScreenStateFlow = MutableStateFlow(getInitialScreenState())
-    val scannerScreenStateFlow = _scannerScreenStateFlow.asStateFlow()
+    companion object {
+        private fun getInitialScreenState(servicesStateProvider: ServicesStateProvider): ScannerScreenState {
+            val servicesState = servicesStateProvider.getServicesState()
+            return if (servicesState.isScannerReady()) {
+                ScannerScreenState.Ready
+            } else {
+                ScannerScreenState.NotReady(
+                    bluetoothEnabled = servicesState.bluetoothState == BluetoothState.STATE_ON,
+                    locationEnabled = servicesState.locationState == LocationState.LOCATION_ENABLED,
+                    deniedPermissions = servicesState.permissionsState.deniedPermissions.toTypedArray()
+                )
+            }
+        }
+    }
 
-    private fun getInitialScreenState(): ScannerScreenState {
-        val servicesState = servicesStateProvider.getServicesState()
-        return if (servicesState.isScannerReady()) {
-            ScannerScreenState.Scanning(persistentListOf()).also { startScan() }
-        } else {
-            ScannerScreenState.NotReady(
-                bluetoothEnabled = servicesState.bluetoothState == BluetoothState.STATE_ON,
-                locationEnabled = servicesState.locationState == LocationState.LOCATION_ENABLED,
-                deniedPermissions = servicesState.permissionsState.deniedPermissions.toTypedArray()
+    init {
+        if (viewState == ScannerScreenState.Ready) startScan()
+    }
+
+    override fun obtainEvent(viewEvent: ScannerScreenEvent) {
+        Timber.d("obtainEvent: $viewEvent")
+        when (viewEvent) {
+            is ScannerScreenEvent.DeviceClick -> deviceClickUseCase.invoke(
+                viewModelScope,
+                viewEvent.device
             )
+
+            ScannerScreenEvent.SkipClick -> viewAction = ScannerScreenAction.SkipDeviceSearch
+            ScannerScreenEvent.GoBack -> viewAction = ScannerScreenAction.GoBack
+            ScannerScreenEvent.RestartScanClick -> startScan()
         }
     }
 
     private fun onDevicesCollect(devices: Iterable<ScannerApi.DiscoveredDevice>) {
-        _scannerScreenStateFlow.update {
-            ScannerScreenState.Scanning(devices.toPersistentList())
-        }
+        viewState = ScannerScreenState.Scanning(devices.filter {
+            // TODO proper filtering
+            it.name.isNotEmpty()
+        }.toPersistentList())
     }
 
     private fun onScanStart() {
-        _scannerScreenStateFlow.update {
-            ScannerScreenState.Scanning(persistentListOf())
-        }
+        viewState = ScannerScreenState.Scanning(persistentListOf())
     }
 
     private fun onScanCompletion(throwable: Throwable?) {
         Timber.e("onScanCompletion", throwable)
-        if (throwable != null) {
-            _scannerScreenStateFlow.update {
-                ScannerScreenState.Stopped(throwable.message ?: "")
-            }
+        viewState = if (throwable != null) {
+            ScannerScreenState.Stopped(throwable.message ?: "")
         } else {
-            _scannerScreenStateFlow.update {
-                ScannerScreenState.Stopped(resourceProvider.getString(R.string.text_scan_stopped))
-            }
+            ScannerScreenState.Stopped(resourceProvider.getString(R.string.text_scan_stopped))
         }
     }
 
-    fun startScan() {
+    private fun startScan() {
         scannerApi.scanDevices()
             .onEach(::onDevicesCollect)
             .onStart { onScanStart() }
-            .catch {  }
+            .catch { }
             .onCompletion { onScanCompletion(it) }
             .launchIn(viewModelScope)
     }
@@ -91,10 +104,5 @@ class ScannerScreenViewModel @AssistedInject constructor(
 
     fun onPermissionActivityResult(map: Map<String, Boolean>) {
 
-    }
-
-    @AssistedFactory
-    interface Factory {
-        fun create(scannerScreenEventHandler: ScannerScreenEventHandler): ScannerScreenViewModel
     }
 }

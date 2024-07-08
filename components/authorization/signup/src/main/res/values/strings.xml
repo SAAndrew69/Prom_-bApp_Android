@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_sign_up">Регистрация</string>
+
+    <string name="label_register">Зарегистрироваться</string>
+    <string name="label_password">Пароль</string>
+    <string name="label_create_password">Придумайте пароль</string>
+    <string name="label_confirm_password">Повторите пароль</string>
+
+    <string name="text_incorrect_pass_format">Пароль должен состоять из 6 символов</string>
+    <string name="text_incorrect_pass_confirm">Пароли не совпадают</string>
+    <string name="text_sign_up_failure_default">Не удалось зарегистрироваться</string>
+    <string name="text_incorrect_email">Введён некорректный e-mail адрес</string>
+    <string name="label_skip_registration">Продолжить без регистрации</string>
+
+</resources>

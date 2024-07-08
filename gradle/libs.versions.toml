@@ -40,6 +40,12 @@ kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.
 # UI
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose-ui" }
 compose-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-ui" }
+compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose-ui" }
+
+compose-android = { module = "androidx.compose.foundation:foundation-android", version.ref = "compose-ui" }
+compose-text = { module = "androidx.compose.foundation:foundation-text", version.ref = "compose-ui" }
+compose-google-fonts = { module = "androidx.compose.ui:ui-text-google-fonts", version.ref = "compose-ui" }
+
 compose-accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "compose-accompanist" }
 compose-accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "compose-accompanist" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose-material3" }

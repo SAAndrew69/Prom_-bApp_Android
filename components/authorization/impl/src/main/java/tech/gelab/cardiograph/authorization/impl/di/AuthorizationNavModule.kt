@@ -7,7 +7,8 @@ import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
 import tech.gelab.cardiograph.authorization.api.AuthFeatureEntry
 import tech.gelab.cardiograph.authorization.impl.AuthFeatureEntryImpl
-import tech.gelab.cardiograph.core.navigation.ComposableFeatureEntry
+import tech.gelab.cardiograph.core.ui.navigation.AggregateFeatureEntry
+import tech.gelab.cardiograph.core.ui.navigation.ComposableFeatureEntry
 
 @Module
 @InstallIn(SingletonComponent::class)

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_skip_auth">Пропустить авторизацию</string>
+
+    <string name="label_skip">Продолжить без авторизации</string>
+
+    <string name="text_skip_auth_question">Вы уверены, что хотите пропустить авторизацию?</string>
+    <string name="text_skip_auth1">Авторизовавшись, вы сможете:</string>
+    <string name="text_skip_auth2">Выбирать ID сотрудника из списка</string>
+    <string name="text_skip_auth3">Получать готовые заключения по окончании измерения</string>
+    <string name="label_skip_auth_get_back">Назад к авторизации</string>
+    <string name="label_skip_authorization">Продолжить без авторизации</string>
+</resources>

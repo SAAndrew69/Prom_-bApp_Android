@@ -17,7 +17,8 @@
             android:name="${startActivity}"
             android:exported="true"
             android:launchMode="singleTask"
-            android:theme="@style/Theme.Cardiograph">
+            android:theme="@style/Theme.Cardiograph"
+            android:windowSoftInputMode="adjustResize">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

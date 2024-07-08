@@ -5,7 +5,8 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
-import tech.gelab.cardiograph.core.navigation.ComposableFeatureEntry
+import tech.gelab.cardiograph.core.ui.navigation.AggregateFeatureEntry
+import tech.gelab.cardiograph.core.ui.navigation.ComposableFeatureEntry
 import tech.gelab.cardiograph.scanner.api.ScannerFeatureEntry
 import tech.gelab.cardiograph.scanner.impl.ScannerFeatureEntryImpl
 
@@ -18,6 +19,6 @@ interface ScannerNavModule {
 
     @Binds
     @IntoSet
-    fun bindComposableFeatureEntry(scannerFeatureEntry: ScannerFeatureEntry): ComposableFeatureEntry
+    fun bindAggregateFeatureEntry(scannerFeatureEntry: ScannerFeatureEntry): AggregateFeatureEntry
 
 }

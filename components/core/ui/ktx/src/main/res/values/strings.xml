@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="test_button_label">Закрыть</string>
+    <string name="test_dialog_title">Ошибка</string>
+    <string name="test_dialog_text">Неверный логин или пароль. Проверьте корректность введенных данных.</string>
+</resources>
