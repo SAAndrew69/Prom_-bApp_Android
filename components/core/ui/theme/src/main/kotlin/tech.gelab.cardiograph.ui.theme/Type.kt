@@ -66,6 +66,11 @@ val Typography = Typography(
         letterSpacing = 0.5.sp
     )
     */
+    bodyMedium = TextStyle(
+        fontFamily = interFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp
+    ),
     bodyLarge = TextStyle(
         fontFamily = interFontFamily,
         fontWeight = FontWeight.Normal,
@@ -114,5 +119,11 @@ val Typography = Typography(
         fontWeight = FontWeight.SemiBold,
         lineHeight = TextUnit(24f, TextUnitType.Sp),
         fontSize = 20.sp
+    ),
+    headlineLarge = TextStyle(
+        fontFamily = interFontFamily,
+        fontWeight = FontWeight.Medium,
+        lineHeight = 24.sp,
+        fontSize = 32.sp
     )
 )

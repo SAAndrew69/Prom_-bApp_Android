@@ -1,27 +1,25 @@
 package tech.gelab.cardiograph.scanner.impl.presentation
 
-import android.content.ActivityNotFoundException
+import android.bluetooth.BluetoothAdapter
 import android.content.Intent
+import android.net.Uri
 import android.provider.Settings
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -31,8 +29,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.filterNotNull
@@ -41,12 +41,13 @@ import tech.gelab.cardiograph.scanner.impl.R
 import tech.gelab.cardiograph.scanner.impl.domain.model.action.ScannerScreenAction
 import tech.gelab.cardiograph.scanner.impl.domain.model.event.ScannerScreenEvent
 import tech.gelab.cardiograph.scanner.impl.domain.model.state.ScannerScreenState
+import tech.gelab.cardiograph.ui.ktx.element.CardioAppButton
 import tech.gelab.cardiograph.ui.ktx.element.CardioAppTextButton
+import tech.gelab.cardiograph.ui.ktx.element.RationaleImageView
 import tech.gelab.cardiograph.ui.theme.CardiographAppTheme
 import tech.gelab.cardiograph.ui.theme.spacing
 import tech.gelab.cardiograph.ui.topbar.CardioAppBar
 import tech.gelab.cardiograph.ui.topbar.TopBarState
-import timber.log.Timber
 
 @Composable
 fun ScannerScreen(
@@ -80,19 +81,24 @@ fun ScannerView(
     scannerScreenState: ScannerScreenState,
     onEvent: (ScannerScreenEvent) -> Unit,
 ) {
-    Column(modifier, verticalArrangement = Arrangement.SpaceBetween) {
+    Column(modifier) {
         when (scannerScreenState) {
             is ScannerScreenState.Stopped -> StoppedView(
+                modifier = Modifier.weight(1f),
                 viewState = scannerScreenState,
-                onEvent = onEvent
+                onRestartScan = onEvent
             )
 
             is ScannerScreenState.NotReady -> NotReadyView(
+                modifier = Modifier.weight(1f),
                 viewState = scannerScreenState,
                 onEvent = onEvent
             )
 
             is ScannerScreenState.Scanning -> ScanningView(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(MaterialTheme.spacing.small),
                 viewState = scannerScreenState,
                 onEvent = onEvent
             )
@@ -100,7 +106,9 @@ fun ScannerView(
             ScannerScreenState.Ready -> {}
         }
         CardioAppTextButton(
-            modifier = Modifier.padding(vertical = MaterialTheme.spacing.medium),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = MaterialTheme.spacing.medium),
             text = stringResource(id = R.string.label_skip_connection),
             onClick = { onEvent(ScannerScreenEvent.SkipClick) }
         )
@@ -111,12 +119,36 @@ fun ScannerView(
 fun StoppedView(
     modifier: Modifier = Modifier,
     viewState: ScannerScreenState.Stopped,
-    onEvent: (ScannerScreenEvent) -> Unit,
+    onRestartScan: (ScannerScreenEvent.RestartScanClick) -> Unit,
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
-        Text(text = viewState.message)
-        TextButton(onClick = { onEvent(ScannerScreenEvent.RestartScanClick) }) {
-            Text(text = stringResource(R.string.label_scan_restart))
+    Column(
+        modifier.padding(
+            start = MaterialTheme.spacing.small,
+            top = MaterialTheme.spacing.extraLarge,
+            end = MaterialTheme.spacing.small
+        ),
+    ) {
+        Column(
+            modifier,
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Icon(
+                    modifier = Modifier.size(200.dp),
+                    painter = painterResource(R.drawable.bluetooth_disabled),
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Text(
+                    text = viewState.message,
+                    textAlign = TextAlign.Justify
+                )
+            }
+            CardioAppButton(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(id = R.string.label_scan_restart),
+                onClick = { onRestartScan(ScannerScreenEvent.RestartScanClick) })
         }
     }
 }
@@ -146,50 +178,33 @@ fun NotReadyView(
         }
     }
 
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        if (!viewState.bluetoothEnabled) {
-            RationaleView(
-                iconId = R.drawable.bluetooth_disabled,
-                textId = R.string.text_enable_bluetooth_rationale,
-                labelId = R.string.label_enable_bluetooth,
-                onButtonClick = {
-//                    bluetoothActivityResult.launch(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE))
-                })
-        } else if (!viewState.locationEnabled) {
-            RationaleView(
-                iconId = R.drawable.location_off,
-                textId = R.string.text_enable_location_rationale,
-                labelId = R.string.label_settings,
-                onButtonClick = {
-                    try {
-                        val locSettings = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                        context.startActivity(locSettings)
-                    } catch (anfe: ActivityNotFoundException) {
-                        Timber.e("Settings activity not found")
-                    }
-                })
-        } else if (viewState.deniedPermissions.isNotEmpty()) {
-            Surface {
-                Column(Modifier.padding(MaterialTheme.spacing.small)) {
-                    Row {
-                        Icon(
-                            painter = painterResource(id = R.drawable.warning),
-                            contentDescription = null
-                        )
-                        Text(text = stringResource(R.string.text_enable_permissions_rationale))
-                    }
-                    TextButton(onClick = {
-//                        permissionActivityResult.launch(state.deniedPermissions)
-                    }) {
-                        Text(text = stringResource(R.string.label_grant_permissions))
-                    }
-                }
-            }
-        }
+    if (viewState.deniedPermissions.isNotEmpty()) {
+        PermissionsDeniedView(
+            modifier.padding(
+                start = MaterialTheme.spacing.small,
+                top = MaterialTheme.spacing.extraLarge,
+                end = MaterialTheme.spacing.small
+            ),
+            permissions = viewState.deniedPermissions,
+            shouldOpenSettings = viewState.shouldOpenSettings,
+            onPermissionsResult = onEvent
+        )
+    } else if (!viewState.bluetoothEnabled) {
+        BluetoothDisabledView(
+            modifier.padding(
+                start = MaterialTheme.spacing.small,
+                end = MaterialTheme.spacing.small,
+                top = MaterialTheme.spacing.small
+            ), onEvent
+        )
+    } else if (!viewState.locationEnabled) {
+        LocationDisabledView(
+            modifier.padding(
+                start = MaterialTheme.spacing.small,
+                top = MaterialTheme.spacing.extraLarge,
+                end = MaterialTheme.spacing.small
+            ), onLocationRequestResult = onEvent
+        )
     }
 }
 
@@ -199,38 +214,138 @@ fun ScanningView(
     viewState: ScannerScreenState.Scanning,
     onEvent: (ScannerScreenEvent) -> Unit,
 ) {
-    Surface(
-        modifier = Modifier.padding(horizontal = MaterialTheme.spacing.small),
-        color = MaterialTheme.colorScheme.secondaryContainer,
-        shape = MaterialTheme.shapes.extraSmall
-    ) {
-        LazyColumn(modifier.fillMaxWidth()) {
-            items(viewState.discoveredDevices) { discoveredDevice ->
-                DeviceView(
-                    discoveredDevice = discoveredDevice,
-                    onDeviceClick = { onEvent(ScannerScreenEvent.DeviceClick(it)) }
-                )
+    Column(modifier) {
+        Text(
+            modifier = Modifier.padding(vertical = MaterialTheme.spacing.medium),
+            text = stringResource(R.string.text_scan_choose_device),
+            style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.SemiBold)
+        )
+        Surface(
+            modifier = Modifier.padding(top = MaterialTheme.spacing.medium),
+            color = MaterialTheme.colorScheme.secondaryContainer,
+            shape = MaterialTheme.shapes.extraSmall
+        ) {
+            LazyColumn(Modifier.fillMaxWidth()) {
+                items(viewState.discoveredDevices) { discoveredDevice ->
+                    DeviceView(
+                        modifier = Modifier.fillMaxWidth(),
+                        discoveredDevice = discoveredDevice,
+                        onDeviceClick = { onEvent(ScannerScreenEvent.DeviceClick(it)) }
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-fun RationaleView(
+fun BluetoothDisabledView(
     modifier: Modifier = Modifier,
-    @DrawableRes iconId: Int,
-    @StringRes textId: Int,
-    @StringRes labelId: Int,
-    onButtonClick: () -> Unit,
+    onBluetoothEnableResult: (ScannerScreenEvent.BluetoothEnableResult) -> Unit
 ) {
-    Column(modifier) {
-        Icon(painter = painterResource(id = iconId), contentDescription = null)
-        Spacer(modifier = Modifier.height(MaterialTheme.spacing.small))
-        Text(text = stringResource(textId), textAlign = TextAlign.Center)
-        Spacer(modifier = Modifier.height(MaterialTheme.spacing.small))
-        TextButton(onClick = onButtonClick) {
-            Text(text = stringResource(id = labelId))
+    val bluetoothActivityResult = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult(),
+        onResult = { onBluetoothEnableResult(ScannerScreenEvent.BluetoothEnableResult(it)) }
+    )
+    Column(modifier, verticalArrangement = Arrangement.SpaceBetween) {
+        RationaleImageView(
+            imageRes = R.drawable.image_connectivity_bluetooth,
+            text = R.string.text_bluetooth_rationale1,
+            featureText1 = R.string.text_bluetooth_rationale2,
+            featureText2 = R.string.text_bluetooth_rationale3
+        )
+        CardioAppButton(
+            modifier = Modifier.fillMaxWidth(),
+            text = stringResource(R.string.label_enable_bluetooth),
+            onClick = { bluetoothActivityResult.launch(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)) })
+    }
+}
+
+@Composable
+fun PermissionsDeniedView(
+    modifier: Modifier = Modifier,
+    shouldOpenSettings: Boolean,
+    permissions: Array<String>,
+    onPermissionsResult: (ScannerScreenEvent.PermissionsRequestResult) -> Unit
+) {
+    val permissionActivityResult = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions(),
+        onResult = { onPermissionsResult(ScannerScreenEvent.PermissionsRequestResult(it)) }
+    )
+    val settingsActivityResult = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult(),
+        onResult = {}
+    )
+    val context = LocalContext.current
+
+    Column(
+        modifier,
+        verticalArrangement = Arrangement.SpaceBetween,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Icon(
+                modifier = Modifier.size(200.dp),
+                painter = painterResource(R.drawable.warning),
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary
+            )
+            Text(
+                text = stringResource(R.string.text_enable_permissions_rationale),
+                textAlign = TextAlign.Justify
+            )
         }
+        CardioAppButton(
+            modifier = Modifier.fillMaxWidth(),
+            text = stringResource(if (shouldOpenSettings) R.string.label_settings else R.string.label_grant_permissions),
+            onClick = {
+                if (shouldOpenSettings) {
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    val uri = Uri.fromParts("package", context.packageName, null)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    intent.data = uri
+                    context.startActivity(intent)
+                } else {
+                    permissionActivityResult.launch(permissions)
+                }
+            })
+    }
+}
+
+@Composable
+fun LocationDisabledView(
+    modifier: Modifier = Modifier,
+    onLocationRequestResult: (ScannerScreenEvent.LocationRequestResult) -> Unit
+) {
+    val settingsActivityResult = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult(),
+        onResult = { onLocationRequestResult(ScannerScreenEvent.LocationRequestResult(it)) }
+    )
+    Column(
+        modifier,
+        verticalArrangement = Arrangement.SpaceBetween,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Icon(
+                modifier = Modifier.size(200.dp),
+                painter = painterResource(R.drawable.location_off),
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary
+            )
+            Text(
+                text = stringResource(R.string.text_enable_location_rationale),
+                textAlign = TextAlign.Justify
+            )
+        }
+        CardioAppButton(
+            modifier = Modifier.fillMaxWidth(),
+            text = stringResource(R.string.label_settings),
+            onClick = {
+                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                settingsActivityResult.launch(intent)
+            })
     }
 }
 
@@ -243,14 +358,15 @@ private fun NotReadyViewPrev() {
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
         ) {
-            NotReadyView(
-                viewState = ScannerScreenState.NotReady(
-                    bluetoothEnabled = false,
+            ScannerView(
+                scannerScreenState = ScannerScreenState.NotReady(
+                    bluetoothEnabled = true,
                     locationEnabled = false,
                     deniedPermissions = arrayOf()
-                ),
-                onEvent = {}
-            )
+                )
+            ) {
+
+            }
         }
     }
 }
@@ -273,6 +389,22 @@ private fun ScanningViewPrev() {
                     )
                 )
             ) {
+
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun ScanStoppedPrev() {
+    CardiographAppTheme {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+        ) {
+            ScannerView(scannerScreenState = ScannerScreenState.Stopped("Сканирование приостановлено")) {
 
             }
         }

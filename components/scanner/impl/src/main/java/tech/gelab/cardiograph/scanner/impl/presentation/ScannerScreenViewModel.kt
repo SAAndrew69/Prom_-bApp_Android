@@ -6,12 +6,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import tech.gelab.cardiograph.bluetooth.BluetoothState
 import tech.gelab.cardiograph.bluetooth.LocationState
+import tech.gelab.cardiograph.bluetooth.ServicesState
 import tech.gelab.cardiograph.bluetooth.ServicesStateProvider
 import tech.gelab.cardiograph.core.util.ResourceProvider
 import tech.gelab.cardiograph.scanner.api.ScannerApi
@@ -51,8 +53,17 @@ class ScannerScreenViewModel @Inject constructor(
         }
     }
 
+    private var deniedCounter = 0
+
     init {
-        if (viewState == ScannerScreenState.Ready) startScan()
+        servicesStateProvider.getServicesStateFlow()
+            // TODO initial state
+            .drop(1)
+            .onEach(::onServicesState)
+            .launchIn(viewModelScope)
+        if (viewState is ScannerScreenState.Ready) {
+            startScan()
+        }
     }
 
     override fun obtainEvent(viewEvent: ScannerScreenEvent) {
@@ -66,14 +77,28 @@ class ScannerScreenViewModel @Inject constructor(
             ScannerScreenEvent.SkipClick -> viewAction = ScannerScreenAction.SkipDeviceSearch
             ScannerScreenEvent.GoBack -> viewAction = ScannerScreenAction.GoBack
             ScannerScreenEvent.RestartScanClick -> startScan()
+            is ScannerScreenEvent.BluetoothEnableResult -> onBluetoothEnableResult(viewEvent)
+            is ScannerScreenEvent.PermissionsRequestResult -> onPermissionActivityResult(viewEvent)
+            is ScannerScreenEvent.LocationRequestResult -> onLocationActivityResult(viewEvent)
+        }
+    }
+
+    private fun onServicesState(servicesState: ServicesState) {
+        Timber.d("onServicesState: $servicesState")
+        if (servicesState.isScannerReady()) {
+            viewState = ScannerScreenState.Scanning(persistentListOf())
+            startScan()
+        } else {
+            viewState = ScannerScreenState.NotReady(
+                servicesState.bluetoothState == BluetoothState.STATE_ON,
+                servicesState.locationState == LocationState.LOCATION_ENABLED,
+                servicesState.permissionsState.deniedPermissions.toTypedArray()
+            )
         }
     }
 
     private fun onDevicesCollect(devices: Iterable<ScannerApi.DiscoveredDevice>) {
-        viewState = ScannerScreenState.Scanning(devices.filter {
-            // TODO proper filtering
-            it.name.isNotEmpty()
-        }.toPersistentList())
+        viewState = ScannerScreenState.Scanning(devices.toPersistentList())
     }
 
     private fun onScanStart() {
@@ -82,7 +107,14 @@ class ScannerScreenViewModel @Inject constructor(
 
     private fun onScanCompletion(throwable: Throwable?) {
         Timber.e("onScanCompletion", throwable)
-        viewState = if (throwable != null) {
+        val servicesState = servicesStateProvider.getServicesState()
+        viewState = if (!servicesState.isScannerReady()) {
+            ScannerScreenState.NotReady(
+                bluetoothEnabled = servicesState.bluetoothState == BluetoothState.STATE_ON,
+                locationEnabled = servicesState.locationState == LocationState.LOCATION_ENABLED,
+                deniedPermissions = servicesState.permissionsState.deniedPermissions.toTypedArray()
+            )
+        } else if (throwable != null) {
             ScannerScreenState.Stopped(throwable.message ?: "")
         } else {
             ScannerScreenState.Stopped(resourceProvider.getString(R.string.text_scan_stopped))
@@ -98,11 +130,29 @@ class ScannerScreenViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    fun onBluetoothActivityResult(activityResult: ActivityResult) {
-
+    private fun onBluetoothEnableResult(event: ScannerScreenEvent.BluetoothEnableResult) {
+        Timber.d("onBluetoothEnableResult: ${event.activityResult}")
     }
 
-    fun onPermissionActivityResult(map: Map<String, Boolean>) {
+    private fun onPermissionActivityResult(event: ScannerScreenEvent.PermissionsRequestResult) {
+        Timber.d("onPermissionActivityResult: ${event.result}")
+        val deniedPermissions = event.result.entries.filter { !it.value }.map { it.key }
+        if (deniedPermissions.isNotEmpty()) {
+            deniedCounter++
+        }
+        if (deniedCounter >= 2) {
+            // TODO make cleaner
+            Timber.d("User denied permissions twice")
+            viewState = ScannerScreenState.NotReady(
+                bluetoothEnabled = servicesStateProvider.getBluetoothState() == BluetoothState.STATE_ON,
+                locationEnabled = servicesStateProvider.getLocationState() == LocationState.LOCATION_ENABLED,
+                deniedPermissions = deniedPermissions.toTypedArray(),
+                shouldOpenSettings = true
+            )
+        }
+    }
+
+    private fun onLocationActivityResult(event: ScannerScreenEvent.LocationRequestResult) {
 
     }
 }

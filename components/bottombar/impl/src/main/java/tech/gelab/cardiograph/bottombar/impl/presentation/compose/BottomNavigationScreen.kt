@@ -10,16 +10,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import kotlinx.collections.immutable.ImmutableSet
-import kotlinx.collections.immutable.persistentListOf
-import tech.gelab.cardiograph.bottombar.impl.R
 import tech.gelab.cardiograph.bottombar.impl.bottombar.CardioBottomBar
-import tech.gelab.cardiograph.bottombar.impl.bottombar.NavigationItem
 import tech.gelab.cardiograph.bottombar.impl.domain.BottomNavigationAction
 import tech.gelab.cardiograph.bottombar.impl.domain.BottomNavigationEvent
 import tech.gelab.cardiograph.bottombar.impl.domain.BottomNavigationState
 import tech.gelab.cardiograph.bottombar.impl.presentation.viewmodel.BottomNavigationViewModel
 import tech.gelab.cardiograph.core.ui.navigation.AggregateFeatureEntry
 import tech.gelab.cardiograph.core.ui.navigation.ComposableFeatureEntry
+import tech.gelab.cardiograph.core.ui.navigation.DestinationChangedEffect
+import tech.gelab.cardiograph.core.ui.navigation.rememberGraph
 import tech.gelab.cardiograph.ui.topbar.CardioAppBar
 
 
@@ -33,7 +32,9 @@ fun BottomNavigationScreen(
 ) {
     DestinationChangedEffect(
         navController = navController,
-        onDestinationChanged = viewModel::obtainEvent
+        onDestinationChanged = {
+            viewModel.obtainEvent(BottomNavigationEvent.GraphDestinationChanged(it))
+        }
     )
 
     val viewState by viewModel.viewStates().collectAsState()
@@ -48,8 +49,6 @@ fun BottomNavigationScreen(
         navController = navController,
         onEvent = viewModel::obtainEvent
     )
-
-
 }
 
 @Composable

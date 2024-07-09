@@ -12,17 +12,15 @@ import tech.gelab.cardiograph.authorization.api.SignUpFeatureEntry
 import tech.gelab.cardiograph.authorization.api.SkipAuthFeatureEntry
 import tech.gelab.cardiograph.authorization.impl.presentation.compose.WelcomeScreen
 import tech.gelab.cardiograph.authorization.impl.presentation.viewmodel.WelcomeScreenViewModel
-import tech.gelab.cardiograph.authorization.util.defaultEnterTransition
-import tech.gelab.cardiograph.authorization.util.defaultExitTransition
-import tech.gelab.cardiograph.authorization.util.defaultPopEnterTransition
-import tech.gelab.cardiograph.authorization.util.defaultPopExitTransition
 import tech.gelab.cardiograph.core.notification.ToastHelper
 import tech.gelab.cardiograph.core.ui.navigation.FeatureEventHandler
 import tech.gelab.cardiograph.core.ui.navigation.NavigationRoute
+import tech.gelab.cardiograph.core.ui.navigation.defaultEnterTransition
+import tech.gelab.cardiograph.core.ui.navigation.defaultExitTransition
+import tech.gelab.cardiograph.core.ui.navigation.defaultPopEnterTransition
+import tech.gelab.cardiograph.core.ui.navigation.defaultPopExitTransition
 import tech.gelab.cardiograph.scanner.api.ScannerFeatureEntry
 import javax.inject.Inject
-
-private const val dialogMessageArgName = "msg"
 
 class AuthFeatureEntryImpl @Inject constructor(
     private val loginFeatureEntry: LoginFeatureEntry,
@@ -32,12 +30,6 @@ class AuthFeatureEntryImpl @Inject constructor(
     private val toastHelper: ToastHelper,
 ) : AuthFeatureEntry, FeatureEventHandler<AuthFeatureEvent> {
 
-    private val authFailureDialogArgs = listOf(
-        navArgument(dialogMessageArgName) {
-            type = NavType.IntType
-            nullable = false
-        }
-    )
     private var navController: NavController? = null
 
     override fun NavGraphBuilder.composable(navController: NavController) {
@@ -76,6 +68,8 @@ class AuthFeatureEntryImpl @Inject constructor(
             AuthFeatureEvent.NavigateLogin -> navController?.navigate(loginFeatureEntry.ROUTE.name)
             AuthFeatureEvent.NavigateSignUp -> navController?.navigate(sighUpFeatureEntry.ROUTE.name)
             AuthFeatureEvent.NavigateSkipAuth -> navController?.navigate(skipAuthFeatureEntry.ROUTE.name)
+            AuthFeatureEvent.OpenNetworkSettings -> {}
+            AuthFeatureEvent.SkipNetworkConnection -> navController?.navigate(scannerFeatureEntry.getScannerRoute(false))
         }
     }
 }

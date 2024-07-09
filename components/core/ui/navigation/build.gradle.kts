@@ -10,6 +10,9 @@ dependencies {
 
     implementation(libs.appcompat)
 
-    implementation(libs.compose.navigation)
+    implementation(libs.timber)
 
+    implementation(libs.kotlin.immutable.collections)
+
+    implementation(libs.compose.navigation)
 }

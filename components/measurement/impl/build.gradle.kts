@@ -9,12 +9,15 @@ android {
 
 dependencies {
     implementation(projects.components.measurement.api)
+    implementation(projects.components.bottombar.api)
 
     implementation(projects.components.core.ui.navigation)
+    implementation(projects.components.core.ui.topbar)
     implementation(projects.components.core.ui.theme)
     implementation(projects.components.core.ui.ktx)
 
     implementation(libs.appcompat)
+    implementation(libs.timber)
 
     implementation(libs.compose.ui)
     implementation(libs.compose.tooling)

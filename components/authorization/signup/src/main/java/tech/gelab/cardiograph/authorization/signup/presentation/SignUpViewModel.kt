@@ -36,7 +36,7 @@ class SignUpViewModel @AssistedInject constructor(
             is SignUpScreenEvent.TextFieldSubmit -> onTextFieldSubmit(viewEvent)
             is SignUpScreenEvent.TextFieldUpdate -> onTextFieldUpdate(viewEvent)
             SignUpScreenEvent.VisibilityUpdate -> onVisibilityUpdate()
-            SignUpScreenEvent.BackClick -> TODO()
+            SignUpScreenEvent.BackClick -> onBackClick()
         }
     }
 
@@ -85,28 +85,62 @@ class SignUpViewModel @AssistedInject constructor(
         Timber.e("onRegistrationFailure: $t")
         signUpFeatureEventHandler.obtainEvent(
             SignUpFeatureEvent.SignUpFailure(
-                resourceProvider.getString(
+                t.message ?: resourceProvider.getString(
                     R.string.text_sign_up_failure_default
                 )
             )
         )
-
     }
 
     private fun onTextFieldSubmit(event: SignUpScreenEvent.TextFieldSubmit) {
+        when (event.textFieldType) {
+            SignUpScreenEvent.TextFieldType.EMAIL -> if (!validateEmail(viewState.email)) {
+                viewState = viewState.copy(emailError = true)
+            }
 
+            SignUpScreenEvent.TextFieldType.PASSWORD -> if (!validatePassword(viewState.password)) {
+                viewState = viewState.copy(passwordError = true)
+            }
+
+            SignUpScreenEvent.TextFieldType.PASSWORD_CONFIRM -> if (!validateConfirmation(
+                    viewState.password,
+                    viewState.passwordConfirm
+                )
+            ) {
+                viewState = viewState.copy(passwordConfirmError = true)
+            }
+        }
     }
 
     private fun onTextFieldUpdate(event: SignUpScreenEvent.TextFieldUpdate) {
         viewState = when (event.textFieldType) {
-            SignUpScreenEvent.TextFieldType.EMAIL -> viewState.copy(email = event.value)
-            SignUpScreenEvent.TextFieldType.PASSWORD -> viewState.copy(password = event.value)
-            SignUpScreenEvent.TextFieldType.PASSWORD_CONFIRM -> viewState.copy(passwordConfirm = event.value)
+            SignUpScreenEvent.TextFieldType.EMAIL -> viewState.copy(
+                email = event.value,
+                emailError = if (viewState.emailError && validateEmail(event.value)) false else viewState.emailError
+            )
+
+            SignUpScreenEvent.TextFieldType.PASSWORD -> viewState.copy(
+                password = event.value,
+                passwordError = if (viewState.passwordError && validatePassword(event.value)) false else viewState.passwordError
+            )
+
+            SignUpScreenEvent.TextFieldType.PASSWORD_CONFIRM -> viewState.copy(
+                passwordConfirm = event.value,
+                passwordConfirmError = if (viewState.passwordConfirmError && validateConfirmation(
+                        viewState.password,
+                        viewState.passwordConfirm
+                    )
+                ) false else viewState.passwordConfirmError
+            )
         }
     }
 
     private fun onVisibilityUpdate() {
         viewState = viewState.copy(passwordVisible = !viewState.passwordVisible)
+    }
+
+    private fun onBackClick() {
+        signUpFeatureEventHandler.obtainEvent(SignUpFeatureEvent.PopBackStack)
     }
 
     private fun onSkipClick() {

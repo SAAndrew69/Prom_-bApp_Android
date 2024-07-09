@@ -41,7 +41,7 @@ fun WelcomeScreen(
     when (viewState) {
         is WelcomeScreenState.NetworkConnectable -> WelcomeView(onEvent = viewModel::obtainEvent)
 
-        WelcomeScreenState.NoNetwork -> ConnectivityInternetView(viewModel::obtainEvent)
+        WelcomeScreenState.NoNetwork -> ConnectivityInternetView(onEvent = viewModel::obtainEvent)
     }
 }
 
@@ -110,7 +110,7 @@ fun WelcomeButtons(modifier: Modifier = Modifier, onEvent: (WelcomeScreenEvent) 
         CardioAppTextButton(
             modifier = Modifier.fillMaxWidth().padding(vertical = MaterialTheme.spacing.medium),
             text = stringResource(id = R.string.label_skip_auth),
-            onClick = { onEvent(WelcomeScreenEvent.SKIP) }
+            onClick = { onEvent(WelcomeScreenEvent.SKIP_AUTH) }
         )
     }
 }

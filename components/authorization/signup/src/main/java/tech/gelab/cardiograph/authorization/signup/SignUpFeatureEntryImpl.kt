@@ -7,15 +7,21 @@ import androidx.navigation.compose.composable
 import tech.gelab.cardiograph.authorization.api.SignUpFeatureEntry
 import tech.gelab.cardiograph.authorization.signup.presentation.SignUpScreen
 import tech.gelab.cardiograph.authorization.signup.presentation.SignUpViewModel
-import tech.gelab.cardiograph.authorization.util.defaultEnterTransition
-import tech.gelab.cardiograph.authorization.util.defaultExitTransition
-import tech.gelab.cardiograph.authorization.util.defaultPopEnterTransition
-import tech.gelab.cardiograph.authorization.util.defaultPopExitTransition
 import tech.gelab.cardiograph.core.ui.navigation.FeatureEventHandler
+import tech.gelab.cardiograph.core.ui.navigation.defaultEnterTransition
+import tech.gelab.cardiograph.core.ui.navigation.defaultExitTransition
+import tech.gelab.cardiograph.core.ui.navigation.defaultPopEnterTransition
+import tech.gelab.cardiograph.core.ui.navigation.defaultPopExitTransition
+import tech.gelab.cardiograph.core.util.ResourceProvider
 import tech.gelab.cardiograph.scanner.api.ScannerFeatureEntry
+import tech.gelab.cardiograph.ui.dialog.dialognavprovider.TextDialogFeatureEntry
 import javax.inject.Inject
 
-class SignUpFeatureEntryImpl @Inject constructor(private val scannerFeatureEntry: ScannerFeatureEntry) :
+class SignUpFeatureEntryImpl @Inject constructor(
+    private val scannerFeatureEntry: ScannerFeatureEntry,
+    private val textDialogFeatureEntry: TextDialogFeatureEntry,
+    private val resourceProvider: ResourceProvider
+) :
     SignUpFeatureEntry, FeatureEventHandler<SignUpFeatureEvent> {
 
     private var navController: NavController? = null
@@ -39,9 +45,26 @@ class SignUpFeatureEntryImpl @Inject constructor(private val scannerFeatureEntry
 
     override fun obtainEvent(event: SignUpFeatureEvent) {
         when (event) {
-            is SignUpFeatureEvent.SignUpSuccess -> navController?.navigate(scannerFeatureEntry.getScannerRoute(false))
-            is SignUpFeatureEvent.SignUpFailure -> TODO()
-            SignUpFeatureEvent.Skip -> navController?.navigate(scannerFeatureEntry.getScannerRoute(true))
+            is SignUpFeatureEvent.SignUpSuccess -> navController?.navigate(
+                scannerFeatureEntry.getScannerRoute(
+                    false
+                )
+            )
+
+            is SignUpFeatureEvent.SignUpFailure -> navController?.navigate(
+                textDialogFeatureEntry.start(
+                    title = resourceProvider.getString(R.string.title_sign_up_error),
+                    message = event.message
+                )
+            )
+
+            SignUpFeatureEvent.Skip -> navController?.navigate(
+                scannerFeatureEntry.getScannerRoute(
+                    true
+                )
+            )
+
+            SignUpFeatureEvent.PopBackStack -> navController?.popBackStack()
         }
     }
 }

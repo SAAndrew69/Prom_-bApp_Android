@@ -9,6 +9,8 @@ sealed interface ScannerScreenState {
         val bluetoothEnabled: Boolean,
         val locationEnabled: Boolean,
         val deniedPermissions: Array<String>,
+        // TODO permission state
+        val shouldOpenSettings: Boolean = false
     ) : ScannerScreenState {
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
@@ -18,6 +20,7 @@ sealed interface ScannerScreenState {
 
             if (bluetoothEnabled != other.bluetoothEnabled) return false
             if (locationEnabled != other.locationEnabled) return false
+            if (shouldOpenSettings != other.shouldOpenSettings) return false
             return deniedPermissions.contentEquals(other.deniedPermissions)
         }
 

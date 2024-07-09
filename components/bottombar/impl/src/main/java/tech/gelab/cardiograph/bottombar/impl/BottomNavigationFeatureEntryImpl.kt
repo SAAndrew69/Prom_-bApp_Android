@@ -11,13 +11,17 @@ import tech.gelab.cardiograph.bottombar.impl.presentation.compose.BottomNavigati
 import tech.gelab.cardiograph.core.ui.navigation.AggregateFeatureEntry
 import tech.gelab.cardiograph.core.ui.navigation.ComposableFeatureEntry
 import tech.gelab.cardiograph.core.ui.navigation.NavigationRoute
+import tech.gelab.cardiograph.core.ui.navigation.defaultEnterTransition
+import tech.gelab.cardiograph.core.ui.navigation.defaultExitTransition
+import tech.gelab.cardiograph.core.ui.navigation.defaultPopEnterTransition
+import tech.gelab.cardiograph.core.ui.navigation.defaultPopExitTransition
 import javax.inject.Inject
 import javax.inject.Provider
 
 class BottomNavigationFeatureEntryImpl @Inject constructor(
     composableFeatureEntries: Provider<MutableSet<ComposableFeatureEntry>>,
     aggregateFeatureEntries: Provider<MutableSet<AggregateFeatureEntry>>
-): BottomNavigationFeatureEntry {
+) : BottomNavigationFeatureEntry {
 
     private val composableEntries = lazy {
         composableFeatureEntries.get().toPersistentSet()
@@ -38,7 +42,13 @@ class BottomNavigationFeatureEntryImpl @Inject constructor(
     }
 
     override fun NavGraphBuilder.composable(navController: NavController) {
-        composable(route = start()) {
+        composable(
+            route = start(),
+            enterTransition = defaultEnterTransition,
+            exitTransition = defaultExitTransition,
+            popEnterTransition = defaultPopEnterTransition,
+            popExitTransition = defaultPopExitTransition
+        ) {
             val childNavController = rememberNavController().also {
                 childNavController = it
             }

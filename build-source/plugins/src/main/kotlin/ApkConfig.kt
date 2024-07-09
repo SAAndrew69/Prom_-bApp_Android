@@ -2,7 +2,7 @@ object ApkConfig {
     object AppVersion {
         const val major = 0
         const val minor = 0
-        const val revision = 2
+        const val revision = 3
     }
 
     const val APPLICATION_ID = "tech.gelab.cardiograph"

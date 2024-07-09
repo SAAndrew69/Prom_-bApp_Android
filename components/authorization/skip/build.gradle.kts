@@ -9,7 +9,6 @@ android {
 
 dependencies {
     implementation(projects.components.authorization.api)
-    implementation(projects.components.authorization.util)
 
     implementation(projects.components.core.network)
     implementation(projects.components.core.notification)

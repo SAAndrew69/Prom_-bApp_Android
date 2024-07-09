@@ -15,6 +15,7 @@ import tech.gelab.cardiograph.authorization.login.domain.LoginAction
 import tech.gelab.cardiograph.authorization.login.domain.LoginEvent
 import tech.gelab.cardiograph.authorization.login.domain.LoginScreenState
 import tech.gelab.cardiograph.authorization.util.validateEmail
+import tech.gelab.cardiograph.authorization.util.validatePassword
 import tech.gelab.cardiograph.core.notification.ToastHelper
 import tech.gelab.cardiograph.core.ui.navigation.FeatureEventHandler
 import tech.gelab.cardiograph.core.util.ResourceProvider
@@ -46,11 +47,15 @@ class LoginViewModel @AssistedInject constructor(
             LoginEvent.SkipClick -> loginFeatureEventHandler.obtainEvent(LoginFeatureEvent.NavigateToNext)
 
             LoginEvent.ForgotPasswordClick -> {}
+            LoginEvent.BackClick -> loginFeatureEventHandler.obtainEvent(LoginFeatureEvent.PopBackStack)
         }
     }
 
     private fun onEmailUpdate(event: LoginEvent.EmailUpdate) {
-        viewState = viewState.copy(email = event.value)
+        viewState = viewState.copy(
+            email = event.value,
+            emailError = if (viewState.emailError && validateEmail(event.value)) false else viewState.emailError
+        )
     }
 
     private fun onEmailSubmit() {
@@ -62,7 +67,7 @@ class LoginViewModel @AssistedInject constructor(
     }
 
     private fun onPasswordSubmit() {
-
+        onLoginClick()
     }
 
     private fun onVisibilityClick() {
@@ -73,10 +78,9 @@ class LoginViewModel @AssistedInject constructor(
         viewModelScope.launch {
             if (!validateEmail(viewState.email)) {
                 viewState = viewState.copy(emailError = true)
-                toastHelper.showToast(R.string.text_auth_failure, Toast.LENGTH_SHORT)
+                toastHelper.showToast(tech.gelab.cardiograph.authorization.util.R.string.text_incorrect_email, Toast.LENGTH_SHORT)
                 return@launch
             }
-
 
             authService.authorize(viewState.email, viewState.password)
                 .onSuccess { token ->
@@ -88,11 +92,7 @@ class LoginViewModel @AssistedInject constructor(
                 }
                 .onFailure {
                     loginFeatureEventHandler.obtainEvent(
-                        LoginFeatureEvent.LoginFailure(
-                            resourceProvider.getString(
-                                R.string.text_auth_failure
-                            )
-                        )
+                        LoginFeatureEvent.LoginFailure(it.message ?: "Ошибка авторизации")
                     )
                 }
         }

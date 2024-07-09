@@ -1,9 +1,6 @@
 package tech.gelab.cardiograph.scanner.impl
 
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
-import androidx.navigation.NavBackStackEntry
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
@@ -12,14 +9,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
-import androidx.navigation.navigation
 import tech.gelab.cardiograph.bottombar.api.BottomNavigationFeatureEntry
 import tech.gelab.cardiograph.core.ui.navigation.NavigationRoute
+import tech.gelab.cardiograph.core.ui.navigation.defaultEnterTransition
+import tech.gelab.cardiograph.core.ui.navigation.defaultExitTransition
+import tech.gelab.cardiograph.core.ui.navigation.defaultPopExitTransition
 import tech.gelab.cardiograph.scanner.api.ScannerApi
 import tech.gelab.cardiograph.scanner.api.ScannerFeatureEntry
 import tech.gelab.cardiograph.scanner.impl.domain.model.action.ScannerScreenAction
 import tech.gelab.cardiograph.scanner.impl.presentation.ScannerScreen
-import tech.gelab.cardiograph.ui.ktx.dialog.CardioAppDialog
+import tech.gelab.cardiograph.ui.dialog.CardioAppDialog
 import javax.inject.Inject
 
 class ScannerFeatureEntryImpl @Inject constructor(
@@ -39,24 +38,6 @@ class ScannerFeatureEntryImpl @Inject constructor(
         }
     )
 
-    private val enterTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition) by lazy {
-        {
-            slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Start)
-        }
-    }
-
-    private val exitTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition) by lazy {
-        {
-            slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Start)
-        }
-    }
-
-    private val popExitTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition) by lazy {
-        {
-            slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.End)
-        }
-    }
-
     override fun start(): String {
         return "${NavigationRoute.SCANNER}?$GO_BACK_AVAILABLE={$GO_BACK_AVAILABLE}"
     }
@@ -73,9 +54,9 @@ class ScannerFeatureEntryImpl @Inject constructor(
         navigation(
             route = ROUTE.name,
             startDestination = start(),
-            enterTransition = enterTransition,
-            exitTransition = exitTransition,
-            popExitTransition = popExitTransition
+            enterTransition = defaultEnterTransition,
+            exitTransition = defaultExitTransition,
+            popExitTransition = defaultPopExitTransition
         ) {
             composable(
                 route = start(),
@@ -88,7 +69,7 @@ class ScannerFeatureEntryImpl @Inject constructor(
             }
             dialog(route = "${NavigationRoute.AUTH_ERROR_DIALOG.name}?$DEVICE_ADDRESS={$DEVICE_ADDRESS}&$DEVICE_NAME=${DEVICE_NAME}") {
                 CardioAppDialog(
-                    buttonLabelId = R.string.label_cancel,
+                    buttonLabel = stringResource(R.string.label_cancel),
                     onClickButton = { navController.popBackStack() })
             }
         }

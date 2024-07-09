@@ -16,5 +16,6 @@ enum class NavigationRoute {
     SCHEME,
     ELECTRODE_CONNECTION,
     SIGNAL_QUALITY,
-    MEASUREMENT
+    MEASUREMENT,
+    TEXT_DIALOG
 }

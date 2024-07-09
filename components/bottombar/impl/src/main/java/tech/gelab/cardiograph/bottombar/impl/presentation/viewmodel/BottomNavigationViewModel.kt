@@ -50,6 +50,6 @@ class BottomNavigationViewModel :
     }
 
     private fun onNavDestinationChange(viewEvent: BottomNavigationEvent.GraphDestinationChanged) {
-        viewState = getViewState(destination = viewEvent.navDestination)
+        viewState = getViewState(destination = viewEvent.navigationEvent.destination)
     }
 }

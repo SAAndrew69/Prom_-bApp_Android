@@ -9,4 +9,5 @@ sealed interface LoginEvent {
     data object LoginClick: LoginEvent
     data object SkipClick: LoginEvent
     data object ForgotPasswordClick: LoginEvent
+    data object BackClick: LoginEvent
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_picker_tip">Выберете ID сотрудника, которому проводите измерение</string>
+    <string name="label_new_employee">Новый сотрудник - </string>
+    <string name="text_new_employee">Обратите внимание - в приложении нельзя указать имя сотрудника. Для дальнейших измерений зафиксируйте вне приложения ID и имя сотрудника, которое к нему относится.</string>
+    <string name="label_pick_from_list">Выбор из списка</string>
+    <string name="text_placeholder_pick_id">Выберите ID</string>
+    <string name="text_placeholder_manual_input">Введите ID сотрудника</string>
+    <string name="label_manual_input">Ввод вручную</string>
+    <string name="label_next">Далее</string>
+</resources>

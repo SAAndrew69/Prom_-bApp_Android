@@ -24,7 +24,7 @@ private val LightColorScheme = lightColorScheme(
     background = Grey100,
     primary = Blue60,
     primaryContainer = Blue60,
-    secondary = PurpleGrey40,
+    secondary = SecondaryPurple,
     secondaryContainer = Grey95,
     surface = Grey100,
     tertiary = Blue25,
@@ -64,8 +64,8 @@ fun CardiographAppTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+            window.statusBarColor = colorScheme.background.toArgb()
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = true
         }
     }
 

@@ -14,5 +14,4 @@ dependencies {
     implementation(libs.compose.ui)
     implementation(libs.compose.google.fonts)
     implementation(libs.compose.material3)
-    implementation(libs.compose.accompanist.systemuicontroller)
 }

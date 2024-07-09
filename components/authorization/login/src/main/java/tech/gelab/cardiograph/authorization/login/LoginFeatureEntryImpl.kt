@@ -1,23 +1,28 @@
 package tech.gelab.cardiograph.authorization.login
 
+import android.widget.Toast
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import tech.gelab.cardiograph.authorization.api.AuthApi
 import tech.gelab.cardiograph.authorization.api.LoginFeatureEntry
 import tech.gelab.cardiograph.authorization.login.presentation.LoginScreen
 import tech.gelab.cardiograph.authorization.login.presentation.LoginViewModel
-import tech.gelab.cardiograph.authorization.util.defaultEnterTransition
-import tech.gelab.cardiograph.authorization.util.defaultExitTransition
-import tech.gelab.cardiograph.authorization.util.defaultPopEnterTransition
-import tech.gelab.cardiograph.authorization.util.defaultPopExitTransition
+import tech.gelab.cardiograph.core.notification.ToastHelper
 import tech.gelab.cardiograph.core.ui.navigation.FeatureEventHandler
+import tech.gelab.cardiograph.core.ui.navigation.defaultEnterTransition
+import tech.gelab.cardiograph.core.ui.navigation.defaultExitTransition
+import tech.gelab.cardiograph.core.ui.navigation.defaultPopEnterTransition
+import tech.gelab.cardiograph.core.ui.navigation.defaultPopExitTransition
+import tech.gelab.cardiograph.core.util.ResourceProvider
 import tech.gelab.cardiograph.scanner.api.ScannerFeatureEntry
+import tech.gelab.cardiograph.ui.dialog.dialognavprovider.TextDialogFeatureEntry
 import javax.inject.Inject
 
 class LoginFeatureEntryImpl @Inject constructor(
-    private val scannerFeatureEntry: ScannerFeatureEntry
+    private val scannerFeatureEntry: ScannerFeatureEntry,
+    private val textDialogFeatureEntry: TextDialogFeatureEntry,
+    private val resourceProvider: ResourceProvider
 ) : LoginFeatureEntry, FeatureEventHandler<LoginFeatureEvent> {
 
     private var navController: NavController? = null
@@ -36,15 +41,21 @@ class LoginFeatureEntryImpl @Inject constructor(
                     creationCallback = { factory: LoginViewModel.Factory ->
                         factory.create(this@LoginFeatureEntryImpl)
                     }
-                ),
-                onBackClick = navController::popBackStack
+                )
             )
         }
     }
 
     override fun obtainEvent(event: LoginFeatureEvent) {
         when (event) {
-            is LoginFeatureEvent.LoginFailure -> TODO()
+            // TODO implement
+            is LoginFeatureEvent.LoginFailure -> navController?.navigate(
+                textDialogFeatureEntry.start(
+                    title = resourceProvider.getString(R.string.title_login_error),
+                    message = event.message
+                )
+            )
+
             is LoginFeatureEvent.LoginSuccess -> navController?.navigate(
                 scannerFeatureEntry.getScannerRoute(
                     false
@@ -56,6 +67,8 @@ class LoginFeatureEntryImpl @Inject constructor(
                     true
                 )
             )
+
+            LoginFeatureEvent.PopBackStack -> navController?.popBackStack()
         }
     }
 

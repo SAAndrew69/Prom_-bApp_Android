@@ -4,5 +4,6 @@ enum class WelcomeScreenEvent {
     LOGIN,
     REGISTER,
     NETWORK_SETTINGS_CLICK,
-    SKIP
+    SKIP_AUTH,
+    SKIP_NETWORK_CONNECTION
 }

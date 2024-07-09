@@ -4,4 +4,5 @@ sealed interface LoginFeatureEvent {
     data class LoginSuccess(val token: String) : LoginFeatureEvent
     data class LoginFailure(val message: String) : LoginFeatureEvent
     data object NavigateToNext : LoginFeatureEvent
+    data object PopBackStack : LoginFeatureEvent
 }

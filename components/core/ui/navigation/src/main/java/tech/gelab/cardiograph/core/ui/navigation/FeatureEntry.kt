@@ -21,9 +21,3 @@ interface AggregateFeatureEntry : FeatureEntry {
     fun NavGraphBuilder.navigation(navController: NavController)
 
 }
-
-interface DialogFeatureEntry : FeatureEntry {
-
-    fun NavGraphBuilder.dialog(navController: NavController)
-
-}

@@ -1,3 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="title_measure">Измерение показаний</string>
+    <string name="text_please_wait">Пожалуйста подождите, проводится измерение</string>
+    <string name="label_bluetooth_quality">Качество Bluetooth-соединения</string>
+    <string name="text_quality_good">Хорошее</string>
+    <string name="label_employee">Сотрудник</string>
+    <string name="label_measurement_num">Измерение</string>
+    <string name="label_start_again">Начать сначала</string>
 </resources>

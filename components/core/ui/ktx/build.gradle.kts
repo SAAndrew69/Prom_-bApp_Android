@@ -15,5 +15,4 @@ dependencies {
     implementation(libs.compose.tooling)
     implementation(libs.compose.material3)
     implementation(libs.compose.foundation)
-
 }

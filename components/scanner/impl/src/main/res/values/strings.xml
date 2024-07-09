@@ -11,4 +11,8 @@
     <string name="label_cancel">Отмена</string>
     <string name="title_device_search">Выбор устройства</string>
     <string name="label_skip_connection">Продолжить без подключения</string>
+    <string name="text_bluetooth_rationale1">Включите Bluetooth и подключитесь к устройству, чтобы получить доступ к следующим функциям:</string>
+    <string name="text_bluetooth_rationale2">Проведение измерений сотрудников</string>
+    <string name="text_bluetooth_rationale3">Получение готовых заключений по окончании измерения</string>
+    <string name="text_scan_choose_device">Выберите кардиограф, с которым вы хотите установить соединение</string>
 </resources>

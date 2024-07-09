@@ -13,8 +13,11 @@ dependencies {
     implementation(projects.components.core.ui.navigation)
     implementation(projects.components.core.ui.theme)
     implementation(projects.components.core.ui.ktx)
+    implementation(projects.components.core.ui.topbar)
 
     implementation(libs.appcompat)
+    implementation(libs.timber)
+    implementation(libs.kotlin.immutable.collections)
 
     implementation(libs.compose.ui)
     implementation(libs.compose.tooling)

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_email">E-mail</string>
+    <string name="label_skip_authorization">Продолжить без авторизации</string>
+
+    <string name="text_placeholder_email">Введите вашу почту</string>
+    <string name="text_incorrect_email">Некорректный e-mail адрес</string>
+</resources>

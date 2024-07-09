@@ -1,6 +1,5 @@
 package tech.gelab.cardiograph.authorization.skip
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,13 +10,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import tech.gelab.cardiograph.authorization.util.FeatureEnableContent
-import tech.gelab.cardiograph.authorization.util.SkipAuthButton
 import tech.gelab.cardiograph.ui.ktx.element.CardioAppButton
 import tech.gelab.cardiograph.ui.ktx.element.CardioAppTextButton
+import tech.gelab.cardiograph.ui.ktx.element.RationaleImageView
 import tech.gelab.cardiograph.ui.theme.CardiographAppTheme
 import tech.gelab.cardiograph.ui.theme.spacing
 import tech.gelab.cardiograph.ui.topbar.CardioAppBar
@@ -49,18 +46,14 @@ fun SkipAuthView(modifier: Modifier = Modifier, onEvent: (SkipAuthEvent) -> Unit
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Image(
-                painter = painterResource(id = R.drawable.image_auth_skip),
-                contentDescription = null
-            )
-            FeatureEnableContent(
-                questionText = stringResource(R.string.text_skip_auth_question),
-                text = stringResource(R.string.text_skip_auth1),
-                featureText1 = stringResource(R.string.text_skip_auth2),
-                featureText2 = stringResource(R.string.text_skip_auth3)
-            )
-        }
+        RationaleImageView(
+            modifier = Modifier.fillMaxWidth(),
+            imageRes = R.drawable.image_auth_skip,
+            questionText = R.string.text_skip_auth_question,
+            text = R.string.text_skip_auth1,
+            featureText1 = R.string.text_skip_auth2,
+            featureText2 = R.string.text_skip_auth3
+        )
         SkipAuthButtons(onEvent = onEvent)
     }
 }
@@ -74,7 +67,9 @@ fun SkipAuthButtons(modifier: Modifier = Modifier, onEvent: (SkipAuthEvent) -> U
             onClick = { onEvent(SkipAuthEvent.GET_BACK) }
         )
         CardioAppTextButton(
-            modifier = Modifier.padding(MaterialTheme.spacing.medium),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(MaterialTheme.spacing.medium),
             text = stringResource(id = R.string.label_skip_authorization),
             onClick = { onEvent(SkipAuthEvent.CONTINUE) })
     }

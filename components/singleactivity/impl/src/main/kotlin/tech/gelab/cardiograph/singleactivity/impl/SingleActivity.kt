@@ -37,6 +37,12 @@ class SingleActivity : ComponentActivity() {
 
         setContent {
             val navControllerLocal = rememberNavController().also { globalNavController = it }
+
+            // TODO debug
+            navControllerLocal.addOnDestinationChangedListener { controller, destination, args ->
+                Timber.d("destination changed: ${destination.route}")
+            }
+
             CardiographAppTheme {
                 CompositionLocalProvider(value = LocalNavHostProvider provides navControllerLocal) {
                     Navigation(

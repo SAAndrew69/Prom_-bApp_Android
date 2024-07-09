@@ -17,11 +17,15 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import tech.gelab.cardiograph.bluetooth.permissions.BluetoothPermissions
 import tech.gelab.cardiograph.bluetooth.permissions.PermissionChecker
 import tech.gelab.cardiograph.bluetooth.permissions.PermissionsState
+import timber.log.Timber
 
 class ServicesStateProvider(
     private val context: Context,
@@ -39,6 +43,7 @@ class ServicesStateProvider(
         Context.LOCATION_SERVICE
     ) as LocationManager
 
+    // TODO remove this
     private val providerScope = CoroutineScope(Dispatchers.IO)
 
     private fun bluetoothFlow(): Flow<BluetoothState> {
@@ -118,12 +123,13 @@ class ServicesStateProvider(
         return permissionChecker.checkPermissions(bluetoothPermissions)
     }
 
-    fun getServicesStateFlow(): StateFlow<ServicesState> {
+    // TODO make state flow
+    fun getServicesStateFlow(): Flow<ServicesState> {
         return combine(
-            bluetoothFlow(),
-            locationFlow(),
-            permissionsFlow(),
+            bluetoothFlow().onStart { emit(getBluetoothState()) },
+            locationFlow().onStart { emit(getLocationState()) },
+            permissionsFlow().onStart { emit(getPermissionsState()) },
             ::ServicesState
-        ).stateIn(providerScope, SharingStarted.WhileSubscribed(1000), getServicesState())
+        ).distinctUntilChanged()
     }
 }

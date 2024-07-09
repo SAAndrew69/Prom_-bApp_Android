@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import tech.gelab.cardiograph.authorization.signup.R
@@ -95,6 +96,7 @@ fun SignUpInputs(
                         SignUpScreenEvent.TextFieldType.EMAIL
                     )
                 )
+                defaultKeyboardAction(ImeAction.Next)
             }
         )
         PasswordTextField(
@@ -102,6 +104,7 @@ fun SignUpInputs(
             password = viewState.password,
             enabled = !viewState.signingUp,
             visible = viewState.passwordVisible,
+            errorMessage = if (viewState.passwordError) stringResource(R.string.text_incorrect_pass_format) else null,
             labelResource = R.string.label_password,
             placeholderResource = R.string.label_create_password,
             updateInput = {
@@ -119,6 +122,7 @@ fun SignUpInputs(
                         SignUpScreenEvent.TextFieldType.PASSWORD
                     )
                 )
+                defaultKeyboardAction(ImeAction.Next)
             }
         )
         PasswordTextField(
@@ -126,6 +130,7 @@ fun SignUpInputs(
             password = viewState.passwordConfirm,
             enabled = !viewState.signingUp,
             visible = viewState.passwordVisible,
+            errorMessage = if (viewState.passwordConfirmError) stringResource(R.string.text_incorrect_pass_confirm) else null,
             placeholderResource = R.string.label_confirm_password,
             updateInput = {
                 onEvent(
@@ -142,6 +147,7 @@ fun SignUpInputs(
                         SignUpScreenEvent.TextFieldType.PASSWORD_CONFIRM
                     )
                 )
+                defaultKeyboardAction(ImeAction.Done)
             }
         )
     }
@@ -161,7 +167,7 @@ fun SignUpButtons(
             onClick = { onEvent(SignUpScreenEvent.RegisterClick) }
         )
         CardioAppTextButton(
-            modifier = Modifier.padding(vertical = MaterialTheme.spacing.medium),
+            modifier = Modifier.fillMaxWidth().padding(vertical = MaterialTheme.spacing.medium),
             text = stringResource(id = R.string.label_skip_registration),
             onClick = { onEvent(SignUpScreenEvent.SkipClick) })
     }

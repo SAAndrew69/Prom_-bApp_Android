@@ -40,11 +40,13 @@
             <option value="$PROJECT_DIR$/components/bridge/impl" />
             <option value="$PROJECT_DIR$/components/core" />
             <option value="$PROJECT_DIR$/components/core/bluetooth" />
+            <option value="$PROJECT_DIR$/components/core/dialog" />
             <option value="$PROJECT_DIR$/components/core/network" />
             <option value="$PROJECT_DIR$/components/core/notification" />
             <option value="$PROJECT_DIR$/components/core/storage" />
             <option value="$PROJECT_DIR$/components/core/ui" />
             <option value="$PROJECT_DIR$/components/core/ui/cardiogram" />
+            <option value="$PROJECT_DIR$/components/core/ui/dialog" />
             <option value="$PROJECT_DIR$/components/core/ui/ktx" />
             <option value="$PROJECT_DIR$/components/core/ui/navigation" />
             <option value="$PROJECT_DIR$/components/core/ui/theme" />
