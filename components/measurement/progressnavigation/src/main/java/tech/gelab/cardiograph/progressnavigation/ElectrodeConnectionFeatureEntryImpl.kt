@@ -17,11 +17,12 @@ class ElectrodeConnectionFeatureEntryImpl @Inject constructor(
     private val signalQualityFeatureEntry: SignalQualityFeatureEntry
 ) : ElectrodeConnectionFeatureEntry {
 
-    private var globalNavController: NavController? = null
     private var childNavController: NavController? = null
 
     private fun onNextClick() {
-        childNavController?.navigate(signalQualityFeatureEntry.ROUTE.name)
+        childNavController?.navigate(signalQualityFeatureEntry.ROUTE.name) {
+            popUpTo(ROUTE.name)
+        }
     }
 
     override fun NavGraphBuilder.composable(navController: NavController) {
@@ -32,8 +33,7 @@ class ElectrodeConnectionFeatureEntryImpl @Inject constructor(
             popEnterTransition = defaultPopEnterTransition,
             popExitTransition = defaultPopExitTransition
         ) {
-            globalNavController = LocalNavHostProvider.current
-            this@ElectrodeConnectionFeatureEntryImpl.childNavController = navController
+            childNavController = navController
             ElectrodeConnectionScreen(onNextClick = this@ElectrodeConnectionFeatureEntryImpl::onNextClick)
         }
     }

@@ -1,5 +1,9 @@
 package tech.gelab.cardiograph.authorization.impl.presentation.compose
 
+import android.content.Intent
+import android.provider.Settings
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -60,16 +64,24 @@ fun ConnectivityInfo(modifier: Modifier = Modifier) {
 
 @Composable
 fun ConnectivityButtons(modifier: Modifier = Modifier, onEvent: (WelcomeScreenEvent) -> Unit) {
+    val settingsActivityResult = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult(),
+        onResult = { /*TODO add handler*/ }
+    )
     Column(modifier) {
         CardioAppButton(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.label_internet_settings),
-            onClick = { onEvent(WelcomeScreenEvent.NETWORK_SETTINGS_CLICK) }
+            onClick = {
+                val intent = Intent(Settings.ACTION_WIRELESS_SETTINGS)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                settingsActivityResult.launch(intent)
+            }
         )
         CardioAppTextButton(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = MaterialTheme.spacing.small, bottom = MaterialTheme.spacing.medium),
+                .padding(top = MaterialTheme.spacing.small, bottom = MaterialTheme.spacing.small),
             text = stringResource(id = R.string.label_continue_without_network),
             onClick = { onEvent(WelcomeScreenEvent.SKIP_NETWORK_CONNECTION) })
     }

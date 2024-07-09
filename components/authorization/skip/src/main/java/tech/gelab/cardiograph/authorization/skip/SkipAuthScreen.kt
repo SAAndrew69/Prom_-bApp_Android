@@ -28,7 +28,7 @@ fun SkipAuthScreen(onSkipAuthEvent: (SkipAuthEvent) -> Unit) {
             topBarState = TopBarState(
                 titleId = R.string.title_skip_auth,
                 showBackButton = true
-            )
+            ), onBackButtonClick = { onSkipAuthEvent(SkipAuthEvent.GET_BACK) }
         )
         SkipAuthView(
             modifier = Modifier

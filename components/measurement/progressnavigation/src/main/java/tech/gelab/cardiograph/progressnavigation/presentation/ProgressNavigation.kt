@@ -59,7 +59,8 @@ fun ProgressNavigation(
         startDestination = startDestination,
         composableEntries = composableEntries,
         aggregateEntries = aggregateEntries,
-        navController = navController
+        navController = navController,
+        onEvent = viewModel::obtainEvent
     )
 }
 
@@ -71,12 +72,15 @@ fun ProgressNavigationView(
     startDestination: String,
     composableEntries: ImmutableSet<ComposableFeatureEntry>,
     aggregateEntries: ImmutableSet<AggregateFeatureEntry>,
-    navController: NavHostController
+    navController: NavHostController,
+    onEvent: (ProgressNavEvent) -> Unit
 ) {
     Scaffold(
         modifier = modifier,
         topBar = {
-            ProgressNavigationBar(topBarState = viewState.topBarState)
+            ProgressNavigationBar(
+                topBarState = viewState.topBarState,
+                onBackButtonClick = { onEvent(ProgressNavEvent.BackClick) })
         }) { paddingValues ->
         val graph = rememberGraph(
             navController,
@@ -100,12 +104,15 @@ fun ProgressNavigationView(
 val progressNavIndicatorLabel = "indicator_label"
 
 @Composable
-fun ProgressNavigationBar(topBarState: TopBarState) {
+fun ProgressNavigationBar(topBarState: TopBarState, onBackButtonClick: () -> Unit) {
     Column {
-        CardioAppBar(topBarState = topBarState)
+        CardioAppBar(topBarState = topBarState, onBackButtonClick = onBackButtonClick)
         val prog = topBarState.progress
         if (prog != null) {
-            val progress by animateFloatAsState(targetValue = prog, label = progressNavIndicatorLabel)
+            val progress by animateFloatAsState(
+                targetValue = prog,
+                label = progressNavIndicatorLabel
+            )
             LinearProgressIndicator(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -131,7 +138,7 @@ private fun ProgressNavigationBarPrev() {
                     showBackButton = true,
                     0.4f
                 )
-            )
+            ) {}
         }
     }
 }

@@ -19,6 +19,7 @@ class SignalQualityFeatureEntryImpl @Inject constructor(
 ) : SignalQualityFeatureEntry {
 
     private var globalNavController: NavController? = null
+    private var childNavController: NavController? = null
 
     private fun onNextClick() {
         globalNavController?.navigate(measurementFeatureEntry.start()) {
