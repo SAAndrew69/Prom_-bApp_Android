@@ -1,7 +1,6 @@
 package tech.gelab.cardiograph.progressnavigation
 
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import tech.gelab.cardiograph.core.ui.navigation.LocalNavHostProvider

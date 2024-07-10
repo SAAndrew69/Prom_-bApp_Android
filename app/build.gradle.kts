@@ -1,6 +1,6 @@
 plugins {
-    id("gelab.cardiograph.android-app")
-    kotlin("kapt")
+    id("cardiograph.android-app")
+    id("cardiograph.hilt")
     alias(libs.plugins.hilt)
 }
 
@@ -21,7 +21,7 @@ dependencies {
     implementation(projects.components.core.ui.dialog)
     implementation(projects.components.core.ui.theme)
 
-
+    implementation(projects.components.core.storage)
     implementation(projects.components.core.util)
 
     implementation(projects.components.bridge.api)
@@ -36,8 +36,8 @@ dependencies {
     implementation(projects.components.authorization.signup)
     implementation(projects.components.authorization.skip)
 
-    implementation(projects.components.scanner.api)
-    implementation(projects.components.scanner.impl)
+    implementation(projects.components.pairing.api)
+    implementation(projects.components.pairing.impl)
 
     implementation(projects.components.bottombar.api)
     implementation(projects.components.bottombar.impl)

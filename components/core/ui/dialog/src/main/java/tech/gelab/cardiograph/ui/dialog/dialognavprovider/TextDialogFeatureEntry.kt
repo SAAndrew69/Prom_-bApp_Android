@@ -1,11 +1,5 @@
 package tech.gelab.cardiograph.ui.dialog.dialognavprovider
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -16,7 +10,6 @@ import tech.gelab.cardiograph.core.ui.navigation.ComposableFeatureEntry
 import tech.gelab.cardiograph.core.ui.navigation.NavigationRoute
 import tech.gelab.cardiograph.ui.dialog.CardioAppDialog
 import tech.gelab.cardiograph.ui.dialog.R
-import tech.gelab.cardiograph.ui.ktx.element.CardioAppTextButton
 import javax.inject.Inject
 
 private const val dialogTitleArgName = "title"

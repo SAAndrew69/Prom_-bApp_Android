@@ -20,7 +20,7 @@ fun BluetoothLeScannerCompat.scan(
     return callbackFlow {
         val scanCallback = object : ScanCallback() {
             override fun onScanResult(callbackType: Int, scanResult: ScanResult) {
-                Timber.d("onScanResult: $scanResult")
+//                Timber.d("onScanResult: $scanResult")
                 trySend(scanResult).onFailure { exc ->
                     Timber.e(exc, "Scan result failed")
                 }

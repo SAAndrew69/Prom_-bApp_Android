@@ -1,6 +1,6 @@
 plugins {
-    id("gelab.cardiograph.android-lib")
-    kotlin("kapt")
+    id("cardiograph.android-lib")
+    id("cardiograph.hilt")
 }
 
 android {
@@ -13,8 +13,9 @@ dependencies {
 
     implementation(libs.appcompat)
 
-    implementation(libs.hilt)
-    kapt(libs.hilt.compiler)
+    implementation(libs.ble)
+    implementation(libs.ble.scan)
+    implementation(libs.ble.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

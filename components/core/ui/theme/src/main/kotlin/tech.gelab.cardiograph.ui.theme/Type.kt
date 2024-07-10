@@ -74,32 +74,34 @@ val Typography = Typography(
     bodyLarge = TextStyle(
         fontFamily = interFontFamily,
         fontWeight = FontWeight.Normal,
-        lineHeight = TextUnit(24f, TextUnitType.Sp),
+        lineHeight = 24.sp,
         fontSize = 16.sp
     ),
+    // Labels
     labelSmall = TextStyle(
         fontFamily = interFontFamily,
         fontWeight = FontWeight.Medium,
-        lineHeight = TextUnit(20f, TextUnitType.Sp),
+        lineHeight = 20.sp,
         fontSize = 12.sp
     ),
     labelMedium = TextStyle(
         fontFamily = interFontFamily,
         fontWeight = FontWeight.Medium,
-        lineHeight = TextUnit(20f, TextUnitType.Sp),
+        lineHeight = 20.sp,
         fontSize = 14.sp
     ),
     labelLarge = TextStyle(
         fontFamily = interFontFamily,
         fontWeight = FontWeight.Medium,
-        lineHeight = TextUnit(24f, TextUnitType.Sp),
+        lineHeight = 24.sp,
         fontSize = 16.sp
     ),
+    // Titles
     titleLarge = TextStyle(
         fontFamily = interFontFamily,
         fontWeight = FontWeight.Medium,
-        lineHeight = TextUnit(24f, TextUnitType.Sp),
-        fontSize = 24.sp
+        lineHeight = 24.sp,
+        fontSize = 20.sp
     ),
 //    TODO
 //    headlineSmall = TextStyle(
@@ -111,14 +113,14 @@ val Typography = Typography(
     headlineSmall = TextStyle(
         fontFamily = interFontFamily,
         fontWeight =  FontWeight.Medium,
-        lineHeight = TextUnit(24f, TextUnitType.Sp),
+        lineHeight = 24.sp,
         fontSize = 20.sp
     ),
     headlineMedium = TextStyle(
         fontFamily = interFontFamily,
         fontWeight = FontWeight.SemiBold,
-        lineHeight = TextUnit(24f, TextUnitType.Sp),
-        fontSize = 20.sp
+        lineHeight = 24.sp,
+        fontSize = 24.sp
     ),
     headlineLarge = TextStyle(
         fontFamily = interFontFamily,

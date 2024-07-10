@@ -1,5 +1,7 @@
 plugins {
-    id("gelab.cardiograph.android-lib")
+    id("cardiograph.android-lib")
+    id("cardiograph.hilt")
+    id("cardiograph.protobuf")
 }
 
 android {
@@ -7,8 +9,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
-    implementation(libs.datastore.preferences)
-
+    implementation(libs.datastore)
 }

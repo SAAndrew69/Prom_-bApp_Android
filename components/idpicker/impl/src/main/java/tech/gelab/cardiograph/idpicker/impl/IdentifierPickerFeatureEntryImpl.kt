@@ -9,14 +9,13 @@ import tech.gelab.cardiograph.core.ui.navigation.LocalNavHostProvider
 import tech.gelab.cardiograph.idpicker.api.IdentifierPickerFeatureEntry
 import tech.gelab.cardiograph.idpicker.impl.presentation.compose.IdentifierPickerScreen
 import tech.gelab.cardiograph.idpicker.impl.presentation.viewmodel.IdentifierPickerViewModel
-import tech.gelab.cardiograph.measurement.api.MeasurementFeatureEntry
 import tech.gelab.cardiograph.measurement.api.ProgressNavigationFeatureEntry
-import tech.gelab.cardiograph.scanner.api.ScannerFeatureEntry
+import tech.gelab.cardiograph.pairing.api.PairingFeatureEntry
 import javax.inject.Inject
 
 class IdentifierPickerFeatureEntryImpl @Inject constructor(
     private val progressNavigationFeatureEntry: ProgressNavigationFeatureEntry,
-    private val scannerFeatureEntry: ScannerFeatureEntry
+    private val pairingFeatureEntry: PairingFeatureEntry
 ) : IdentifierPickerFeatureEntry, FeatureEventHandler<IdentifierFeatureEvent> {
 
     private var navController: NavController? = null
@@ -37,7 +36,7 @@ class IdentifierPickerFeatureEntryImpl @Inject constructor(
     override fun obtainEvent(event: IdentifierFeatureEvent) {
         when (event) {
             IdentifierFeatureEvent.ConnectDevice -> navController?.navigate(
-                scannerFeatureEntry.getScannerRoute(
+                pairingFeatureEntry.getSearchRoute(
                     true
                 )
             )

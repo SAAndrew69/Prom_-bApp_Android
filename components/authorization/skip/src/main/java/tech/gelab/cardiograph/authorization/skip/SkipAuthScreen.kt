@@ -12,8 +12,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import tech.gelab.cardiograph.ui.ktx.element.CardioAppButton
-import tech.gelab.cardiograph.ui.ktx.element.CardioAppTextButton
+import tech.gelab.cardiograph.ui.ktx.element.CardioButton
+import tech.gelab.cardiograph.ui.ktx.element.CardioTextButton
 import tech.gelab.cardiograph.ui.ktx.element.RationaleImageView
 import tech.gelab.cardiograph.ui.theme.CardiographAppTheme
 import tech.gelab.cardiograph.ui.theme.spacing
@@ -61,12 +61,12 @@ fun SkipAuthView(modifier: Modifier = Modifier, onEvent: (SkipAuthEvent) -> Unit
 @Composable
 fun SkipAuthButtons(modifier: Modifier = Modifier, onEvent: (SkipAuthEvent) -> Unit) {
     Column(modifier) {
-        CardioAppButton(
+        CardioButton(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.label_skip_auth_get_back),
             onClick = { onEvent(SkipAuthEvent.GET_BACK) }
         )
-        CardioAppTextButton(
+        CardioTextButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(MaterialTheme.spacing.medium),

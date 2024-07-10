@@ -1,0 +1,14 @@
+syntax="proto3";
+
+option java_package = "tech.gelab.cardiograph.storage.pb";
+option java_multiple_files = true;
+
+enum SelectedBottomItem {
+  MEASUREMENT=0;
+  REPORTS=1;
+  PROFILE=2;
+}
+
+message Settings {
+  SelectedBottomItem selected_item = 1;
+}

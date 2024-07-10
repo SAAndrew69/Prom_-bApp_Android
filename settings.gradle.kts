@@ -27,39 +27,48 @@ include(":components:core:bluetooth")
 include(":components:core:storage")
 include(":components:core:network")
 include(":components:core:notification")
+include(":components:core:dialog")
 include(":components:core:util")
 
 include(":components:core:ui:navigation")
 include(":components:core:ui:topbar")
 include(":components:core:ui:cardiogram")
 include(":components:core:ui:theme")
+include(":components:core:ui:ktx")
+include(":components:core:ui:dialog")
+include(":components:core:ui:layout")
 
 include(":components:authorization:api")
 include(":components:authorization:impl")
+include(":components:authorization:login")
+include(":components:authorization:signup")
+include(":components:authorization:skip")
+include(":components:authorization:util")
 
-include(":components:scanner:api")
-include(":components:scanner:impl")
+include(":components:pairing:api")
+include(":components:pairing:impl")
 
 include(":components:bottombar:api")
 include(":components:bottombar:impl")
 
 include(":components:measurement:api")
 include(":components:measurement:impl")
+include(":components:measurement:progressnavigation")
 
-include(":components:profile:api")
-include(":components:deeplink:api")
-include(":components:core:ui:ktx")
-include(":components:bridge:api")
-include(":components:bridge:impl")
 include(":components:idpicker:api")
 include(":components:idpicker:impl")
-include(":components:profile:impl")
+
 include(":components:reports:api")
 include(":components:reports:impl")
-include(":components:measurement:progressnavigation")
-include(":components:authorization:login")
-include(":components:authorization:signup")
-include(":components:authorization:skip")
-include(":components:authorization:util")
-include(":components:core:ui:dialog")
-include(":components:core:dialog")
+
+include(":components:profile:api")
+include(":components:profile:impl")
+
+include(":components:bridge:api")
+include(":components:bridge:impl")
+
+include(":components:deeplink:api")
+
+
+
+

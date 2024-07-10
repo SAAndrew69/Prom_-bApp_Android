@@ -1,36 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="title_connectivity_internet">Нет подключения к интернету</string>
-    <string name="title_authorization">Авторизация</string>
     <string name="title_welcome">Добро пожаловать!</string>
 
-
-
-
-
     <string name="label_login">Войти в аккаунт</string>
-
-
-
-    <string name="label_skip_sign_up">Продолжить без регистрации</string>
+    <string name="label_register">Зарегистрироваться</string>
+    <string name="label_skip_auth">Продолжить без авторизации</string>
+    <string name="label_continue_without_network">Продолжить без подключения</string>
+    <string name="label_internet_settings">Настройки интернета</string>
 
     <string name="text_connectivity_internet_1">Подключитесь к интернету, чтобы получить доступ к следующим функциям:</string>
     <string name="text_connectivity_internet_2">Выбор ID сотрудника из списка</string>
     <string name="text_connectivity_internet_3">Получение готовых заключений по окончании измерения</string>
-    <string name="label_skip_question">Вы уверены, что хотите пропустить авторизацию?</string>
-
-    <string name="label_close">Закрыть</string>
-    <string name="label_continue_without_network">Продолжить без подключения</string>
-    <string name="label_internet_settings">Настройки интернета</string>
-
-    <string name="text_authorize">Пожалуйста, авторизуйтесь</string>
-    <string name="text_auth_error">Ошибка авторизации</string>
-
-
-
-    <string name="text_sign_up_success">Успешная регистрация</string>
-    <string name="label_error">Ошибка</string>
-    <string name="label_register">Зарегистрироваться</string>
-    <string name="label_skip_auth">Продолжить без авторизации</string>
-
 </resources>

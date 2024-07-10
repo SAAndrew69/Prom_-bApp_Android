@@ -3,37 +3,26 @@ package tech.gelab.cardiograph.authorization.signup
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
 import tech.gelab.cardiograph.authorization.api.SignUpFeatureEntry
 import tech.gelab.cardiograph.authorization.signup.presentation.SignUpScreen
 import tech.gelab.cardiograph.authorization.signup.presentation.SignUpViewModel
 import tech.gelab.cardiograph.core.ui.navigation.FeatureEventHandler
-import tech.gelab.cardiograph.core.ui.navigation.defaultEnterTransition
-import tech.gelab.cardiograph.core.ui.navigation.defaultExitTransition
-import tech.gelab.cardiograph.core.ui.navigation.defaultPopEnterTransition
-import tech.gelab.cardiograph.core.ui.navigation.defaultPopExitTransition
+import tech.gelab.cardiograph.core.ui.navigation.animatedComposable
 import tech.gelab.cardiograph.core.util.ResourceProvider
-import tech.gelab.cardiograph.scanner.api.ScannerFeatureEntry
+import tech.gelab.cardiograph.pairing.api.PairingFeatureEntry
 import tech.gelab.cardiograph.ui.dialog.dialognavprovider.TextDialogFeatureEntry
 import javax.inject.Inject
 
 class SignUpFeatureEntryImpl @Inject constructor(
-    private val scannerFeatureEntry: ScannerFeatureEntry,
+    private val pairingFeatureEntry: PairingFeatureEntry,
     private val textDialogFeatureEntry: TextDialogFeatureEntry,
     private val resourceProvider: ResourceProvider
-) :
-    SignUpFeatureEntry, FeatureEventHandler<SignUpFeatureEvent> {
+) : SignUpFeatureEntry, FeatureEventHandler<SignUpFeatureEvent> {
 
     private var navController: NavController? = null
 
     override fun NavGraphBuilder.composable(navController: NavController) {
-        composable(
-            route = ROUTE.name,
-            enterTransition = defaultEnterTransition,
-            exitTransition = defaultExitTransition,
-            popEnterTransition = defaultPopEnterTransition,
-            popExitTransition = defaultPopExitTransition
-        ) {
+        animatedComposable(route = ROUTE.name) {
             this@SignUpFeatureEntryImpl.navController = navController
             SignUpScreen(
                 viewModel = hiltViewModel { factory: SignUpViewModel.Factory ->
@@ -46,7 +35,7 @@ class SignUpFeatureEntryImpl @Inject constructor(
     override fun obtainEvent(event: SignUpFeatureEvent) {
         when (event) {
             is SignUpFeatureEvent.SignUpSuccess -> navController?.navigate(
-                scannerFeatureEntry.getScannerRoute(
+                pairingFeatureEntry.getSearchRoute(
                     false
                 )
             )
@@ -59,7 +48,7 @@ class SignUpFeatureEntryImpl @Inject constructor(
             )
 
             SignUpFeatureEvent.Skip -> navController?.navigate(
-                scannerFeatureEntry.getScannerRoute(
+                pairingFeatureEntry.getSearchRoute(
                     true
                 )
             )

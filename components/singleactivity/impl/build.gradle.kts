@@ -1,6 +1,6 @@
 plugins {
-    id("gelab.cardiograph.android-compose")
-    kotlin("kapt")
+    id("cardiograph.android-compose")
+    id("cardiograph.hilt")
     alias(libs.plugins.hilt)
 }
 
@@ -21,7 +21,5 @@ dependencies {
     implementation(libs.compose.tooling)
     implementation(libs.compose.material3)
     implementation(libs.compose.navigation)
-
-    implementation(libs.hilt)
-    kapt(libs.hilt.compiler)
+    implementation(libs.compose.accompanist.bottomsheet)
 }

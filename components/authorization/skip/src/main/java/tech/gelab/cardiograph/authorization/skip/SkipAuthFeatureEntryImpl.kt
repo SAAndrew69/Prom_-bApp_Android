@@ -9,11 +9,11 @@ import tech.gelab.cardiograph.core.ui.navigation.defaultEnterTransition
 import tech.gelab.cardiograph.core.ui.navigation.defaultExitTransition
 import tech.gelab.cardiograph.core.ui.navigation.defaultPopEnterTransition
 import tech.gelab.cardiograph.core.ui.navigation.defaultPopExitTransition
-import tech.gelab.cardiograph.scanner.api.ScannerFeatureEntry
+import tech.gelab.cardiograph.pairing.api.PairingFeatureEntry
 import javax.inject.Inject
 
 class SkipAuthFeatureEntryImpl @Inject constructor(
-    private val scannerFeatureEntry: ScannerFeatureEntry
+    private val pairingFeatureEntry: PairingFeatureEntry
 ) :
     SkipAuthFeatureEntry {
     override fun NavGraphBuilder.composable(navController: NavController) {
@@ -27,11 +27,7 @@ class SkipAuthFeatureEntryImpl @Inject constructor(
             SkipAuthScreen {
                 when (it) {
                     SkipAuthEvent.GET_BACK -> navController.popBackStack()
-                    SkipAuthEvent.CONTINUE -> navController.navigate(
-                        scannerFeatureEntry.getScannerRoute(
-                            true
-                        )
-                    ) {
+                    SkipAuthEvent.CONTINUE -> navController.navigate(pairingFeatureEntry.start()) {
                         popUpTo(route = NavigationRoute.WELCOME.name)
                     }
                 }

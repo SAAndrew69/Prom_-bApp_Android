@@ -1,7 +1,6 @@
 package tech.gelab.cardiograph.authorization.login.presentation
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,14 +14,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.focus.onFocusEvent
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import tech.gelab.cardiograph.authorization.login.R
@@ -31,8 +25,8 @@ import tech.gelab.cardiograph.authorization.login.domain.LoginEvent
 import tech.gelab.cardiograph.authorization.login.domain.LoginScreenState
 import tech.gelab.cardiograph.authorization.util.EmailTextField
 import tech.gelab.cardiograph.authorization.util.PasswordTextField
-import tech.gelab.cardiograph.ui.ktx.element.CardioAppButton
-import tech.gelab.cardiograph.ui.ktx.element.CardioAppTextButton
+import tech.gelab.cardiograph.ui.ktx.element.CardioButton
+import tech.gelab.cardiograph.ui.ktx.element.CardioTextButton
 import tech.gelab.cardiograph.ui.theme.CardiographAppTheme
 import tech.gelab.cardiograph.ui.theme.spacing
 import tech.gelab.cardiograph.ui.topbar.CardioAppBar
@@ -131,7 +125,7 @@ fun LoginInputsView(
 @Composable
 fun ForgotPassword(modifier: Modifier = Modifier, onEvent: (LoginEvent) -> Unit) {
     Row(modifier) {
-        CardioAppTextButton(
+        CardioTextButton(
             text = stringResource(id = R.string.label_forgot_password),
             onClick = { onEvent(LoginEvent.ForgotPasswordClick) })
     }
@@ -140,11 +134,11 @@ fun ForgotPassword(modifier: Modifier = Modifier, onEvent: (LoginEvent) -> Unit)
 @Composable
 fun LoginButtons(modifier: Modifier = Modifier, onEvent: (LoginEvent) -> Unit) {
     Column(modifier) {
-        CardioAppButton(
+        CardioButton(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(id = R.string.label_authorize),
             onClick = { onEvent(LoginEvent.LoginClick) })
-        CardioAppTextButton(
+        CardioTextButton(
             modifier = Modifier.fillMaxWidth().padding(top = MaterialTheme.spacing.medium),
             text = stringResource(id = R.string.label_skip_authorization),
             onClick = { onEvent(LoginEvent.SkipClick) }

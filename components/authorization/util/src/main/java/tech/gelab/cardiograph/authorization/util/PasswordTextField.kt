@@ -1,7 +1,6 @@
 package tech.gelab.cardiograph.authorization.util
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActionScope
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -14,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import tech.gelab.cardiograph.ui.ktx.element.CardioAppOutlinedTextField
+import tech.gelab.cardiograph.ui.ktx.element.CardioOutlinedTextField
 
 @Composable
 fun PasswordTextField(
@@ -29,7 +28,7 @@ fun PasswordTextField(
     onDone: KeyboardActionScope.() -> Unit,
     errorMessage: String? = null,
 ) {
-    CardioAppOutlinedTextField(
+    CardioOutlinedTextField(
         modifier = modifier,
         value = password,
         onValueChange = updateInput,

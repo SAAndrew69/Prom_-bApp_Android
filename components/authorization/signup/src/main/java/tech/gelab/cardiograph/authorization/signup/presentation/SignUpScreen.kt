@@ -23,20 +23,19 @@ import tech.gelab.cardiograph.authorization.signup.domain.SignUpScreenEvent
 import tech.gelab.cardiograph.authorization.signup.domain.SignUpScreenState
 import tech.gelab.cardiograph.authorization.util.EmailTextField
 import tech.gelab.cardiograph.authorization.util.PasswordTextField
-import tech.gelab.cardiograph.ui.ktx.element.CardioAppButton
-import tech.gelab.cardiograph.ui.ktx.element.CardioAppTextButton
+import tech.gelab.cardiograph.ui.ktx.element.CardioButton
+import tech.gelab.cardiograph.ui.ktx.element.CardioTextButton
 import tech.gelab.cardiograph.ui.theme.CardiographAppTheme
 import tech.gelab.cardiograph.ui.theme.spacing
 import tech.gelab.cardiograph.ui.topbar.CardioAppBar
 import tech.gelab.cardiograph.ui.topbar.TopBarState
 
 @Composable
-fun SignUpScreen(viewModel: SignUpViewModel = hiltViewModel()) {
+fun SignUpScreen(viewModel: SignUpViewModel) {
     val viewState by viewModel.viewStates().collectAsState()
     SignUpView(
         modifier = Modifier
-            .fillMaxSize()
-            .imePadding(),
+            .fillMaxSize(),
         viewState = viewState,
         onEvent = viewModel::obtainEvent
     )
@@ -160,13 +159,13 @@ fun SignUpButtons(
     onEvent: (SignUpScreenEvent) -> Unit
 ) {
     Column(modifier) {
-        CardioAppButton(
+        CardioButton(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.label_register),
             enabled = !viewState.signingUp,
             onClick = { onEvent(SignUpScreenEvent.RegisterClick) }
         )
-        CardioAppTextButton(
+        CardioTextButton(
             modifier = Modifier.fillMaxWidth().padding(vertical = MaterialTheme.spacing.medium),
             text = stringResource(id = R.string.label_skip_registration),
             onClick = { onEvent(SignUpScreenEvent.SkipClick) })

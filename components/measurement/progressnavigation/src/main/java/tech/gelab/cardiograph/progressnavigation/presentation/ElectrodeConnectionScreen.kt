@@ -2,26 +2,21 @@ package tech.gelab.cardiograph.progressnavigation.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import tech.gelab.cardiograph.measurement.progressnavigation.R
-import tech.gelab.cardiograph.ui.ktx.element.CardioAppButton
+import tech.gelab.cardiograph.ui.ktx.element.CardioButton
 import tech.gelab.cardiograph.ui.theme.CardiographAppTheme
 import tech.gelab.cardiograph.ui.theme.spacing
 
@@ -57,7 +52,7 @@ fun ElectrodeConnectionView(modifier: Modifier = Modifier, onNextClick: () -> Un
             painter = painterResource(id = R.drawable.image_electrode_connection),
             contentDescription = null
         )
-        CardioAppButton(
+        CardioButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter),

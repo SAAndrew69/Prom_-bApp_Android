@@ -9,12 +9,18 @@ kotlin-immutable-collections = "0.3.5" # https://github.com/Kotlin/kotlinx.colle
 
 compose-ui = "1.6.8" # https://developer.android.com/jetpack/androidx/releases/compose#versions
 compose-compiler = "1.5.4" # https://developer.android.com/jetpack/androidx/releases/compose#versions
-compose-accompanist = "0.32.0" # https://github.com/google/accompanist/releases
+
+# TODO remove after compose material 1.7.0 release
+compose-accompanist = "0.34.0" # https://github.com/google/accompanist/releases
+
 compose-navigation = "2.7.7" # https://developer.android.com/jetpack/androidx/releases/navigation
 compose-material3 = "1.2.1" # https://mvnrepository.com/artifact/androidx.compose.material3/material3
 
 ble = "2.7.2" # https://github.com/NordicSemiconductor/Android-BLE-Library/releases
 ble-scan = "1.6.0" # https://github.com/NordicSemiconductor/Android-Scanner-Compat-Library/releases
+
+protobuf = "3.24.0" # https://github.com/protocolbuffers/protobuf/releases
+protobuf-gradle = "0.9.4" # https://github.com/google/protobuf-gradle-plugin/releases
 
 room = "2.6.1" # https://developer.android.com/jetpack/androidx/releases/room
 
@@ -41,30 +47,26 @@ kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose-ui" }
 compose-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-ui" }
 compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose-ui" }
-
-compose-android = { module = "androidx.compose.foundation:foundation-android", version.ref = "compose-ui" }
-compose-text = { module = "androidx.compose.foundation:foundation-text", version.ref = "compose-ui" }
 compose-google-fonts = { module = "androidx.compose.ui:ui-text-google-fonts", version.ref = "compose-ui" }
-
-compose-accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "compose-accompanist" }
-compose-accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "compose-accompanist" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose-material3" }
-compose-window-size = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "compose-material3"}
+compose-accompanist-bottomsheet = { group = "com.google.accompanist", name = "accompanist-navigation-material", version.ref = "compose-accompanist" }
 
 # Navigation
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "compose-navigation" }
+
+# Protobuf
+protobuf-kotlinlite = { module = "com.google.protobuf:protobuf-kotlin-lite", version.ref = "protobuf" }
+protobuf-protoc = { module = "com.google.protobuf:protoc", version.ref = "protobuf" }
+protobuf-gradle = { module = "com.google.protobuf:protobuf-gradle-plugin", version.ref = "protobuf-gradle" }
 
 # Storage
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-ksp = { module = "androidx.room:room-compiler", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 
+datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
 
 # Dependency Injection
-dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
-dagger-kapt = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
-
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger" }
 hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
@@ -92,3 +94,4 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-general" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger"}
+protobuf = { id = "com.google.protobuf", version.ref = "protobuf-gradle" }

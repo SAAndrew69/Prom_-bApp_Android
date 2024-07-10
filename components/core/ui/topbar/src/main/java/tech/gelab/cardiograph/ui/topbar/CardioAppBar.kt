@@ -54,7 +54,7 @@ fun CardioAppBar(
         }
         Text(
             modifier = Modifier.align(Alignment.Center),
-            style = MaterialTheme.typography.headlineMedium,
+            style = MaterialTheme.typography.titleLarge,
             text = stringResource(topBarState.titleId)
         )
     }

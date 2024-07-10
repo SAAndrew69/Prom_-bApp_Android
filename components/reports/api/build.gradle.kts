@@ -1,5 +1,5 @@
 plugins {
-    id("gelab.cardiograph.android-lib")
+    id("cardiograph.android-lib")
 }
 
 android {

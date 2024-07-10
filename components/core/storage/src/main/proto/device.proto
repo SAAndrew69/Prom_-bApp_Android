@@ -1,0 +1,10 @@
+syntax="proto3";
+
+option java_package = "tech.gelab.cardiograph.storage.pb";
+option java_multiple_files = true;
+
+message DeviceSettings {
+  string device_id = 1;
+  string device_name = 2;
+  bool device_connection_passed = 3;
+}

@@ -37,14 +37,4 @@ class AppModule {
         return NetworkManager(context)
     }
 
-    @Provides
-    @Singleton
-    fun provideServicesStateProvider(
-        @ApplicationContext context: Context,
-        permissionChecker: PermissionChecker,
-        @BluetoothPermissions permissions: Array<String>,
-    ): ServicesStateProvider {
-        return ServicesStateProvider(context, permissionChecker, permissions)
-    }
-
 }

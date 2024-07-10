@@ -26,8 +26,8 @@ import tech.gelab.cardiograph.idpicker.impl.domain.PickerAction
 import tech.gelab.cardiograph.idpicker.impl.domain.PickerEvent
 import tech.gelab.cardiograph.idpicker.impl.domain.PickerState
 import tech.gelab.cardiograph.idpicker.impl.presentation.viewmodel.IdentifierPickerViewModel
-import tech.gelab.cardiograph.ui.ktx.element.CardioAppButton
-import tech.gelab.cardiograph.ui.ktx.element.CardioAppOutlinedTextField
+import tech.gelab.cardiograph.ui.ktx.element.CardioButton
+import tech.gelab.cardiograph.ui.ktx.element.CardioOutlinedTextField
 import tech.gelab.cardiograph.ui.theme.CardiographAppTheme
 import tech.gelab.cardiograph.ui.theme.spacing
 
@@ -54,7 +54,7 @@ fun PickerView(
             )
             RadioView(viewState = viewState, viewAction = viewAction, onEvent = onEvent)
         }
-        CardioAppButton(
+        CardioButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
@@ -142,7 +142,7 @@ fun ListGroup(
                 text = stringResource(R.string.label_pick_from_list),
                 style = MaterialTheme.typography.labelMedium
             )
-            CardioAppOutlinedTextField(
+            CardioOutlinedTextField(
                 modifier = Modifier.padding(top = MaterialTheme.spacing.small),
                 value = "",
                 onValueChange = {},
@@ -170,7 +170,7 @@ fun ManualGroup(
                 text = stringResource(R.string.label_manual_input),
                 style = MaterialTheme.typography.labelMedium
             )
-            CardioAppOutlinedTextField(
+            CardioOutlinedTextField(
                 modifier = Modifier.padding(top = MaterialTheme.spacing.small),
                 value = viewState.userInput,
                 onValueChange = { onEvent(PickerEvent.ManualInputChange(it)) },

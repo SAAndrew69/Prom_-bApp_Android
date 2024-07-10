@@ -1,7 +1,6 @@
 package tech.gelab.cardiograph.ui.dialog
 
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,10 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.window.Dialog
-import tech.gelab.cardiograph.ui.ktx.element.CardioAppTextButton
+import tech.gelab.cardiograph.ui.ktx.element.CardioTextButton
 import tech.gelab.cardiograph.ui.ktx.element.letCompose
 import tech.gelab.cardiograph.ui.theme.spacing
 
@@ -64,7 +62,7 @@ fun CardioAppDialog(
         Text(
             modifier = Modifier.padding(MaterialTheme.spacing.small),
             text = titleIdNotNullable,
-            style = MaterialTheme.typography.headlineSmall,
+            style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center
         )
     },
@@ -83,7 +81,7 @@ fun CardioAppDialog(
                 .padding(horizontal = MaterialTheme.spacing.medium),
             horizontalArrangement = Arrangement.End
         ) {
-            CardioAppTextButton(
+            CardioTextButton(
                 text = buttonLabel,
                 onClick = onClickButton
             )

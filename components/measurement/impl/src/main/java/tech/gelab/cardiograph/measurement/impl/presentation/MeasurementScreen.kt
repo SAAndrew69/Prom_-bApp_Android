@@ -34,7 +34,7 @@ import tech.gelab.cardiograph.measurement.impl.domain.MeasurementAction
 import tech.gelab.cardiograph.measurement.impl.domain.MeasurementEvent
 import tech.gelab.cardiograph.measurement.impl.domain.MeasurementState
 import tech.gelab.cardiograph.measurement.impl.model.BluetoothQuality
-import tech.gelab.cardiograph.ui.ktx.element.CardioAppOutlinedButton
+import tech.gelab.cardiograph.ui.ktx.element.CardioOutlinedButton
 import tech.gelab.cardiograph.ui.theme.CardiographAppTheme
 import tech.gelab.cardiograph.ui.theme.spacing
 import tech.gelab.cardiograph.ui.topbar.CardioAppBar
@@ -113,7 +113,7 @@ fun MeasurementBottomSheet(
                 progress = viewState.progress,
                 timeString = viewState.timeString
             )
-            CardioAppOutlinedButton(
+            CardioOutlinedButton(
                 modifier = Modifier.fillMaxWidth().padding(top = MaterialTheme.spacing.large),
                 leadingIconRes = R.drawable.icon_start_again,
                 labelId = R.string.label_start_again,

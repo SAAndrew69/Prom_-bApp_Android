@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import tech.gelab.cardiograph.ui.ktx.element.CardioAppOutlinedTextField
+import tech.gelab.cardiograph.ui.ktx.element.CardioOutlinedTextField
 
 @Composable
 fun EmailTextField(
@@ -19,7 +19,7 @@ fun EmailTextField(
     hasErrors: Boolean,
     onNext: KeyboardActionScope.() -> Unit,
 ) {
-    CardioAppOutlinedTextField(
+    CardioOutlinedTextField(
         modifier = modifier.fillMaxWidth(),
         value = email,
         enabled = enabled,

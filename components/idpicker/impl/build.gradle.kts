@@ -1,6 +1,6 @@
 plugins {
-    id("gelab.cardiograph.android-compose")
-    kotlin("kapt")
+    id("cardiograph.android-compose")
+    id("cardiograph.hilt")
 }
 
 android {
@@ -10,7 +10,7 @@ android {
 dependencies {
     implementation(projects.components.idpicker.api)
     implementation(projects.components.bridge.api)
-    implementation(projects.components.scanner.api)
+    implementation(projects.components.pairing.api)
     implementation(projects.components.measurement.api)
 
     implementation(projects.components.core.ui.navigation)
@@ -24,6 +24,4 @@ dependencies {
     implementation(libs.compose.material3)
 
     implementation(libs.hilt.navigation.compose)
-    implementation(libs.hilt)
-    kapt(libs.hilt.compiler)
 }

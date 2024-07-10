@@ -48,6 +48,7 @@
             <option value="$PROJECT_DIR$/components/core/ui/cardiogram" />
             <option value="$PROJECT_DIR$/components/core/ui/dialog" />
             <option value="$PROJECT_DIR$/components/core/ui/ktx" />
+            <option value="$PROJECT_DIR$/components/core/ui/layout" />
             <option value="$PROJECT_DIR$/components/core/ui/navigation" />
             <option value="$PROJECT_DIR$/components/core/ui/theme" />
             <option value="$PROJECT_DIR$/components/core/ui/topbar" />
@@ -61,15 +62,15 @@
             <option value="$PROJECT_DIR$/components/measurement/api" />
             <option value="$PROJECT_DIR$/components/measurement/impl" />
             <option value="$PROJECT_DIR$/components/measurement/progressnavigation" />
+            <option value="$PROJECT_DIR$/components/pairing" />
+            <option value="$PROJECT_DIR$/components/pairing/api" />
+            <option value="$PROJECT_DIR$/components/pairing/impl" />
             <option value="$PROJECT_DIR$/components/profile" />
             <option value="$PROJECT_DIR$/components/profile/api" />
             <option value="$PROJECT_DIR$/components/profile/impl" />
             <option value="$PROJECT_DIR$/components/reports" />
             <option value="$PROJECT_DIR$/components/reports/api" />
             <option value="$PROJECT_DIR$/components/reports/impl" />
-            <option value="$PROJECT_DIR$/components/scanner" />
-            <option value="$PROJECT_DIR$/components/scanner/api" />
-            <option value="$PROJECT_DIR$/components/scanner/impl" />
             <option value="$PROJECT_DIR$/components/singleactivity" />
             <option value="$PROJECT_DIR$/components/singleactivity/api" />
             <option value="$PROJECT_DIR$/components/singleactivity/impl" />
