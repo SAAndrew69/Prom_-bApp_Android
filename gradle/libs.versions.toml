@@ -1,8 +1,9 @@
 [versions]
-android-gradle = "8.2.0" # https://developer.android.com/studio/releases/gradle-plugin
-kotlin-general = "1.9.20" # https://kotlinlang.org/docs/releases.html#release-details
+android-gradle = "8.2.2" # https://developer.android.com/studio/releases/gradle-plugin
+kotlin-general = "1.9.22" # https://kotlinlang.org/docs/releases.html#release-details
+sentry = "4.9.0" # https://github.com/getsentry/sentry-android-gradle-plugin/releases
 
-agp = "8.2.0" # https://maven.google.com/web/index.html?q=android.app#com.android.application:com.android.application.gradle.plugin
+agp = "8.5.1" # https://maven.google.com/web/index.html?q=android.app#com.android.application:com.android.application.gradle.plugin
 
 appcompat = "1.7.0" # https://developer.android.com/jetpack/androidx/releases/appcompat
 kotlin-immutable-collections = "0.3.5" # https://github.com/Kotlin/kotlinx.collections.immutable/releases
@@ -34,8 +35,8 @@ timber = "5.0.1"
 # Testing
 junit = "4.13.2"
 androidx-test-ext-junit = "1.1.5"
-espresso-core = "3.5.1"
-androidx-test-ext-junit115 = "1.1.5"
+espresso-core = "3.6.1"
+androidx-test-ext-junit115 = "1.2.1"
 material = "1.12.0"
 
 [libraries]
@@ -95,3 +96,4 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-general" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger"}
 protobuf = { id = "com.google.protobuf", version.ref = "protobuf-gradle" }
+sentry = { id = "io.sentry.android.gradle", version.ref = "sentry" }

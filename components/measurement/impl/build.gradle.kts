@@ -25,4 +25,5 @@ dependencies {
     implementation(libs.compose.navigation)
 
     implementation(libs.hilt.navigation.compose)
+    implementation(libs.compose.accompanist.bottomsheet)
 }

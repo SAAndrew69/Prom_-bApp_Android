@@ -1,4 +1,4 @@
-package tech.gelab.cardiograph.bottombar.impl.presentation.compose
+package tech.gelab.cardiograph.bottombar.impl.presentation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -14,7 +14,6 @@ import tech.gelab.cardiograph.bottombar.impl.bottombar.CardioBottomBar
 import tech.gelab.cardiograph.bottombar.impl.domain.BottomNavigationAction
 import tech.gelab.cardiograph.bottombar.impl.domain.BottomNavigationEvent
 import tech.gelab.cardiograph.bottombar.impl.domain.BottomNavigationState
-import tech.gelab.cardiograph.bottombar.impl.presentation.viewmodel.BottomNavigationViewModel
 import tech.gelab.cardiograph.core.ui.navigation.AggregateFeatureEntry
 import tech.gelab.cardiograph.core.ui.navigation.ComposableFeatureEntry
 import tech.gelab.cardiograph.core.ui.navigation.DestinationChangedEffect

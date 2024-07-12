@@ -16,6 +16,7 @@ dependencies {
 
     implementation(projects.components.core.network)
     implementation(projects.components.core.notification)
+    implementation(projects.components.core.storage)
     implementation(projects.components.core.util)
 
     implementation(projects.components.core.ui.navigation)
@@ -27,6 +28,7 @@ dependencies {
 
     implementation(libs.appcompat)
     implementation(libs.timber)
+    implementation(libs.datastore)
     implementation(libs.kotlin.immutable.collections)
 
     implementation(libs.compose.ui)

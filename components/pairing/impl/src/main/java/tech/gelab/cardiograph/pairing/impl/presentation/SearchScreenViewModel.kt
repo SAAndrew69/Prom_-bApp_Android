@@ -1,10 +1,6 @@
 package tech.gelab.cardiograph.pairing.impl.presentation
 
-import androidx.datastore.core.DataStore
 import androidx.lifecycle.viewModelScope
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
@@ -31,19 +27,19 @@ import tech.gelab.cardiograph.pairing.impl.domain.SearchState
 import tech.gelab.cardiograph.pairing.impl.domain.usecase.DeviceClickUseCase
 import tech.gelab.cardiograph.pairing.impl.domain.usecase.GetInitialStateUseCase
 import tech.gelab.cardiograph.pairing.impl.domain.usecase.PermissionsRequestResultHandler
-import tech.gelab.cardiograph.storage.pb.DeviceSettings
 import tech.gelab.cardiograph.ui.ktx.viewmodel.BaseViewModel
 import timber.log.Timber
+import javax.inject.Inject
 
-@HiltViewModel(assistedFactory = SearchScreenViewModel.Factory::class)
-class SearchScreenViewModel @AssistedInject constructor(
+@HiltViewModel
+class SearchScreenViewModel @Inject constructor(
     getInitialStateUseCase: GetInitialStateUseCase,
-    @Assisted private val pairingFeatureEventHandler: FeatureEventHandler<PairingFeatureEvent>,
-    private val deviceSettingsDataStore: DataStore<DeviceSettings>,
+    private val pairingFeatureEventHandler: FeatureEventHandler<PairingFeatureEvent>,
     private val servicesStateProvider: ServicesStateProvider,
     private val permissionsRequestResultHandler: PermissionsRequestResultHandler,
     private val resourceProvider: ResourceProvider,
-    private val cardiographApi: CardiographApi
+    private val cardiographApi: CardiographApi,
+    private val deviceClickUseCase: DeviceClickUseCase
 ) : BaseViewModel<SearchState, SearchAction, SearchEvent>(getInitialStateUseCase.invoke()) {
 
     init {
@@ -119,7 +115,7 @@ class SearchScreenViewModel @AssistedInject constructor(
 
     private fun onDeviceClick(event: SearchEvent.DeviceClick) {
         viewModelScope.launch {
-            DeviceClickUseCase(pairingFeatureEventHandler, deviceSettingsDataStore).invoke(event.device)
+            deviceClickUseCase.invoke(event.device)
         }
     }
 
@@ -140,10 +136,5 @@ class SearchScreenViewModel @AssistedInject constructor(
             deniedPermissions = event.permissions.filter { !it.value }.keys.toTypedArray(),
             shouldOpenSettings = shouldOpenSettings
         )
-    }
-
-    @AssistedFactory
-    interface Factory {
-        fun create(pairingFeatureEventHandler: FeatureEventHandler<PairingFeatureEvent>) : SearchScreenViewModel
     }
 }

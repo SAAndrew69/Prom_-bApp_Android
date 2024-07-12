@@ -8,4 +8,7 @@
     <string name="text_placeholder_manual_input">Введите ID сотрудника</string>
     <string name="label_manual_input">Ввод вручную</string>
     <string name="label_next">Далее</string>
+    <string name="text_disconnected1">Вы не подключены к устройству.</string>
+    <string name="text_disconnected2">Подключитесь, чтобы получить доступ к функциям измерения</string>
+    <string name="label_connect_device">Подключиться к устройству</string>
 </resources>

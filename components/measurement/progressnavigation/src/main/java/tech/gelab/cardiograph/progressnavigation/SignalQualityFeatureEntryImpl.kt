@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import tech.gelab.cardiograph.core.ui.navigation.LocalNavHostProvider
 import tech.gelab.cardiograph.core.ui.navigation.NavigationRoute
+import tech.gelab.cardiograph.core.ui.navigation.animatedComposable
 import tech.gelab.cardiograph.core.ui.navigation.defaultEnterTransition
 import tech.gelab.cardiograph.core.ui.navigation.defaultExitTransition
 import tech.gelab.cardiograph.core.ui.navigation.defaultPopExitTransition
@@ -22,9 +23,9 @@ class SignalQualityFeatureEntryImpl @Inject constructor(
 
     private fun onNextClick() {
         globalNavController?.navigate(measurementFeatureEntry.start()) {
-            popUpTo(route = NavigationRoute.BOTTOM_NAVIGATION.name) {
-                inclusive = true
-            }
+//            popUpTo(route = NavigationRoute.BOTTOM_NAVIGATION.name) {
+//                inclusive = true
+//            }
 //            globalNavController?.graph?.findStartDestination()?.route?.let {
 //                popUpTo(route = it) {
 //                    inclusive = true
@@ -34,13 +35,7 @@ class SignalQualityFeatureEntryImpl @Inject constructor(
     }
 
     override fun NavGraphBuilder.composable(navController: NavController) {
-        composable(
-            route = ROUTE.name,
-            enterTransition = defaultEnterTransition,
-            exitTransition = defaultExitTransition,
-            popExitTransition = defaultPopExitTransition,
-            popEnterTransition = defaultEnterTransition
-        ) {
+        animatedComposable(route = ROUTE.name) {
             globalNavController = LocalNavHostProvider.current
             SignalQualityScreen(onNextClick = this@SignalQualityFeatureEntryImpl::onNextClick)
         }

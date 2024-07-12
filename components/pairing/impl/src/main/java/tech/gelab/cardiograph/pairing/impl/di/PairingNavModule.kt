@@ -20,6 +20,9 @@ interface PairingNavModule {
     fun bindPairingFeatureEntry(pairingFeatureEntryImpl: PairingFeatureEntryImpl): PairingFeatureEntry
 
     @Binds
+    fun bindPairingFeatureEventHandler(pairingFeatureEntryImpl: PairingFeatureEntryImpl): FeatureEventHandler<PairingFeatureEvent>
+
+    @Binds
     @IntoSet
     fun bindAggregateFeatureEntry(pairingFeatureEntry: PairingFeatureEntry): AggregateFeatureEntry
 

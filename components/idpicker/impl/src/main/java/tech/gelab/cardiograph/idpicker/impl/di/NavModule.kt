@@ -6,7 +6,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
 import tech.gelab.cardiograph.core.ui.navigation.ComposableFeatureEntry
+import tech.gelab.cardiograph.core.ui.navigation.FeatureEventHandler
 import tech.gelab.cardiograph.idpicker.api.IdentifierPickerFeatureEntry
+import tech.gelab.cardiograph.idpicker.impl.IdentifierFeatureEvent
 import tech.gelab.cardiograph.idpicker.impl.IdentifierPickerFeatureEntryImpl
 
 @Module
@@ -15,6 +17,9 @@ interface NavModule {
 
     @Binds
     fun bindIdentifierPickerFeatureEntry(identifierPickerFeatureEntryImpl: IdentifierPickerFeatureEntryImpl) : IdentifierPickerFeatureEntry
+
+    @Binds
+    fun bindIdentifierFeatureEventHandler(identifierPickerFeatureEntryImpl: IdentifierPickerFeatureEntryImpl) : FeatureEventHandler<IdentifierFeatureEvent>
 
     @Binds
     @IntoSet

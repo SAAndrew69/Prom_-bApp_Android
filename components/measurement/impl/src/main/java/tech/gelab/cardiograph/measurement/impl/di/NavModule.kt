@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
+import tech.gelab.cardiograph.core.ui.navigation.BottomSheetFeatureEntry
 import tech.gelab.cardiograph.core.ui.navigation.ComposableFeatureEntry
 import tech.gelab.cardiograph.measurement.api.MeasurementFeatureEntry
 import tech.gelab.cardiograph.measurement.impl.MeasurementFeatureEntryImpl
@@ -18,6 +19,6 @@ interface NavModule {
 
     @Binds
     @IntoSet
-    fun bindComposableFeatureEntry(measurementFeatureEntry: MeasurementFeatureEntry): ComposableFeatureEntry
+    fun bindBottomSheetFeatureEntry(measurementFeatureEntry: MeasurementFeatureEntry): BottomSheetFeatureEntry
 
 }

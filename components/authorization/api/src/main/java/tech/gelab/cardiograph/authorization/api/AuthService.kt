@@ -5,6 +5,11 @@ import kotlinx.coroutines.flow.Flow
 interface AuthService {
 
     /**
+     * Checks if authentication was already completed
+     */
+    fun shouldOpenAuthScreen(): Boolean
+
+    /**
      * Tries to get authorization token with given email and password
      * @return Result with token or Result with exception in case of failure
      */

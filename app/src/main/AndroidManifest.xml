@@ -13,12 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cardiograph"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="io.sentry.dsn"
+            android:value="https://395ab18954411dbe055b63f2216e5161@o4507589385453568.ingest.de.sentry.io/4507589387092048" />
+
         <activity
             android:name="${startActivity}"
             android:exported="true"
             android:launchMode="singleTask"
-            android:theme="@style/Theme.Cardiograph"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.Cardiograph"
             android:windowSoftInputMode="adjustPan">
 
             <intent-filter>

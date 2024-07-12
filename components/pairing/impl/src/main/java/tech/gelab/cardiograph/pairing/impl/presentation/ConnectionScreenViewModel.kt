@@ -15,12 +15,15 @@ import tech.gelab.cardiograph.pairing.impl.domain.ConnectionAction
 import tech.gelab.cardiograph.pairing.impl.domain.ConnectionEvent
 import tech.gelab.cardiograph.pairing.impl.domain.ConnectionState
 import tech.gelab.cardiograph.storage.pb.DeviceSettings
+import tech.gelab.cardiograph.storage.pb.copy
+import tech.gelab.cardiograph.storage.pb.deviceSettings
 import tech.gelab.cardiograph.ui.ktx.viewmodel.BaseViewModel
 import timber.log.Timber
+import javax.inject.Inject
 
-@HiltViewModel(assistedFactory = ConnectionScreenViewModel.Factory::class)
-class ConnectionScreenViewModel @AssistedInject constructor(
-    @Assisted private val pairingFeatureEventHandler: FeatureEventHandler<PairingFeatureEvent>,
+@HiltViewModel
+class ConnectionScreenViewModel @Inject constructor(
+    private val pairingFeatureEventHandler: FeatureEventHandler<PairingFeatureEvent>,
     private val deviceSettingsDataStore: DataStore<DeviceSettings>,
     private val cardiographApi: CardiographApi
 ) : BaseViewModel<ConnectionState, ConnectionAction, ConnectionEvent>(ConnectionState()) {
@@ -30,6 +33,13 @@ class ConnectionScreenViewModel @AssistedInject constructor(
             val deviceSettings = deviceSettingsDataStore.data.first()
             try {
                 cardiographApi.establishConnection(deviceSettings.deviceId)
+                deviceSettingsDataStore.updateData { data ->
+                    deviceSettings {
+                        deviceId = data.deviceId
+                        deviceName = data.deviceName
+                        deviceConnectionPassed = true
+                    }
+                }
                 pairingFeatureEventHandler.obtainEvent(PairingFeatureEvent.NavigateMainScreen)
 
             } catch (e: Exception) {
@@ -41,10 +51,5 @@ class ConnectionScreenViewModel @AssistedInject constructor(
 
     override fun obtainEvent(viewEvent: ConnectionEvent) {
 
-    }
-
-    @AssistedFactory
-    interface Factory {
-        fun create(pairingFeatureEventHandler: FeatureEventHandler<PairingFeatureEvent>): ConnectionScreenViewModel
     }
 }

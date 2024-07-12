@@ -16,17 +16,16 @@ import tech.gelab.cardiograph.pairing.api.PairingFeatureEntry
 import tech.gelab.cardiograph.pairing.impl.presentation.ConnectionScreen
 import tech.gelab.cardiograph.pairing.impl.presentation.ConnectionScreenViewModel
 import tech.gelab.cardiograph.pairing.impl.presentation.SearchScreen
-import tech.gelab.cardiograph.pairing.impl.presentation.SearchScreenViewModel
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class PairingFeatureEntryImpl @Inject constructor(
     private val pairingApi: PairingApi,
     private val bottomNavigationFeatureEntry: BottomNavigationFeatureEntry,
 ) : PairingFeatureEntry, FeatureEventHandler<PairingFeatureEvent> {
 
     companion object {
-        const val DEVICE_ADDRESS = "address"
-        const val DEVICE_NAME = "name"
         const val GO_BACK_AVAILABLE = "go_back_available"
 
         val scannerRoute = "${NavigationRoute.PAIRING}search?$GO_BACK_AVAILABLE={$GO_BACK_AVAILABLE}"
@@ -63,19 +62,11 @@ class PairingFeatureEntryImpl @Inject constructor(
             animatedComposable(route = scannerRoute, arguments = arguments) { backStackEntry ->
                 this@PairingFeatureEntryImpl.navController = navController
                 val goBackAvailable = backStackEntry.arguments?.getBoolean(GO_BACK_AVAILABLE)
-                SearchScreen(goBackAvailable = goBackAvailable!!, viewModel = hiltViewModel(
-                    creationCallback = { factory: SearchScreenViewModel.Factory ->
-                        factory.create(this@PairingFeatureEntryImpl)
-                    }
-                ))
+                SearchScreen(goBackAvailable = goBackAvailable!!)
             }
             animatedComposable(route = connectionRoute) {
                 this@PairingFeatureEntryImpl.navController = navController
-                ConnectionScreen(viewModel = hiltViewModel(
-                    creationCallback = { factory: ConnectionScreenViewModel.Factory ->
-                        factory.create(this@PairingFeatureEntryImpl)
-                    }
-                ))
+                ConnectionScreen()
             }
         }
     }

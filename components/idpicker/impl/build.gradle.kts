@@ -13,11 +13,14 @@ dependencies {
     implementation(projects.components.pairing.api)
     implementation(projects.components.measurement.api)
 
+    implementation(projects.components.core.storage)
+
     implementation(projects.components.core.ui.navigation)
     implementation(projects.components.core.ui.theme)
     implementation(projects.components.core.ui.ktx)
 
     implementation(libs.appcompat)
+    implementation(libs.datastore)
 
     implementation(libs.compose.ui)
     implementation(libs.compose.tooling)

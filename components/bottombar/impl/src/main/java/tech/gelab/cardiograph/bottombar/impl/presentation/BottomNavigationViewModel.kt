@@ -1,19 +1,26 @@
-package tech.gelab.cardiograph.bottombar.impl.presentation.viewmodel
+package tech.gelab.cardiograph.bottombar.impl.presentation
 
-import androidx.navigation.NavDestination
+import androidx.datastore.core.DataStore
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import tech.gelab.cardiograph.bottombar.impl.R
 import tech.gelab.cardiograph.bottombar.impl.domain.BottomNavigationAction
 import tech.gelab.cardiograph.bottombar.impl.domain.BottomNavigationEvent
 import tech.gelab.cardiograph.bottombar.impl.domain.BottomNavigationState
 import tech.gelab.cardiograph.core.ui.navigation.NavigationRoute
+import tech.gelab.cardiograph.storage.pb.SelectedBottomItem
+import tech.gelab.cardiograph.storage.pb.Settings
+import tech.gelab.cardiograph.storage.pb.copy
 import tech.gelab.cardiograph.ui.ktx.viewmodel.BaseViewModel
 import tech.gelab.cardiograph.ui.topbar.TopBarState
 import timber.log.Timber
+import javax.inject.Inject
 
-class BottomNavigationViewModel :
-    BaseViewModel<BottomNavigationState, BottomNavigationAction, BottomNavigationEvent>(
-        BottomNavigationState()
-    ) {
+@HiltViewModel
+class BottomNavigationViewModel @Inject constructor(
+    private val settingsDatastore: DataStore<Settings>
+) : BaseViewModel<BottomNavigationState, BottomNavigationAction, BottomNavigationEvent>(BottomNavigationState()) {
 
     override fun obtainEvent(viewEvent: BottomNavigationEvent) {
         when (viewEvent) {
@@ -22,9 +29,15 @@ class BottomNavigationViewModel :
         }
     }
 
-    private fun getViewState(destination: NavDestination): BottomNavigationState {
+    private fun onNavigationItemClick(viewEvent: BottomNavigationEvent.NavigationItemClick) {
+        Timber.d("onNavigationItemClick: index = ${viewEvent.navigationItem}")
+        viewAction = BottomNavigationAction.ChangeDestination(viewEvent.navigationItem.route.name)
+    }
+
+    private fun onNavDestinationChange(viewEvent: BottomNavigationEvent.GraphDestinationChanged) {
+        val destination = viewEvent.navigationEvent.destination
         val titleId: Int
-        var selectedIndex: Int? =null
+        var selectedIndex: Int? = null
         if (destination.route?.contains(NavigationRoute.IDENTIFIER_PICKER.name) == true) {
             titleId = R.string.title_measure_preparation
             selectedIndex = 0
@@ -38,18 +51,17 @@ class BottomNavigationViewModel :
             titleId = R.string.title_default
         }
 
-        return viewState.copy(
+        if (selectedIndex != null) {
+            viewModelScope.launch {
+                settingsDatastore.updateData { data ->
+                    data.copy { selectedItem = SelectedBottomItem.entries[selectedIndex] }
+                }
+            }
+        }
+
+        viewState = viewState.copy(
             topBarState = TopBarState(titleId),
             selectedItemIndex = selectedIndex ?: viewState.selectedItemIndex
         )
-    }
-
-    private fun onNavigationItemClick(viewEvent: BottomNavigationEvent.NavigationItemClick) {
-        Timber.d("onNavigationItemClick: index = ${viewEvent.navigationItem}")
-        viewAction = BottomNavigationAction.ChangeDestination(viewEvent.navigationItem.route.name)
-    }
-
-    private fun onNavDestinationChange(viewEvent: BottomNavigationEvent.GraphDestinationChanged) {
-        viewState = getViewState(destination = viewEvent.navigationEvent.destination)
     }
 }

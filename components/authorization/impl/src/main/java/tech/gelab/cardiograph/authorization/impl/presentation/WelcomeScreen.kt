@@ -21,6 +21,7 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import tech.gelab.cardiograph.authorization.impl.R
 import tech.gelab.cardiograph.authorization.impl.domain.WelcomeScreenEvent
 import tech.gelab.cardiograph.authorization.impl.domain.WelcomeScreenState
@@ -31,7 +32,7 @@ import tech.gelab.cardiograph.ui.theme.spacing
 
 
 @Composable
-fun WelcomeScreen(viewModel: WelcomeScreenViewModel) {
+fun WelcomeScreen(viewModel: WelcomeScreenViewModel = hiltViewModel()) {
     val viewState by viewModel.viewStates().collectAsState()
 
     when (viewState) {
@@ -103,7 +104,9 @@ fun WelcomeButtons(modifier: Modifier = Modifier, onEvent: (WelcomeScreenEvent) 
             text = stringResource(id = R.string.label_register),
             onClick = { onEvent(WelcomeScreenEvent.REGISTER) })
         CardioTextButton(
-            modifier = Modifier.fillMaxWidth().padding(vertical = MaterialTheme.spacing.medium),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = MaterialTheme.spacing.medium),
             text = stringResource(id = R.string.label_skip_auth),
             onClick = { onEvent(WelcomeScreenEvent.SKIP_AUTH) }
         )

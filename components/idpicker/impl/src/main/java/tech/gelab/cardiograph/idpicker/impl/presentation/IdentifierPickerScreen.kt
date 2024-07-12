@@ -1,4 +1,4 @@
-package tech.gelab.cardiograph.idpicker.impl.presentation.compose
+package tech.gelab.cardiograph.idpicker.impl.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -25,7 +25,6 @@ import tech.gelab.cardiograph.idpicker.impl.R
 import tech.gelab.cardiograph.idpicker.impl.domain.PickerAction
 import tech.gelab.cardiograph.idpicker.impl.domain.PickerEvent
 import tech.gelab.cardiograph.idpicker.impl.domain.PickerState
-import tech.gelab.cardiograph.idpicker.impl.presentation.viewmodel.IdentifierPickerViewModel
 import tech.gelab.cardiograph.ui.ktx.element.CardioButton
 import tech.gelab.cardiograph.ui.ktx.element.CardioOutlinedTextField
 import tech.gelab.cardiograph.ui.theme.CardiographAppTheme
@@ -46,25 +45,49 @@ fun PickerView(
     viewAction: PickerAction?,
     onEvent: (PickerEvent) -> Unit
 ) {
-    Column(modifier, verticalArrangement = Arrangement.SpaceBetween) {
-        Column(Modifier.padding(MaterialTheme.spacing.small)) {
-            Text(
-                text = stringResource(R.string.text_picker_tip),
-                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold)
+    if (viewState.isDeviceConnected) {
+        Column(modifier, verticalArrangement = Arrangement.SpaceBetween) {
+            Column(Modifier.padding(MaterialTheme.spacing.small)) {
+                Text(
+                    text = stringResource(R.string.text_picker_tip),
+                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold)
+                )
+                RadioView(viewState = viewState, viewAction = viewAction, onEvent = onEvent)
+            }
+            CardioButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = MaterialTheme.spacing.small,
+                        vertical = MaterialTheme.spacing.medium
+                    ),
+                text = stringResource(R.string.label_next),
+                enabled = viewState.pickedGroupIndex != null,
+                onClick = { onEvent(PickerEvent.NextClick) }
             )
-            RadioView(viewState = viewState, viewAction = viewAction, onEvent = onEvent)
         }
-        CardioButton(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    horizontal = MaterialTheme.spacing.small,
-                    vertical = MaterialTheme.spacing.medium
-                ),
-            text = stringResource(R.string.label_next),
-            enabled = viewState.pickedGroupIndex != null,
-            onClick = { onEvent(PickerEvent.NextClick) }
-        )
+    } else {
+        Box(modifier) {
+            Column(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(MaterialTheme.spacing.small)
+                    .align(Alignment.Center)
+            ) {
+                Text(text = stringResource(R.string.text_disconnected1))
+                Text(text = stringResource(R.string.text_disconnected2))
+            }
+            CardioButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = MaterialTheme.spacing.small,
+                        vertical = MaterialTheme.spacing.medium
+                    )
+                    .align(Alignment.BottomCenter),
+                text = stringResource(R.string.label_connect_device),
+                onClick = { onEvent(PickerEvent.ConnectDeviceClick) })
+        }
     }
 }
 

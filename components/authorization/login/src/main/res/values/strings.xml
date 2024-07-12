@@ -10,4 +10,5 @@
     <string name="text_check_input">Проверьте введённые данные</string>
     <string name="text_auth_failure">Неверный логин или пароль. Проверьте корректность введенных данных</string>
     <string name="title_login_error">Ошибка авторизации</string>
+    <string name="text_auth_error">Ошибка авторизации</string>
 </resources>

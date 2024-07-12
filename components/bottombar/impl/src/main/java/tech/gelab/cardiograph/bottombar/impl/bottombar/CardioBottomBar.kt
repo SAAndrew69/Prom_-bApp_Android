@@ -75,27 +75,6 @@ fun CardioBottomBar(
             }
         }
     }
-//    BottomAppBar(modifier = modifier) {
-//        NavigationItem.entries.forEachIndexed { index, navItem ->
-//            NavigationBarItem(
-//                selected = index == selectedIndex,
-//                colors = colors(),
-//                icon = {
-//                    Icon(
-//                        painter = painterResource(id = navItem.iconRes),
-//                        contentDescription = null
-//                    )
-//                },
-//                label = {
-//                    Text(
-//                        text = stringResource(id = navItem.labelRes),
-//                        style = MaterialTheme.typography.labelSmall
-//                    )
-//                },
-//                onClick = { onNavigationItemClick(navItem) },
-//            )
-//        }
-//    }
 }
 
 @Preview

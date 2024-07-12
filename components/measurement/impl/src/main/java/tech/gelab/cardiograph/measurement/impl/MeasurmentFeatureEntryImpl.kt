@@ -5,6 +5,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import com.google.accompanist.navigation.material.bottomSheet
 import tech.gelab.cardiograph.bottombar.api.BottomNavigationFeatureEntry
 import tech.gelab.cardiograph.core.ui.navigation.FeatureEventHandler
 import tech.gelab.cardiograph.core.ui.navigation.LocalNavHostProvider
@@ -26,8 +28,9 @@ class MeasurementFeatureEntryImpl @Inject constructor(
         return ROUTE.name
     }
 
-    override fun NavGraphBuilder.composable(navController: NavController) {
-        composable(route = ROUTE.name) {
+    @OptIn(ExperimentalMaterialNavigationApi::class)
+    override fun NavGraphBuilder.bottomSheet(navController: NavController) {
+        bottomSheet(route = ROUTE.name) {
             this@MeasurementFeatureEntryImpl.globalNavController = LocalNavHostProvider.current
             MeasurementScreen(viewModel = hiltViewModel(
                 creationCallback = { factory: MeasurementViewModel.Factory ->

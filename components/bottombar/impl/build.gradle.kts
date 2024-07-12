@@ -10,6 +10,8 @@ android {
 dependencies {
     implementation(projects.components.bottombar.api)
 
+    implementation(projects.components.core.storage)
+
     implementation(projects.components.core.ui.theme)
     implementation(projects.components.core.ui.topbar)
     implementation(projects.components.core.ui.navigation)
@@ -17,6 +19,7 @@ dependencies {
 
     implementation(libs.timber)
     implementation(libs.appcompat)
+    implementation(libs.datastore)
     implementation(libs.kotlin.immutable.collections)
 
     implementation(libs.compose.ui)

@@ -2,6 +2,7 @@ plugins {
     id("cardiograph.android-app")
     id("cardiograph.hilt")
     alias(libs.plugins.hilt)
+    alias(libs.plugins.sentry)
 }
 
 android {

@@ -9,9 +9,14 @@ android {
 }
 
 dependencies {
-    implementation(projects.components.core.ui.theme)
+    implementation(projects.components.core.network)
 
+    implementation(projects.components.core.ui.theme)
     implementation(projects.components.core.ui.navigation)
+
+    implementation(projects.components.authorization.api)
+    implementation(projects.components.bottombar.api)
+    implementation(projects.components.pairing.api)
 
     implementation(libs.appcompat)
     implementation(libs.kotlin.immutable.collections)

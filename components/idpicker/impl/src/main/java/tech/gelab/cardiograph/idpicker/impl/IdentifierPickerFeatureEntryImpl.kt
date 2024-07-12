@@ -1,18 +1,18 @@
 package tech.gelab.cardiograph.idpicker.impl
 
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import tech.gelab.cardiograph.core.ui.navigation.FeatureEventHandler
 import tech.gelab.cardiograph.core.ui.navigation.LocalNavHostProvider
 import tech.gelab.cardiograph.idpicker.api.IdentifierPickerFeatureEntry
-import tech.gelab.cardiograph.idpicker.impl.presentation.compose.IdentifierPickerScreen
-import tech.gelab.cardiograph.idpicker.impl.presentation.viewmodel.IdentifierPickerViewModel
+import tech.gelab.cardiograph.idpicker.impl.presentation.IdentifierPickerScreen
 import tech.gelab.cardiograph.measurement.api.ProgressNavigationFeatureEntry
 import tech.gelab.cardiograph.pairing.api.PairingFeatureEntry
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class IdentifierPickerFeatureEntryImpl @Inject constructor(
     private val progressNavigationFeatureEntry: ProgressNavigationFeatureEntry,
     private val pairingFeatureEntry: PairingFeatureEntry
@@ -24,12 +24,7 @@ class IdentifierPickerFeatureEntryImpl @Inject constructor(
         composable(route = ROUTE.name) {
             // TODO make navigation with deeplinks
             this@IdentifierPickerFeatureEntryImpl.navController = LocalNavHostProvider.current
-            IdentifierPickerScreen(
-                viewModel = hiltViewModel(
-                    creationCallback = { factory: IdentifierPickerViewModel.Factory ->
-                        factory.create(this@IdentifierPickerFeatureEntryImpl)
-                    })
-            )
+            IdentifierPickerScreen()
         }
     }
 
@@ -46,5 +41,4 @@ class IdentifierPickerFeatureEntryImpl @Inject constructor(
             )
         }
     }
-
 }

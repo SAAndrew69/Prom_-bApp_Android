@@ -5,4 +5,5 @@ option java_multiple_files = true;
 
 message AuthorizationSettings {
   string token = 1;
+  bool authentication_complete = 2;
 }

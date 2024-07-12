@@ -1,6 +1,5 @@
 package tech.gelab.cardiograph.authorization.impl
 
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import tech.gelab.cardiograph.authorization.api.AuthFeatureEntry
@@ -8,13 +7,14 @@ import tech.gelab.cardiograph.authorization.api.LoginFeatureEntry
 import tech.gelab.cardiograph.authorization.api.SignUpFeatureEntry
 import tech.gelab.cardiograph.authorization.api.SkipAuthFeatureEntry
 import tech.gelab.cardiograph.authorization.impl.presentation.WelcomeScreen
-import tech.gelab.cardiograph.authorization.impl.presentation.WelcomeScreenViewModel
 import tech.gelab.cardiograph.core.ui.navigation.FeatureEventHandler
 import tech.gelab.cardiograph.core.ui.navigation.NavigationRoute
 import tech.gelab.cardiograph.core.ui.navigation.animatedComposable
 import tech.gelab.cardiograph.pairing.api.PairingFeatureEntry
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class AuthFeatureEntryImpl @Inject constructor(
     private val loginFeatureEntry: LoginFeatureEntry,
     private val sighUpFeatureEntry: SignUpFeatureEntry,
@@ -27,11 +27,7 @@ class AuthFeatureEntryImpl @Inject constructor(
     override fun NavGraphBuilder.composable(navController: NavController) {
         animatedComposable(route = NavigationRoute.WELCOME.name) {
             this@AuthFeatureEntryImpl.navController = navController
-            WelcomeScreen(viewModel = hiltViewModel(
-                creationCallback = { factory: WelcomeScreenViewModel.Factory ->
-                    factory.create(this@AuthFeatureEntryImpl)
-                }
-            ))
+            WelcomeScreen()
         }
     }
 
