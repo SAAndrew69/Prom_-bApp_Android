@@ -1,15 +1,18 @@
 [versions]
-android-gradle = "8.2.2" # https://developer.android.com/studio/releases/gradle-plugin
-kotlin-general = "1.9.22" # https://kotlinlang.org/docs/releases.html#release-details
+android-gradle = "8.5.1" # https://developer.android.com/studio/releases/gradle-plugin
+kotlin-general = "2.0.0" # https://kotlinlang.org/docs/releases.html#release-details
+
+# TODO https://youtrack.jetbrains.com/issue/CMP-1611/Compose-Compiler-Plugin-Fails-to-configure-and-import-into-IDE-sometimes
+compose-gradle = "1.7.0-alpha01" # https://mvnrepository.com/artifact/org.jetbrains.compose/compose-gradle-plugin
+
+ksp = "2.0.0-1.0.23" # https://github.com/google/ksp/releases
+
 sentry = "4.9.0" # https://github.com/getsentry/sentry-android-gradle-plugin/releases
 
-agp = "8.5.1" # https://maven.google.com/web/index.html?q=android.app#com.android.application:com.android.application.gradle.plugin
-
 appcompat = "1.7.0" # https://developer.android.com/jetpack/androidx/releases/appcompat
-kotlin-immutable-collections = "0.3.5" # https://github.com/Kotlin/kotlinx.collections.immutable/releases
+kotlin-immutable-collections = "0.3.7" # https://github.com/Kotlin/kotlinx.collections.immutable/releases
 
 compose-ui = "1.6.8" # https://developer.android.com/jetpack/androidx/releases/compose#versions
-compose-compiler = "1.5.4" # https://developer.android.com/jetpack/androidx/releases/compose#versions
 
 # TODO remove after compose material 1.7.0 release
 compose-accompanist = "0.34.0" # https://github.com/google/accompanist/releases
@@ -17,10 +20,10 @@ compose-accompanist = "0.34.0" # https://github.com/google/accompanist/releases
 compose-navigation = "2.7.7" # https://developer.android.com/jetpack/androidx/releases/navigation
 compose-material3 = "1.2.1" # https://mvnrepository.com/artifact/androidx.compose.material3/material3
 
-ble = "2.7.2" # https://github.com/NordicSemiconductor/Android-BLE-Library/releases
+ble = "2.7.5" # https://github.com/NordicSemiconductor/Android-BLE-Library/releases
 ble-scan = "1.6.0" # https://github.com/NordicSemiconductor/Android-Scanner-Compat-Library/releases
 
-protobuf = "3.24.0" # https://github.com/protocolbuffers/protobuf/releases
+protobuf = "4.26.1" # https://github.com/protocolbuffers/protobuf/releases
 protobuf-gradle = "0.9.4" # https://github.com/google/protobuf-gradle-plugin/releases
 
 room = "2.6.1" # https://developer.android.com/jetpack/androidx/releases/room
@@ -36,13 +39,15 @@ timber = "5.0.1"
 junit = "4.13.2"
 androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.6.1"
-androidx-test-ext-junit115 = "1.2.1"
 material = "1.12.0"
 
 [libraries]
 # Gradle
 android-gradle = { module = "com.android.tools.build:gradle", version.ref = "android-gradle" }
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-general" }
+compose-compiler = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin-general"}
+compose-gradle = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose-gradle"}
+ksp-gradle = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp" }
 
 # UI
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose-ui" }
@@ -87,13 +92,18 @@ kotlin-immutable-collections = { module = "org.jetbrains.kotlinx:kotlinx-collect
 # Testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
-androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit115" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
-android-application = { id = "com.android.application", version.ref = "agp" }
-android-library = { id = "com.android.library", version.ref = "agp" }
+android-application = { id = "com.android.application", version.ref = "android-gradle" }
+android-library = { id = "com.android.library", version.ref = "android-gradle" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-general" }
+
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+
+compose = { id = "org.jetbrains.compose", version.ref = "compose-gradle" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin-general"}
+
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger"}
-protobuf = { id = "com.google.protobuf", version.ref = "protobuf-gradle" }
 sentry = { id = "io.sentry.android.gradle", version.ref = "sentry" }

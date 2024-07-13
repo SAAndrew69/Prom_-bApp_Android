@@ -59,7 +59,4 @@ dependencies {
     // Libs
     implementation(libs.appcompat)
     implementation(libs.timber)
-
-    implementation(libs.hilt)
-    kapt(libs.hilt.compiler)
 }

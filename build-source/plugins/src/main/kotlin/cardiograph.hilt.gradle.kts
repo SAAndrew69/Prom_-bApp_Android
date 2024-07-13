@@ -1,10 +1,10 @@
 import org.gradle.kotlin.dsl.kotlin
 
 plugins {
-    kotlin("kapt")
+    id("com.google.devtools.ksp")
 }
 
 dependencies {
     "implementation"(libs.hilt)
-    "kapt"(libs.hilt.compiler)
+    "ksp"(libs.hilt.compiler)
 }

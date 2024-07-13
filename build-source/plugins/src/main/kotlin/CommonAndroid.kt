@@ -3,6 +3,7 @@ import org.gradle.api.JavaVersion
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.withType
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 private const val START_ACTIVITY = "tech.gelab.cardiograph.singleactivity.impl.SingleActivity"
@@ -73,10 +74,9 @@ private fun BaseExtension.configureCompileOptions() {
 private fun Project.suppressOptIn() {
     tasks.withType<KotlinCompile>()
         .configureEach {
-            kotlinOptions {
-                jvmTarget = "11"
-
-                freeCompilerArgs = freeCompilerArgs + listOf(
+            compilerOptions {
+                jvmTarget.set(JvmTarget.JVM_11)
+                freeCompilerArgs.addAll(
                     "-opt-in=kotlin.time.ExperimentalTime",
                     "-opt-in=kotlin.RequiresOptIn"
                 )
