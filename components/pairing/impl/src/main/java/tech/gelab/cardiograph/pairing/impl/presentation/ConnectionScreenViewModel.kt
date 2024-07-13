@@ -40,6 +40,7 @@ class ConnectionScreenViewModel @Inject constructor(
                         deviceConnectionPassed = true
                     }
                 }
+                cardiographApi.disconnect()
                 pairingFeatureEventHandler.obtainEvent(PairingFeatureEvent.NavigateMainScreen)
 
             } catch (e: Exception) {

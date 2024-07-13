@@ -10,6 +10,8 @@ android {
 dependencies {
     implementation(projects.components.authorization.api)
 
+    implementation(projects.components.bottombar.api)
+
     implementation(projects.components.core.network)
     implementation(projects.components.core.notification)
     implementation(projects.components.core.util)

@@ -32,7 +32,8 @@ class IdentifierPickerFeatureEntryImpl @Inject constructor(
         when (event) {
             IdentifierFeatureEvent.ConnectDevice -> navController?.navigate(
                 pairingFeatureEntry.getSearchRoute(
-                    true
+                    goBackAvailable = true,
+                    skipAvailable = false
                 )
             )
 

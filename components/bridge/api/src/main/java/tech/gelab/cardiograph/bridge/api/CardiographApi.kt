@@ -8,4 +8,7 @@ interface CardiographApi {
     fun getScanner() : CardioBleScanner
 
     suspend fun establishConnection(id: String)
+
+    suspend fun disconnect()
+
 }

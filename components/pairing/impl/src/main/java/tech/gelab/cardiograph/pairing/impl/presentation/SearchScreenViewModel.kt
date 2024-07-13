@@ -1,5 +1,6 @@
 package tech.gelab.cardiograph.pairing.impl.presentation
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
@@ -19,6 +20,8 @@ import tech.gelab.cardiograph.bridge.api.CardioBleScanner
 import tech.gelab.cardiograph.bridge.api.CardiographApi
 import tech.gelab.cardiograph.core.ui.navigation.FeatureEventHandler
 import tech.gelab.cardiograph.core.util.ResourceProvider
+import tech.gelab.cardiograph.pairing.impl.PairingFeatureEntryImpl.Companion.GO_BACK_AVAILABLE
+import tech.gelab.cardiograph.pairing.impl.PairingFeatureEntryImpl.Companion.SKIP_AVAILABLE
 import tech.gelab.cardiograph.pairing.impl.PairingFeatureEvent
 import tech.gelab.cardiograph.pairing.impl.R
 import tech.gelab.cardiograph.pairing.impl.domain.SearchAction
@@ -33,6 +36,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchScreenViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     getInitialStateUseCase: GetInitialStateUseCase,
     private val pairingFeatureEventHandler: FeatureEventHandler<PairingFeatureEvent>,
     private val servicesStateProvider: ServicesStateProvider,
@@ -41,6 +45,9 @@ class SearchScreenViewModel @Inject constructor(
     private val cardiographApi: CardiographApi,
     private val deviceClickUseCase: DeviceClickUseCase
 ) : BaseViewModel<SearchState, SearchAction, SearchEvent>(getInitialStateUseCase.invoke()) {
+
+    val goBackAvailable: Boolean = savedStateHandle.get<Boolean>(GO_BACK_AVAILABLE)!!
+    val skipAvailable: Boolean = savedStateHandle.get<Boolean>(SKIP_AVAILABLE)!!
 
     init {
         servicesStateProvider.getServicesStateFlow()

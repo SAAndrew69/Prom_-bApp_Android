@@ -6,15 +6,19 @@ import androidx.navigation.NavGraphBuilder
 import tech.gelab.cardiograph.authorization.api.SignUpFeatureEntry
 import tech.gelab.cardiograph.authorization.signup.presentation.SignUpScreen
 import tech.gelab.cardiograph.authorization.signup.presentation.SignUpViewModel
+import tech.gelab.cardiograph.bottombar.api.BottomNavigationFeatureEntry
 import tech.gelab.cardiograph.core.ui.navigation.FeatureEventHandler
 import tech.gelab.cardiograph.core.ui.navigation.animatedComposable
 import tech.gelab.cardiograph.core.util.ResourceProvider
+import tech.gelab.cardiograph.pairing.api.PairingApi
 import tech.gelab.cardiograph.pairing.api.PairingFeatureEntry
 import tech.gelab.cardiograph.ui.dialog.dialognavprovider.TextDialogFeatureEntry
 import javax.inject.Inject
 
 class SignUpFeatureEntryImpl @Inject constructor(
+    private val pairingApi: PairingApi,
     private val pairingFeatureEntry: PairingFeatureEntry,
+    private val bottomNavigationFeatureEntry: BottomNavigationFeatureEntry,
     private val textDialogFeatureEntry: TextDialogFeatureEntry,
     private val resourceProvider: ResourceProvider
 ) : SignUpFeatureEntry, FeatureEventHandler<SignUpFeatureEvent> {
@@ -34,9 +38,12 @@ class SignUpFeatureEntryImpl @Inject constructor(
 
     override fun obtainEvent(event: SignUpFeatureEvent) {
         when (event) {
-            is SignUpFeatureEvent.SignUpSuccess -> navController?.navigate(
+            is SignUpFeatureEvent.SignUpSuccess -> if (pairingApi.connectionPassed()) navController?.navigate(
+                bottomNavigationFeatureEntry.start()
+            ) else navController?.navigate(
                 pairingFeatureEntry.getSearchRoute(
-                    false
+                    goBackAvailable = false,
+                    skipAvailable = true
                 )
             )
 
@@ -47,9 +54,12 @@ class SignUpFeatureEntryImpl @Inject constructor(
                 )
             )
 
-            SignUpFeatureEvent.Skip -> navController?.navigate(
+            SignUpFeatureEvent.Skip -> if (pairingApi.connectionPassed()) navController?.navigate(
+                bottomNavigationFeatureEntry.start()
+            ) else navController?.navigate(
                 pairingFeatureEntry.getSearchRoute(
-                    true
+                    goBackAvailable = true,
+                    skipAvailable = true
                 )
             )
 

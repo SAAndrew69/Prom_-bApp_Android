@@ -2,7 +2,6 @@ package tech.gelab.cardiograph.authorization.login.presentation
 
 import android.widget.Toast
 import androidx.lifecycle.viewModelScope
-import dagger.assisted.AssistedFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import tech.gelab.cardiograph.authorization.api.AuthService
@@ -34,7 +33,7 @@ class LoginViewModel @Inject constructor(
             LoginEvent.PasswordSubmit -> onPasswordSubmit()
             LoginEvent.VisibilityClick -> onVisibilityClick()
             LoginEvent.LoginClick -> onLoginClick()
-            LoginEvent.SkipClick -> loginFeatureEventHandler.obtainEvent(LoginFeatureEvent.NavigateToNext)
+            LoginEvent.SkipClick -> loginFeatureEventHandler.obtainEvent(LoginFeatureEvent.Skip)
             LoginEvent.ForgotPasswordClick -> {}
             LoginEvent.BackClick -> loginFeatureEventHandler.obtainEvent(LoginFeatureEvent.PopBackStack)
         }

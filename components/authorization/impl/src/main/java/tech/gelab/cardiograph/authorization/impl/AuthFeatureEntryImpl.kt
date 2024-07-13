@@ -37,7 +37,13 @@ class AuthFeatureEntryImpl @Inject constructor(
             AuthFeatureEvent.NavigateSignUp -> navController?.navigate(sighUpFeatureEntry.ROUTE.name)
             AuthFeatureEvent.NavigateSkipAuth -> navController?.navigate(skipAuthFeatureEntry.ROUTE.name)
             AuthFeatureEvent.OpenNetworkSettings -> {}
-            AuthFeatureEvent.NavigateScanner -> navController?.navigate(pairingFeatureEntry.getSearchRoute(false))
+            // TODO check pairing
+            AuthFeatureEvent.NavigateScanner -> navController?.navigate(
+                pairingFeatureEntry.getSearchRoute(
+                    goBackAvailable = true,
+                    skipAvailable = true
+                )
+            )
         }
     }
 }

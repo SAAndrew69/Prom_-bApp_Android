@@ -21,6 +21,10 @@ class CardiographApiImpl(
 
     private val cardiographStateFlow = MutableStateFlow(CardiographState.Disconnected)
 
+    init {
+
+    }
+
     override fun observeCardiographState(): StateFlow<CardiographState> {
         return cardiographStateFlow.asStateFlow()
     }
@@ -32,6 +36,10 @@ class CardiographApiImpl(
     override suspend fun establishConnection(id: String) {
         val cardioDevice = cardioBleScanner.get().findDevice(id)
         cardioBleManager.connect(cardioDevice.bluetoothDevice).suspend()
+    }
+
+    override suspend fun disconnect() {
+        cardioBleManager.disconnect().suspend()
     }
 
 }

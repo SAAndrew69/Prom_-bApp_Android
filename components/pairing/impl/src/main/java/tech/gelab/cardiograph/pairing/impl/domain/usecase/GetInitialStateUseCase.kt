@@ -9,6 +9,7 @@ import javax.inject.Inject
 class GetInitialStateUseCase @Inject constructor(private val servicesStateProvider: ServicesStateProvider) {
     fun invoke(): SearchState {
         val servicesState = servicesStateProvider.getServicesState()
+
         return if (servicesState.isScannerReady()) {
             SearchState.Ready
         } else {

@@ -10,7 +10,7 @@ interface PairingFeatureEntry : AggregateFeatureEntry {
         get() = NavigationRoute.PAIRING
 
     fun start(): String
-    fun getSearchRoute(goBackAvailable: Boolean): String
+    fun getSearchRoute(goBackAvailable: Boolean, skipAvailable: Boolean): String
     fun getConnectionRoute(): String
 
 }

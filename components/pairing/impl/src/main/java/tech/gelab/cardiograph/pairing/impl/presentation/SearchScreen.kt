@@ -47,18 +47,23 @@ import tech.gelab.cardiograph.ui.topbar.CardioAppBar
 import tech.gelab.cardiograph.ui.topbar.TopBarState
 
 @Composable
-fun SearchScreen(goBackAvailable: Boolean, viewModel: SearchScreenViewModel = hiltViewModel()) {
+fun SearchScreen(viewModel: SearchScreenViewModel = hiltViewModel()) {
     val viewState by viewModel.viewStates().collectAsState()
 
     Column(Modifier.fillMaxSize()) {
         CardioAppBar(
             topBarState = TopBarState(
                 R.string.title_device_search,
-                showBackButton = goBackAvailable
+                showBackButton = viewModel.goBackAvailable
             ),
             onBackButtonClick = { viewModel.obtainEvent(SearchEvent.BackButtonClick) }
         )
-        ScannerView(Modifier.fillMaxSize(), viewState, viewModel::obtainEvent)
+        ScannerView(
+            Modifier.fillMaxSize(),
+            viewState,
+            skipAvailable = viewModel.skipAvailable,
+            viewModel::obtainEvent
+        )
     }
 }
 
@@ -66,6 +71,7 @@ fun SearchScreen(goBackAvailable: Boolean, viewModel: SearchScreenViewModel = hi
 fun ScannerView(
     modifier: Modifier = Modifier,
     scannerScreenState: SearchState,
+    skipAvailable: Boolean,
     onEvent: (SearchEvent) -> Unit,
 ) {
     Column(modifier) {
@@ -92,13 +98,15 @@ fun ScannerView(
 
             SearchState.Ready -> {}
         }
-        CardioTextButton(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = MaterialTheme.spacing.medium),
-            text = stringResource(id = R.string.label_skip_connection),
-            onClick = { onEvent(SearchEvent.SkipClick) }
-        )
+        if (skipAvailable) {
+            CardioTextButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = MaterialTheme.spacing.medium),
+                text = stringResource(id = R.string.label_skip_connection),
+                onClick = { onEvent(SearchEvent.SkipClick) }
+            )
+        }
     }
 }
 
@@ -210,7 +218,7 @@ fun ScanningView(
 fun BluetoothDisabledView(modifier: Modifier = Modifier) {
     val bluetoothActivityResult = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult(),
-        onResult = {  }
+        onResult = { }
     )
     Column(modifier, verticalArrangement = Arrangement.SpaceBetween) {
         RationaleImageView(
@@ -239,7 +247,7 @@ fun PermissionsDeniedView(
     )
     val settingsActivityResult = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult(),
-        onResult = {  }
+        onResult = { }
     )
     val context = LocalContext.current
 
@@ -281,7 +289,7 @@ fun PermissionsDeniedView(
 fun LocationDisabledView(modifier: Modifier = Modifier) {
     val settingsActivityResult = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult(),
-        onResult = {  }
+        onResult = { }
     )
     Column(
         modifier,
@@ -325,7 +333,8 @@ private fun NotReadyViewPrev() {
                     bluetoothEnabled = true,
                     locationEnabled = false,
                     deniedPermissions = arrayOf()
-                )
+                ),
+                skipAvailable = true
             ) {
 
             }
@@ -364,7 +373,10 @@ private fun ScanStoppedPrev() {
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
         ) {
-            ScannerView(scannerScreenState = SearchState.Stopped("Сканирование приостановлено")) {
+            ScannerView(
+                scannerScreenState = SearchState.Stopped("Сканирование приостановлено"),
+                skipAvailable = true
+            ) {
 
             }
         }
