@@ -1,5 +1,6 @@
 package tech.gelab.cardiograph.bridge.api
 
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
 interface CardiographApi {
@@ -7,8 +8,6 @@ interface CardiographApi {
 
     fun getScanner() : CardioBleScanner
 
-    suspend fun establishConnection(id: String)
-
-    suspend fun disconnect()
+    suspend fun establishConnection(id: String): Flow<Connection>
 
 }

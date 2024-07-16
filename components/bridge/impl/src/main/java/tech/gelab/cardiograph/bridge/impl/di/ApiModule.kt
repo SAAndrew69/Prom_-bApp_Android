@@ -13,6 +13,7 @@ import tech.gelab.cardiograph.bridge.api.CardioBleScanner
 import tech.gelab.cardiograph.bridge.api.CardiographApi
 import tech.gelab.cardiograph.bridge.impl.CardiographApiImpl
 import tech.gelab.cardiograph.bridge.impl.connection.CardioBleManager
+import tech.gelab.cardiograph.bridge.impl.connection.ConnectionFactory
 import javax.inject.Provider
 import javax.inject.Singleton
 
@@ -23,16 +24,12 @@ class ApiModule {
     @Provides
     @Singleton
     fun provideCardiographApi(
-        @ApplicationContext context: Context,
-        servicesStateProvider: ServicesStateProvider,
         cardioBleScannerProvider: Provider<CardioBleScanner>,
-        cardioBleManager: CardioBleManager
+        connectionFactory: ConnectionFactory
     ): CardiographApi {
         return CardiographApiImpl(
-            context,
-            servicesStateProvider,
             cardioBleScannerProvider,
-            cardioBleManager
+            connectionFactory
         )
     }
 

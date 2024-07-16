@@ -1,29 +1,22 @@
 package tech.gelab.cardiograph.bridge.impl
 
-import android.content.Context
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import no.nordicsemi.android.ble.ktx.suspend
-import tech.gelab.cardiograph.bluetooth.ServicesStateProvider
 import tech.gelab.cardiograph.bridge.api.CardioBleScanner
 import tech.gelab.cardiograph.bridge.api.CardiographApi
 import tech.gelab.cardiograph.bridge.api.CardiographState
-import tech.gelab.cardiograph.bridge.impl.connection.CardioBleManager
+import tech.gelab.cardiograph.bridge.api.Connection
+import tech.gelab.cardiograph.bridge.impl.connection.ConnectionFactory
 import javax.inject.Provider
 
 class CardiographApiImpl(
-    private val context: Context,
-    private val servicesStateProvider: ServicesStateProvider,
     private val cardioBleScanner: Provider<CardioBleScanner>,
-    private val cardioBleManager: CardioBleManager
+    private val connectionFactory: ConnectionFactory
 ) : CardiographApi {
 
     private val cardiographStateFlow = MutableStateFlow(CardiographState.Disconnected)
-
-    init {
-
-    }
 
     override fun observeCardiographState(): StateFlow<CardiographState> {
         return cardiographStateFlow.asStateFlow()
@@ -33,13 +26,8 @@ class CardiographApiImpl(
         return cardioBleScanner.get()
     }
 
-    override suspend fun establishConnection(id: String) {
-        val cardioDevice = cardioBleScanner.get().findDevice(id)
-        cardioBleManager.connect(cardioDevice.bluetoothDevice).suspend()
-    }
-
-    override suspend fun disconnect() {
-        cardioBleManager.disconnect().suspend()
+    override suspend fun establishConnection(id: String): Flow<Connection> {
+        return connectionFactory.createFlow(id)
     }
 
 }

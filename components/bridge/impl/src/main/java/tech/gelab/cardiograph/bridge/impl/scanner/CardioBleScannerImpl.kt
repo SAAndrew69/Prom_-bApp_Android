@@ -74,7 +74,8 @@ class CardioBleScannerImpl @Inject constructor(private val servicesStateProvider
         return withTimeout(timeout) {
             BluetoothLeScannerCompat.getScanner().scan(scanFilters, scanSettings)
                 .filter { it.device.address == address }
-                .map(::discoveredDevice).first()
+                .map(::discoveredDevice)
+                .first()
         }
     }
 }

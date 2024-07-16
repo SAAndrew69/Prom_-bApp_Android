@@ -12,6 +12,7 @@ dependencies {
     implementation(projects.components.core.bluetooth)
 
     implementation(libs.appcompat)
+    implementation(libs.timber)
 
     implementation(libs.ble)
     implementation(libs.ble.scan)
