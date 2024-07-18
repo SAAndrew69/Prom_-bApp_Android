@@ -1,10 +1,14 @@
 package tech.gelab.cardiograph.bridge.impl.parser
 
-class Buffer(private var data: ByteArray? = null) {
+class DataBuffer(initial: ByteArray? = null) {
 
     companion object {
+        // TODO tune
         const val DEFAULT_BUFFER_CAPACITY = 10
     }
+
+    var data: ByteArray? = initial
+        private set
 
     var size: Int = data?.size ?: 0
         private set
@@ -17,7 +21,7 @@ class Buffer(private var data: ByteArray? = null) {
     constructor(capacity: Int) : this(ByteArray(capacity))
 
     init {
-
+        size(capacity())
     }
 
     /**
@@ -58,13 +62,6 @@ class Buffer(private var data: ByteArray? = null) {
     }
 
     /**
-     * @return Buffer position.
-     */
-    fun position(): Int {
-        return position
-    }
-
-    /**
      * @param value
      * Buffer size.
      */
@@ -90,7 +87,7 @@ class Buffer(private var data: ByteArray? = null) {
      * @param item
      * The byte to be added.
      */
-    fun setUInt8(item: Int) {
+    fun setUInt8(item: Byte) {
         setUInt8(size, item)
         ++size
     }
@@ -104,11 +101,11 @@ class Buffer(private var data: ByteArray? = null) {
      * @param item
      * The UInt8 value to be added.
      */
-    fun setUInt8(index: Int, item: Int) {
+    fun setUInt8(index: Int, item: Byte) {
         if (index >= capacity()) {
             capacity(index + DEFAULT_BUFFER_CAPACITY)
         }
-        data!![index] = item.toByte()
+        data!![index] = item
     }
 
     /**
@@ -174,8 +171,8 @@ class Buffer(private var data: ByteArray? = null) {
     /**
      * @return UInt8 value from byte buffer.
      */
-    fun getUInt8(): Short {
-        val value = getUInt8(position())
+    fun getUInt8(): UByte {
+        val value = getUInt8(position)
         ++position
         return value
     }
@@ -194,18 +191,18 @@ class Buffer(private var data: ByteArray? = null) {
      * Buffer index.
      * @return UInt8 value.
      */
-    fun getUInt8(index: Int): Short {
+    fun getUInt8(index: Int): UByte {
         if (index >= size) {
             throw IllegalArgumentException("getUInt8: index = $index, size = $size")
         }
-        return (data!![index].toInt() and 0xFF).toShort()
+        return (data!![index].toInt() and 0xFF).toUByte()
     }
 
     /**
      * @return UInt16 value from byte buffer.
      */
     fun getUInt16(): Int {
-        val value = getUInt16(position())
+        val value = getUInt16(position)
         position += 2
         return value
     }
@@ -237,7 +234,7 @@ class Buffer(private var data: ByteArray? = null) {
      * @return Int32 value.
      */
     fun getUInt32(): Long {
-        val value = getUInt32(position())
+        val value = getUInt32(position)
         position += 4
         return value
     }
@@ -248,7 +245,7 @@ class Buffer(private var data: ByteArray? = null) {
      * @return Int32 value.
      */
     fun getInt32(): Int {
-        val value = getInt32(position())
+        val value = getInt32(position)
         position += 4
         return value
     }

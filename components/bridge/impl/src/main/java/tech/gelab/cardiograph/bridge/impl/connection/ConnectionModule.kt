@@ -4,8 +4,10 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.migration.DisableInstallInCheck
 
 @Module
+@DisableInstallInCheck
 class ConnectionModule {
 
     @Provides

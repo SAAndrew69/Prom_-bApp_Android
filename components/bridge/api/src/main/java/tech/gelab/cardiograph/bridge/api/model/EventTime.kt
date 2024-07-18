@@ -9,14 +9,19 @@ sealed class EventTime(
     /** Системное время */
     abstract val sysTime: Long
 
+    /** Неизвестное ID */
+    class Unknown(
+        override val recNo: Long,
+        override val sysTime: Long,
+        val data: ByteArray
+    ) : EventTime(eventId = PacketEventID.UNKNOWN)
+
     /** Запуск измерений */
     class AdsStarted(
         override val recNo: Long,
         override val sysTime: Long,
         /** Код ошибки */
         val err: Int,
-        /** TODO Длина конфигурации */
-        val cfgLen: Int,
         /** Текущая конфигурация */
         val cfg: ByteArray
     ) : EventTime(eventId = PacketEventID.ADS_STARTED)
@@ -27,8 +32,6 @@ sealed class EventTime(
         override val sysTime: Long,
         /** Код ошибки */
         val err: Int,
-        /** TODO Длина конфигурации */
-        val cfgLen: Int,
         /** Текущая конфигурация */
         val cfg: ByteArray
     ) : EventTime(eventId = PacketEventID.ADS_STOPPED)
