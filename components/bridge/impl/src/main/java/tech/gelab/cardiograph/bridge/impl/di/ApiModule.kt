@@ -13,11 +13,12 @@ import tech.gelab.cardiograph.bridge.api.CardioBleScanner
 import tech.gelab.cardiograph.bridge.api.CardiographApi
 import tech.gelab.cardiograph.bridge.impl.CardiographApiImpl
 import tech.gelab.cardiograph.bridge.impl.connection.CardioBleManager
+import tech.gelab.cardiograph.bridge.impl.connection.ConnectionComponent
 import tech.gelab.cardiograph.bridge.impl.connection.ConnectionFactory
 import javax.inject.Provider
 import javax.inject.Singleton
 
-@Module
+@Module(subcomponents = [ConnectionComponent::class])
 @InstallIn(SingletonComponent::class)
 class ApiModule {
 
@@ -41,14 +42,6 @@ class ApiModule {
         @BluetoothPermissions permissions: Array<String>
     ): ServicesStateProvider {
         return ServicesStateProvider(context, permissionsHelper, permissions)
-    }
-
-    @Provides
-    @Singleton
-    fun provideCardioBleManager(
-        @ApplicationContext context: Context
-    ): CardioBleManager {
-        return CardioBleManager(context)
     }
 
 }

@@ -7,6 +7,9 @@ import tech.gelab.cardiograph.core.ui.navigation.FeatureEventHandler
 import tech.gelab.cardiograph.core.ui.navigation.LocalNavHostProvider
 import tech.gelab.cardiograph.idpicker.api.IdentifierPickerFeatureEntry
 import tech.gelab.cardiograph.idpicker.impl.presentation.IdentifierPickerScreen
+import tech.gelab.cardiograph.measurement.api.ElectrodeConnectionFeatureEntry
+import tech.gelab.cardiograph.measurement.api.MeasurementApi
+import tech.gelab.cardiograph.measurement.api.MeasurementFeatureEntry
 import tech.gelab.cardiograph.measurement.api.ProgressNavigationFeatureEntry
 import tech.gelab.cardiograph.pairing.api.PairingFeatureEntry
 import javax.inject.Inject
@@ -14,8 +17,10 @@ import javax.inject.Singleton
 
 @Singleton
 class IdentifierPickerFeatureEntryImpl @Inject constructor(
-    private val progressNavigationFeatureEntry: ProgressNavigationFeatureEntry,
-    private val pairingFeatureEntry: PairingFeatureEntry
+    private val measurementFeatureEntry: MeasurementFeatureEntry,
+    private val electrodeConnectionFeatureEntry: ElectrodeConnectionFeatureEntry,
+    private val pairingFeatureEntry: PairingFeatureEntry,
+    private val measurementApi: MeasurementApi
 ) : IdentifierPickerFeatureEntry, FeatureEventHandler<IdentifierFeatureEvent> {
 
     private var navController: NavController? = null
@@ -38,7 +43,12 @@ class IdentifierPickerFeatureEntryImpl @Inject constructor(
             )
 
             IdentifierFeatureEvent.StartMeasure -> navController?.navigate(
-                progressNavigationFeatureEntry.start()
+                if (measurementApi.shouldShowElectrodeConnectionTip())
+                    electrodeConnectionFeatureEntry.start(
+                        nextDestinationRoute = measurementFeatureEntry.start(),
+                        showCheckBox = true
+                    )
+                else measurementFeatureEntry.start()
             )
         }
     }

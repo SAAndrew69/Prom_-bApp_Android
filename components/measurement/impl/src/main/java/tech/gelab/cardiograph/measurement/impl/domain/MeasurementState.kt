@@ -1,11 +1,11 @@
 package tech.gelab.cardiograph.measurement.impl.domain
 
-import tech.gelab.cardiograph.measurement.impl.model.BluetoothQuality
+import kotlinx.collections.immutable.ImmutableList
+import tech.gelab.cardiograph.ui.topbar.TopBarState
 
 data class MeasurementState(
-    val bluetoothQuality: BluetoothQuality = BluetoothQuality.GOOD,
-    val employeeId: String = "123456",
-    val measurementString: String = "Первое",
-    val progress: Float = 0f,
-    val timeString: String = "0:00"
+    val topBarState: TopBarState,
+    val supportingText: String,
+    val data: ImmutableList<Int>,
+    val bottomSheetState: BottomSheetState? = null
 )

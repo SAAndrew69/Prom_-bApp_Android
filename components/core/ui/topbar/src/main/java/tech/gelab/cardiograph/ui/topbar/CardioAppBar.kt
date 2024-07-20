@@ -3,6 +3,7 @@ package tech.gelab.cardiograph.ui.topbar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -33,6 +34,7 @@ fun CardioAppBar(
     modifier: Modifier = Modifier,
     topBarState: TopBarState,
     onBackButtonClick: () -> Unit = {},
+    actions: (@Composable RowScope.() -> Unit)? = null
 ) {
     Box(
         modifier
@@ -57,6 +59,12 @@ fun CardioAppBar(
             style = MaterialTheme.typography.titleLarge,
             text = stringResource(topBarState.titleId)
         )
+        if (actions != null) {
+            // TODO
+            Row(modifier = Modifier.align(Alignment.CenterEnd)) {
+                actions.invoke(this)
+            }
+        }
     }
 }
 

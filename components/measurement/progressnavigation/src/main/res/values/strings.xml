@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="title_prepare_measure">Подготовка к измерению</string>
-    <string name="title_measure">Измерение показателей</string>
-    <string name="label_connection_tip">Подключите электроды согласно картинке</string>
-    <string name="label_next">Далее</string>
-    <string name="text_signal_quality">Проверьте качество сигнала</string>
-    <string name="label_start_measure">Начать измерение</string>
+
 </resources>

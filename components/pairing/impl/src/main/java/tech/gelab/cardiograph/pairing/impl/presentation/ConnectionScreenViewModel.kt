@@ -7,6 +7,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.launch
 import tech.gelab.cardiograph.bridge.api.CardiographApi
 import tech.gelab.cardiograph.core.ui.navigation.FeatureEventHandler
@@ -33,6 +34,7 @@ class ConnectionScreenViewModel @Inject constructor(
             val deviceSettings = deviceSettingsDataStore.data.first()
             try {
                 cardiographApi.establishConnection(deviceSettings.deviceId)
+                    .launchIn(viewModelScope)
                 deviceSettingsDataStore.updateData { data ->
                     deviceSettings {
                         deviceId = data.deviceId
@@ -40,7 +42,6 @@ class ConnectionScreenViewModel @Inject constructor(
                         deviceConnectionPassed = true
                     }
                 }
-                cardiographApi.disconnect()
                 pairingFeatureEventHandler.obtainEvent(PairingFeatureEvent.NavigateMainScreen)
 
             } catch (e: Exception) {

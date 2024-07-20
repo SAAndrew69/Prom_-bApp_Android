@@ -72,3 +72,4 @@ include(":components:deeplink:api")
 
 
 
+include(":components:measurement:electrodetip")

@@ -19,7 +19,7 @@ import javax.inject.Provider
 
 class ConnectionFactory @Inject constructor(
     private val servicesStateProvider: ServicesStateProvider,
-    private val connectionComponentProvider: Provider<ConnectionComponent>
+    private val connectionComponentProvider: Provider<ConnectionComponent.Factory>
 ) {
 
     private fun <T> observeServicesException(): Flow<T> {
@@ -35,7 +35,7 @@ class ConnectionFactory @Inject constructor(
 
     private fun connectionFlow(id: String): Flow<ConnectionImpl> {
         return callbackFlow {
-            val connectionComponent = connectionComponentProvider.get()
+            val connectionComponent = connectionComponentProvider.get().create()
             val discoveredDevice = connectionComponent.scanner.findDevice(id)
             val bleManager = connectionComponent.cardioBleManager
 

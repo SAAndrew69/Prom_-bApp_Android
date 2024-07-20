@@ -11,11 +11,18 @@ dependencies {
     implementation(projects.components.measurement.api)
     implementation(projects.components.bottombar.api)
 
+    implementation(projects.components.bridge.api)
+
+    implementation(projects.components.core.storage)
+    implementation(projects.components.core.util)
+
     implementation(projects.components.core.ui.navigation)
     implementation(projects.components.core.ui.topbar)
     implementation(projects.components.core.ui.theme)
     implementation(projects.components.core.ui.ktx)
 
+    implementation(libs.kotlin.immutable.collections)
+    implementation(libs.datastore)
     implementation(libs.appcompat)
     implementation(libs.timber)
 
@@ -25,5 +32,4 @@ dependencies {
     implementation(libs.compose.navigation)
 
     implementation(libs.hilt.navigation.compose)
-    implementation(libs.compose.accompanist.bottomsheet)
 }

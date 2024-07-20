@@ -10,4 +10,9 @@ interface ConnectionComponent {
 
     val cardioBleManager: CardioBleManager
 
+    @Subcomponent.Factory
+    interface Factory {
+        fun create(): ConnectionComponent
+    }
+
 }

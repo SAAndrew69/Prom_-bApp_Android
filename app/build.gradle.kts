@@ -48,6 +48,7 @@ dependencies {
 
     implementation(projects.components.measurement.api)
     implementation(projects.components.measurement.impl)
+    implementation(projects.components.measurement.electrodetip)
     implementation(projects.components.measurement.progressnavigation)
 
     implementation(projects.components.reports.api)

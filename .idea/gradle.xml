@@ -60,6 +60,7 @@
             <option value="$PROJECT_DIR$/components/idpicker/impl" />
             <option value="$PROJECT_DIR$/components/measurement" />
             <option value="$PROJECT_DIR$/components/measurement/api" />
+            <option value="$PROJECT_DIR$/components/measurement/electrodetip" />
             <option value="$PROJECT_DIR$/components/measurement/impl" />
             <option value="$PROJECT_DIR$/components/measurement/progressnavigation" />
             <option value="$PROJECT_DIR$/components/pairing" />

@@ -13,12 +13,14 @@ import tech.gelab.cardiograph.measurement.impl.MeasurementFeatureEvent
 import tech.gelab.cardiograph.measurement.impl.domain.MeasurementAction
 import tech.gelab.cardiograph.measurement.impl.domain.MeasurementEvent
 import tech.gelab.cardiograph.measurement.impl.domain.MeasurementState
+import tech.gelab.cardiograph.measurement.impl.domain.usecase.GetInitialStateUseCase
 import tech.gelab.cardiograph.ui.ktx.viewmodel.BaseViewModel
 
 @HiltViewModel(assistedFactory = MeasurementViewModel.Factory::class)
 class MeasurementViewModel @AssistedInject constructor(
+    getInitialStateUseCase: GetInitialStateUseCase,
     @Assisted private val measurementFeatureEventHandler: FeatureEventHandler<MeasurementFeatureEvent>
-) : BaseViewModel<MeasurementState, MeasurementAction, MeasurementEvent>(MeasurementState()) {
+) : BaseViewModel<MeasurementState, MeasurementAction, MeasurementEvent>(getInitialStateUseCase.invoke()) {
 
 
 
@@ -26,19 +28,19 @@ class MeasurementViewModel @AssistedInject constructor(
         flow<Int> {
             var counter = 1
 
-            while (counter != 120) {
-                viewState = viewState.copy(
-                    progress = counter / 120f,
-                    timeString = "${String.format("%01d", counter / 60)}:${
-                        String.format(
-                            "%02d",
-                            counter % 60
-                        )
-                    }"
-                )
-                counter++
-                delay(1000)
-            }
+//            while (counter != 120) {
+//                viewState = viewState.copy(
+//                    progress = counter / 120f,
+//                    timeString = "${String.format("%01d", counter / 60)}:${
+//                        String.format(
+//                            "%02d",
+//                            counter % 60
+//                        )
+//                    }"
+//                )
+//                counter++
+//                delay(1000)
+//            }
             delay(1000)
             measurementFeatureEventHandler.obtainEvent(MeasurementFeatureEvent.StartAgain)
         }.launchIn(viewModelScope)
@@ -49,6 +51,10 @@ class MeasurementViewModel @AssistedInject constructor(
             MeasurementEvent.StartAgainClick -> measurementFeatureEventHandler.obtainEvent(
                 MeasurementFeatureEvent.StartAgain
             )
+
+            MeasurementEvent.StartMeasure -> TODO()
+            MeasurementEvent.BackButtonClick -> TODO()
+            MeasurementEvent.InfoButtonClick -> TODO()
         }
     }
 

@@ -26,5 +26,4 @@ dependencies {
     implementation(libs.compose.tooling)
     implementation(libs.compose.material3)
     implementation(libs.compose.navigation)
-    implementation(libs.compose.accompanist.bottomsheet)
 }
