@@ -38,6 +38,9 @@
             <option value="$PROJECT_DIR$/components/bridge" />
             <option value="$PROJECT_DIR$/components/bridge/api" />
             <option value="$PROJECT_DIR$/components/bridge/impl" />
+            <option value="$PROJECT_DIR$/components/conclusion" />
+            <option value="$PROJECT_DIR$/components/conclusion/api" />
+            <option value="$PROJECT_DIR$/components/conclusion/impl" />
             <option value="$PROJECT_DIR$/components/core" />
             <option value="$PROJECT_DIR$/components/core/bluetooth" />
             <option value="$PROJECT_DIR$/components/core/dialog" />
@@ -55,6 +58,9 @@
             <option value="$PROJECT_DIR$/components/core/util" />
             <option value="$PROJECT_DIR$/components/deeplink" />
             <option value="$PROJECT_DIR$/components/deeplink/api" />
+            <option value="$PROJECT_DIR$/components/filemanager" />
+            <option value="$PROJECT_DIR$/components/filemanager/api" />
+            <option value="$PROJECT_DIR$/components/filemanager/impl" />
             <option value="$PROJECT_DIR$/components/idpicker" />
             <option value="$PROJECT_DIR$/components/idpicker/api" />
             <option value="$PROJECT_DIR$/components/idpicker/impl" />
@@ -62,7 +68,6 @@
             <option value="$PROJECT_DIR$/components/measurement/api" />
             <option value="$PROJECT_DIR$/components/measurement/electrodetip" />
             <option value="$PROJECT_DIR$/components/measurement/impl" />
-            <option value="$PROJECT_DIR$/components/measurement/progressnavigation" />
             <option value="$PROJECT_DIR$/components/pairing" />
             <option value="$PROJECT_DIR$/components/pairing/api" />
             <option value="$PROJECT_DIR$/components/pairing/impl" />

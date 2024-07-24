@@ -1,6 +1,6 @@
 package tech.gelab.cardiograph.measurement.impl.domain
 
-import tech.gelab.cardiograph.measurement.impl.model.BluetoothQuality
+import tech.gelab.cardiograph.measurement.api.BluetoothQuality
 
 sealed interface BottomSheetState {
 

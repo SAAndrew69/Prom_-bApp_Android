@@ -18,6 +18,7 @@ dependencies {
     implementation(projects.components.core.ui.theme)
     implementation(projects.components.core.ui.ktx)
 
+    implementation(projects.components.core.notification)
     implementation(projects.components.core.bluetooth)
     implementation(projects.components.core.storage)
     implementation(projects.components.core.util)

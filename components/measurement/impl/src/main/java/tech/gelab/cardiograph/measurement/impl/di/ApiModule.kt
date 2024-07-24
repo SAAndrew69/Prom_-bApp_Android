@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import tech.gelab.cardiograph.measurement.api.MeasurementApi
-import tech.gelab.cardiograph.measurement.impl.MeasurementApiImpl
+import tech.gelab.cardiograph.measurement.impl.data.MeasurementApiImpl
 import javax.inject.Singleton
 
 @Module

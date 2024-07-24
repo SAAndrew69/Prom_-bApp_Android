@@ -35,6 +35,7 @@ fun CardioOutlinedButton(
     ) {
         if (leadingIconRes != null) {
             Icon(
+                modifier = Modifier.padding(MaterialTheme.spacing.small),
                 painter = painterResource(id = leadingIconRes),
                 tint = MaterialTheme.colorScheme.onBackground,
                 contentDescription = null

@@ -11,5 +11,5 @@ enum SelectedBottomItem {
 
 message Settings {
   SelectedBottomItem selected_item = 1;
-  bool showElectrodeTip = 2;
+  bool electrode_tip_show_no_more = 2;
 }

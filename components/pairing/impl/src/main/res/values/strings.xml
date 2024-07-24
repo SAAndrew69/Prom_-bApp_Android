@@ -16,4 +16,5 @@
     <string name="text_bluetooth_rationale3">Получение готовых заключений по окончании измерения</string>
     <string name="text_scan_choose_device">Выберите кардиограф, с которым вы хотите установить соединение</string>
     <string name="label_connect_device">Соединение с устройством</string>
+    <string name="text_connection_failed">Ошибка соединения</string>
 </resources>

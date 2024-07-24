@@ -21,9 +21,3 @@ interface AggregateFeatureEntry : FeatureEntry {
     fun NavGraphBuilder.navigation(navController: NavController)
 
 }
-
-interface BottomSheetFeatureEntry : FeatureEntry {
-
-    fun NavGraphBuilder.bottomSheet(navController: NavController)
-
-}

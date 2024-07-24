@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_you_have">У вас есть</string>
+    <string name="text_undelivired_reports">неотправленных отчетов.</string>
+    <string name="text_network_required">Подключитесь к интернету, чтобы сформировать заключение</string>
+    <string name="text_empty_reports_data">Здесь будут отображаться отчёты об измерениях</string>
+</resources>

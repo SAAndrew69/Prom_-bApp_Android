@@ -19,6 +19,7 @@ dependencies {
 
     implementation(libs.appcompat)
     implementation(libs.datastore)
+    implementation(libs.timber)
 
     implementation(libs.compose.ui)
     implementation(libs.compose.tooling)

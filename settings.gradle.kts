@@ -53,7 +53,7 @@ include(":components:bottombar:impl")
 
 include(":components:measurement:api")
 include(":components:measurement:impl")
-include(":components:measurement:progressnavigation")
+include(":components:measurement:electrodetip")
 
 include(":components:idpicker:api")
 include(":components:idpicker:impl")
@@ -69,7 +69,8 @@ include(":components:bridge:impl")
 
 include(":components:deeplink:api")
 
+include(":components:conclusion:api")
+include(":components:conclusion:impl")
 
-
-
-include(":components:measurement:electrodetip")
+include(":components:filemanager:api")
+include(":components:filemanager:impl")

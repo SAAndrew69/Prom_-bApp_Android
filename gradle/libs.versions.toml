@@ -7,7 +7,7 @@ compose-gradle = "1.7.0-alpha01" # https://mvnrepository.com/artifact/org.jetbra
 
 ksp = "2.0.0-1.0.23" # https://github.com/google/ksp/releases
 
-sentry = "4.9.0" # https://github.com/getsentry/sentry-android-gradle-plugin/releases
+sentry = "4.10.0" # https://github.com/getsentry/sentry-android-gradle-plugin/releases
 
 appcompat = "1.7.0" # https://developer.android.com/jetpack/androidx/releases/appcompat
 kotlin-immutable-collections = "0.3.7" # https://github.com/Kotlin/kotlinx.collections.immutable/releases
@@ -27,7 +27,7 @@ room = "2.6.1" # https://developer.android.com/jetpack/androidx/releases/room
 
 datastore = "1.1.1" # https://mvnrepository.com/artifact/androidx.datastore/datastore-preferences
 
-dagger = "2.49" # https://github.com/google/dagger/releases
+dagger = "2.51.1" # https://github.com/google/dagger/releases
 hilt-navigation-compose = "1.2.0" # https://mvnrepository.com/artifact/androidx.hilt/hilt-navigation-compose
 
 timber = "5.0.1"

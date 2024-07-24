@@ -6,9 +6,13 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.dialog
 import androidx.navigation.navArgument
 import tech.gelab.cardiograph.core.ui.navigation.FeatureEventHandler
+import tech.gelab.cardiograph.core.ui.navigation.LocalNavHostProvider
 import tech.gelab.cardiograph.measurement.api.ElectrodeConnectionFeatureEntry
+import tech.gelab.measurement.electrodetip.presentation.ElectrodeConnectionDialog
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class ElectrodeConnectionFeatureEntryImpl @Inject constructor() : ElectrodeConnectionFeatureEntry,
     FeatureEventHandler<CloseDialogFeatureEvent> {
 
@@ -42,6 +46,7 @@ class ElectrodeConnectionFeatureEntryImpl @Inject constructor() : ElectrodeConne
             route = "${ROUTE}?$NEXT_DESTINATION={$NEXT_DESTINATION}&$SHOW_CHECKBOX={$SHOW_CHECKBOX}",
             arguments = arguments
         ) {
+            this@ElectrodeConnectionFeatureEntryImpl.globalNavController = LocalNavHostProvider.current
             ElectrodeConnectionDialog()
         }
     }

@@ -9,7 +9,6 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.collections.immutable.toPersistentSet
 import tech.gelab.cardiograph.core.ui.navigation.AggregateFeatureEntry
-import tech.gelab.cardiograph.core.ui.navigation.BottomSheetFeatureEntry
 import tech.gelab.cardiograph.core.ui.navigation.ComposableFeatureEntry
 import tech.gelab.cardiograph.core.ui.navigation.LocalNavHostProvider
 import tech.gelab.cardiograph.ui.theme.CardiographAppTheme
@@ -28,16 +27,12 @@ class SingleActivity : ComponentActivity() {
     @Inject
     internal lateinit var aggregateEntriesMutable: MutableSet<@JvmSuppressWildcards AggregateFeatureEntry>
 
-    @Inject
-    internal lateinit var bottomSheetEntriesMutable: MutableSet<@JvmSuppressWildcards BottomSheetFeatureEntry>
-
     private var globalNavController: NavHostController? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val composableEntries = composableEntriesMutable.toPersistentSet()
         val aggregateEntries = aggregateEntriesMutable.toPersistentSet()
-        val bottomSheetEntries = bottomSheetEntriesMutable.toPersistentSet()
         Timber.i("onCreate: intent = $intent")
 
         setContent {
@@ -50,8 +45,7 @@ class SingleActivity : ComponentActivity() {
                         navController = navControllerLocal,
                         startDestination = deeplinkHelper.getStartDestination(),
                         composableEntries = composableEntries,
-                        aggregateEntries = aggregateEntries,
-                        bottomSheetEntries = bottomSheetEntries
+                        aggregateEntries = aggregateEntries
                     )
                 }
             }

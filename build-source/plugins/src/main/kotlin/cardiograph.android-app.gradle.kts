@@ -13,9 +13,19 @@ configure<BaseExtension> {
     }
 
     buildTypes{
-        internal {
+        debug {
             isShrinkResources = false
             isMinifyEnabled = false
+            consumerProguardFile("proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+
+        internal {
+            isShrinkResources = true
+            isMinifyEnabled = true
             consumerProguardFile("proguard-rules.pro")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),

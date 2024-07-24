@@ -1,5 +1,6 @@
 package tech.gelab.cardiograph.pairing.impl.presentation
 
+import android.widget.Toast
 import androidx.datastore.core.DataStore
 import androidx.lifecycle.viewModelScope
 import dagger.assisted.Assisted
@@ -10,8 +11,10 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.launch
 import tech.gelab.cardiograph.bridge.api.CardiographApi
+import tech.gelab.cardiograph.core.notification.ToastHelper
 import tech.gelab.cardiograph.core.ui.navigation.FeatureEventHandler
 import tech.gelab.cardiograph.pairing.impl.PairingFeatureEvent
+import tech.gelab.cardiograph.pairing.impl.R
 import tech.gelab.cardiograph.pairing.impl.domain.ConnectionAction
 import tech.gelab.cardiograph.pairing.impl.domain.ConnectionEvent
 import tech.gelab.cardiograph.pairing.impl.domain.ConnectionState
@@ -26,15 +29,15 @@ import javax.inject.Inject
 class ConnectionScreenViewModel @Inject constructor(
     private val pairingFeatureEventHandler: FeatureEventHandler<PairingFeatureEvent>,
     private val deviceSettingsDataStore: DataStore<DeviceSettings>,
-    private val cardiographApi: CardiographApi
+    private val cardiographApi: CardiographApi,
+    private val toastHelper: ToastHelper
 ) : BaseViewModel<ConnectionState, ConnectionAction, ConnectionEvent>(ConnectionState()) {
 
     init {
         viewModelScope.launch {
             val deviceSettings = deviceSettingsDataStore.data.first()
             try {
-                cardiographApi.establishConnection(deviceSettings.deviceId)
-                    .launchIn(viewModelScope)
+                cardiographApi.establishConnection(deviceSettings.deviceId).first()
                 deviceSettingsDataStore.updateData { data ->
                     deviceSettings {
                         deviceId = data.deviceId
@@ -47,6 +50,7 @@ class ConnectionScreenViewModel @Inject constructor(
             } catch (e: Exception) {
                 Timber.e(e)
                 pairingFeatureEventHandler.obtainEvent(PairingFeatureEvent.PopBackStack)
+                toastHelper.showToast(R.string.text_connection_failed, Toast.LENGTH_SHORT)
             }
         }
     }

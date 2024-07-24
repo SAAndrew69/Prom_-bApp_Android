@@ -13,17 +13,27 @@ import timber.log.Timber
 
 object PacketHelper {
 
+    private fun toIntArray(bytes: ByteArray): IntArray {
+        val res = IntArray(bytes.size / 2)
+        var counter = 0
+        for (i in 1 until bytes.size step 2) {
+            res[counter] = bytes[i].toInt() and 0xFF shl 8 or (bytes[i - 1].toInt() and 0xFF)
+            counter++
+        }
+        return res
+    }
+
     private fun getAdsFlow(recNo: Long, data: DataBuffer): AdsFlow {
         val sampleNo = data.getUInt16()
         val length = data.getUInt16()
         if (length < data.available()) {
             Timber.w("Available data is more than parsed length in $recNo, data: ${data.data!!.toHexString()}")
         }
-        val sample = IntArray(length)
+        val sample = ByteArray(length)
         for (i in 0 until length) {
-            sample[i] = data.getUInt8().toInt()
+            sample[i] = data.getInt8()
         }
-        return AdsFlow(recNo, sampleNo, sample)
+        return AdsFlow(recNo, sampleNo, toIntArray(sample))
     }
 
     private fun getEventTime(recNo: Long, data: DataBuffer): EventTime {

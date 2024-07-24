@@ -13,10 +13,12 @@ dependencies {
 
     implementation(projects.components.bridge.api)
 
+    implementation(projects.components.core.notification)
     implementation(projects.components.core.storage)
     implementation(projects.components.core.util)
 
     implementation(projects.components.core.ui.navigation)
+    implementation(projects.components.core.ui.cardiogram)
     implementation(projects.components.core.ui.topbar)
     implementation(projects.components.core.ui.theme)
     implementation(projects.components.core.ui.ktx)

@@ -1,6 +1,5 @@
 package tech.gelab.cardiograph.measurement.api
 
-import tech.gelab.cardiograph.core.ui.navigation.BottomSheetFeatureEntry
 import tech.gelab.cardiograph.core.ui.navigation.ComposableFeatureEntry
 import tech.gelab.cardiograph.core.ui.navigation.NavigationRoute
 

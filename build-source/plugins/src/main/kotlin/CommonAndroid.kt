@@ -93,7 +93,7 @@ fun <BuildTypeT> NamedDomainObjectContainer<BuildTypeT>.debug(
 fun <BuildTypeT> NamedDomainObjectContainer<BuildTypeT>.internal(
     action: BuildTypeT.() -> Unit
 ) {
-    maybeCreate("debug").action()
+    maybeCreate("internal").action()
 }
 
 fun <BuildTypeT> NamedDomainObjectContainer<BuildTypeT>.release(

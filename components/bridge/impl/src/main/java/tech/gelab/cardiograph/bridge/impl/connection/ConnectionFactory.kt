@@ -41,13 +41,13 @@ class ConnectionFactory @Inject constructor(
 
             bleManager.connect(discoveredDevice.bluetoothDevice).suspend()
             val connection = ConnectionImpl(bleManager)
-
+            connection.initialize()
             trySend(connection).onFailure {
                 bleManager.disconnect().suspend()
                 throw CancellationException("Failure to send connection")
             }
             awaitClose {
-                bleManager.disconnect().enqueue()
+                connection.disconnect()
             }
         }
     }

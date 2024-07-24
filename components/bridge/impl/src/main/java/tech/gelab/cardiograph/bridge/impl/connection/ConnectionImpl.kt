@@ -22,6 +22,7 @@ import tech.gelab.cardiograph.bridge.impl.parser.DataBuffer
 import tech.gelab.cardiograph.bridge.impl.parser.PacketBuilder
 import tech.gelab.cardiograph.bridge.impl.parser.toHexString
 import timber.log.Timber
+import kotlin.experimental.and
 
 class ConnectionImpl(private val bleManager: CardioBleManager) : Connection, DataReceivedCallback {
 

@@ -49,13 +49,18 @@ dependencies {
     implementation(projects.components.measurement.api)
     implementation(projects.components.measurement.impl)
     implementation(projects.components.measurement.electrodetip)
-    implementation(projects.components.measurement.progressnavigation)
 
     implementation(projects.components.reports.api)
     implementation(projects.components.reports.impl)
 
     implementation(projects.components.profile.api)
     implementation(projects.components.profile.impl)
+
+    implementation(projects.components.conclusion.api)
+    implementation(projects.components.conclusion.impl)
+
+    implementation(projects.components.filemanager.api)
+    implementation(projects.components.filemanager.impl)
 
     // Libs
     implementation(libs.appcompat)

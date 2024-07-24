@@ -7,6 +7,7 @@ import android.content.Context
 import no.nordicsemi.android.ble.BleManager
 import no.nordicsemi.android.ble.callback.DataReceivedCallback
 import no.nordicsemi.android.ble.ktx.suspend
+import timber.log.Timber
 import java.util.UUID
 
 private const val NORDIC_UART_SERVICE_UUID = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
@@ -36,6 +37,7 @@ class CardioBleManager(context: Context) : BleManager(context),
         uartService = gatt.getService(UUID.fromString(NORDIC_UART_SERVICE_UUID))
         rxCharacteristic = uartService?.getCharacteristic(UUID.fromString(RX_CHARACTERISTIC_UUID))
         txCharacteristic = uartService?.getCharacteristic(UUID.fromString(TX_CHARACTERISTIC_UUID))
+        Timber.w("is required service supported: $uartService")
         return uartService != null && rxCharacteristic != null && txCharacteristic != null
     }
 

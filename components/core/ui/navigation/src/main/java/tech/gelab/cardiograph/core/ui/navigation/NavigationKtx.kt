@@ -72,19 +72,13 @@ fun rememberGraph(
     aggregateEntries: ImmutableSet<AggregateFeatureEntry>
 ): NavGraph {
     return remember(startDestination, composableEntries, aggregateEntries) {
-        // TODO debug
-        Timber.w("Graph creation")
         navController.createGraph(startDestination, null) {
             composableEntries.forEach {
-                // TODO
-                Timber.w(it.ROUTE.name)
                 with(it) {
                     composable(navController)
                 }
             }
             aggregateEntries.forEach {
-                // TODO
-                Timber.w(it.ROUTE.name)
                 with(it) {
                     navigation(navController)
                 }

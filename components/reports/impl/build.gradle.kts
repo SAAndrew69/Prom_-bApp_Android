@@ -15,6 +15,7 @@ dependencies {
     implementation(projects.components.core.ui.ktx)
 
     implementation(libs.appcompat)
+    implementation(libs.kotlin.immutable.collections)
 
     implementation(libs.compose.ui)
     implementation(libs.compose.tooling)
