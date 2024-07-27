@@ -1,5 +1,6 @@
 package tech.gelab.cardiograph.ui.cardiogram
 
+import android.util.Log
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,12 +23,16 @@ fun CardiogramList(
     LazyColumn(modifier) {
         for (m in multipleCardiogramValueProducer.getModels()) {
             item {
+                val values = state.values[m.id]!!
+                val gap = state.gaps[m.id]!!
+
+                Log.d("CardiogramList", "values = $values")
                 Cardiogram(
-                    Modifier.fillMaxWidth().height(100.dp),
+                    Modifier.fillMaxWidth().height(70.dp),
                     label = m.label,
-                    gap = state.gaps[m.id]!!,
+                    gap = gap,
                     maxDisplayValues = 50,
-                    values = state.values[m.id]!!
+                    values = values
                 )
                 Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
             }

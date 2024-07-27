@@ -1,12 +1,23 @@
+import com.android.build.gradle.BaseExtension
+
 plugins {
     id("cardiograph.android-app")
     id("cardiograph.hilt")
     alias(libs.plugins.hilt)
     alias(libs.plugins.sentry)
+
+    // TODO remove
+    id("org.jetbrains.compose")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 android {
     namespace = "tech.gelab.cardiograph"
+}
+
+// TODO remove
+configure<BaseExtension> {
+    buildFeatures.compose = true
 }
 
 dependencies {
@@ -65,4 +76,10 @@ dependencies {
     // Libs
     implementation(libs.appcompat)
     implementation(libs.timber)
+
+    // TODO remvoe
+    implementation(libs.compose.ui)
+    implementation(libs.compose.material3)
+    implementation(libs.compose.tooling)
+    implementation(libs.kotlin.immutable.collections)
 }

@@ -1,29 +1,25 @@
-package tech.gelab.cardiograph.measurement.impl.presentation.compose
+package tech.gelab.cardiograph.prev
 
-import android.view.WindowManager
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.view.WindowCompat
 import kotlinx.collections.immutable.persistentListOf
 import tech.gelab.cardiograph.measurement.api.BluetoothQuality
 import tech.gelab.cardiograph.measurement.impl.R
 import tech.gelab.cardiograph.measurement.impl.domain.BottomSheetState
 import tech.gelab.cardiograph.measurement.impl.domain.MeasurementScreenState
+import tech.gelab.cardiograph.measurement.impl.presentation.compose.MeasurementView
 import tech.gelab.cardiograph.ui.cardiogram.CardiogramModel
 import tech.gelab.cardiograph.ui.cardiogram.MultipleCardiogramValue
 import tech.gelab.cardiograph.ui.cardiogram.MultipleCardiogramValueProducer
 import tech.gelab.cardiograph.ui.theme.CardiographAppTheme
 import tech.gelab.cardiograph.ui.topbar.TopBarState
+import kotlin.random.Random
 
 @Preview
 @Composable
@@ -40,11 +36,11 @@ private fun NoBottomSheetPrev() {
                     CardiogramModel("II", "II", 100)
                 )
             )
-            for (i in 0..100) {
+            for (i in 0..50) {
                 multipleCardiogramValueProducer.produceValue(
                     persistentListOf(
-                        MultipleCardiogramValue("I", 0f),
-                        MultipleCardiogramValue("II", 0f),
+                        MultipleCardiogramValue("I", Random.nextFloat()*2000),
+                        MultipleCardiogramValue("II", Random.nextFloat()*2000),
                     )
                 )
             }
@@ -81,18 +77,18 @@ private fun MeasurementBottomSheetPrev() {
                     CardiogramModel("II", "II", 100)
                 )
             )
-            for (i in 0..100) {
+            for (i in 0..50) {
                 multipleCardiogramValueProducer.produceValue(
                     persistentListOf(
-                        MultipleCardiogramValue("I", 0f),
-                        MultipleCardiogramValue("II", 0f),
+                        MultipleCardiogramValue("I", Random.nextFloat()*2000),
+                        MultipleCardiogramValue("II", Random.nextFloat()*2000),
                     )
                 )
             }
             MeasurementView(
                 modifier = Modifier.fillMaxSize(),
                 viewState = MeasurementScreenState(
-                    topBarState = TopBarState(R.string.title_prepare_measure),
+                    topBarState = TopBarState(R.string.title_measure),
                     supportingText = stringResource(id = R.string.text_please_wait),
                     bottomSheetState = BottomSheetState.MeasureInProgress(
                         bluetoothQuality = BluetoothQuality.GOOD,
@@ -125,11 +121,11 @@ private fun UploadedBottomSheetPrev() {
                     CardiogramModel("II", "II", 100)
                 )
             )
-            for (i in 0..100) {
+            for (i in 0..50) {
                 multipleCardiogramValueProducer.produceValue(
                     persistentListOf(
-                        MultipleCardiogramValue("I", 0f),
-                        MultipleCardiogramValue("II", 0f),
+                        MultipleCardiogramValue("I", Random.nextFloat()*2000),
+                        MultipleCardiogramValue("II", Random.nextFloat()*2000),
                     )
                 )
             }
@@ -163,11 +159,11 @@ private fun ExerciseBottomSheet() {
                     CardiogramModel("II", "II", 100)
                 )
             )
-            for (i in 0..100) {
+            for (i in 0..50) {
                 multipleCardiogramValueProducer.produceValue(
                     persistentListOf(
-                        MultipleCardiogramValue("I", 0f),
-                        MultipleCardiogramValue("II", 0f),
+                        MultipleCardiogramValue("I", Random.nextFloat()*2000),
+                        MultipleCardiogramValue("II", Random.nextFloat()*2000),
                     )
                 )
             }
@@ -208,11 +204,11 @@ private fun MeasureSuccessPrev() {
                     CardiogramModel("II", "II", 100)
                 )
             )
-            for (i in 0..100) {
+            for (i in 0..50) {
                 multipleCardiogramValueProducer.produceValue(
                     persistentListOf(
-                        MultipleCardiogramValue("I", 0f),
-                        MultipleCardiogramValue("II", 0f),
+                        MultipleCardiogramValue("I", Random.nextFloat()*2000),
+                        MultipleCardiogramValue("II", Random.nextFloat()*2000),
                     )
                 )
             }

@@ -3,6 +3,7 @@ package tech.gelab.cardiograph.measurement.impl.presentation.compose
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -35,6 +36,8 @@ import tech.gelab.cardiograph.measurement.impl.domain.MeasurementAction
 import tech.gelab.cardiograph.measurement.impl.domain.MeasurementEvent
 import tech.gelab.cardiograph.measurement.impl.domain.MeasurementScreenState
 import tech.gelab.cardiograph.measurement.impl.presentation.MeasurementViewModel
+import tech.gelab.cardiograph.ui.cardiogram.CardiogramList
+import tech.gelab.cardiograph.ui.cardiogram.MultipleCardiogramValueProducer
 import tech.gelab.cardiograph.ui.ktx.element.CardioButton
 import tech.gelab.cardiograph.ui.theme.spacing
 import tech.gelab.cardiograph.ui.topbar.CardioAppBar
@@ -47,6 +50,7 @@ fun MeasurementScreen(viewModel: MeasurementViewModel = hiltViewModel()) {
 
     MeasurementView(
         modifier = Modifier.fillMaxSize(),
+        multipleCardiogramValueProducer = viewModel.multipleCardiogramValueProducer,
         viewState = viewState,
         viewAction = viewAction,
         onEvent = viewModel::obtainEvent
@@ -56,6 +60,7 @@ fun MeasurementScreen(viewModel: MeasurementViewModel = hiltViewModel()) {
 @Composable
 fun MeasurementView(
     modifier: Modifier = Modifier,
+    multipleCardiogramValueProducer: MultipleCardiogramValueProducer,
     viewState: MeasurementScreenState,
     viewAction: MeasurementAction?,
     onEvent: (MeasurementEvent) -> Unit
@@ -83,12 +88,17 @@ fun MeasurementView(
                 text = viewState.supportingText,
                 style = MaterialTheme.typography.labelLarge
             )
-
+            CardiogramList(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = MaterialTheme.spacing.small),
+                multipleCardiogramValueProducer = multipleCardiogramValueProducer
+            )
             if (viewState.bottomSheetState != null) {
                 MeasurementBottomSheet(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(420.dp)
+                        .height(380.dp)
                         .padding(MaterialTheme.spacing.small),
                     viewState = viewState,
                     onStartAgain = { onEvent(MeasurementEvent.StartAgainClick) },

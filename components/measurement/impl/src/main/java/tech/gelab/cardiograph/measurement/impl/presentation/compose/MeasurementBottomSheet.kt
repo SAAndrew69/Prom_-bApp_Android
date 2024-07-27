@@ -52,7 +52,7 @@ fun MeasurementBottomSheet(
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .padding(MaterialTheme.spacing.small),
+                    .padding(MaterialTheme.spacing.extraSmall),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 OutlinedText(
@@ -67,7 +67,7 @@ fun MeasurementBottomSheet(
         }
         ProgressIndicator(
             modifier = Modifier
-                .padding(top = MaterialTheme.spacing.medium)
+                .padding(top = MaterialTheme.spacing.small)
                 .height(MeasurementConst.PROGRESS_INDICATOR_HEIGHT.dp),
             progress = state.progress,
             timeLabel = state.progressLabel

@@ -4,12 +4,14 @@ import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -56,36 +58,49 @@ fun Cardiogram(
     gap: Int,
     maxDisplayValues: Int,
     values: ImmutableList<Float>,
-    strokeColor: Color = Color(CardiogramTokens.STROKE_COLOR)
+    strokeColor: Color = Color.Black
 ) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        if (label != null) {
-            Text(modifier = Modifier.padding(MaterialTheme.spacing.small), text = label)
+        Box(modifier = Modifier.width(20.dp)) {
+            if (label != null) {
+                Text(modifier = Modifier.fillMaxWidth(), text = label)
+            }
         }
-        Canvas(modifier = Modifier.fillMaxSize()) {
+        Canvas(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    color = MaterialTheme.colorScheme.secondaryContainer,
+                    shape = MaterialTheme.shapes.extraSmall
+                )
+        ) {
             if (values.size > 1) {
-                val xStep = size.width / maxDisplayValues
+                val xStep = size.width / (maxDisplayValues - 1)
                 val yStep = size.height / (gap * 2)
 
                 val yAxis = size.height / 2f
 
                 for (i in 1 until maxDisplayValues) {
                     val listIndex = i - (maxDisplayValues - values.size)
-                    if (listIndex < 1) continue
+                    if (listIndex < 1 || values.size <= i) continue
 
                     val prevPoint = values[listIndex - 1]
                     val point = values[listIndex]
 
                     val offset1 = Offset((i - 1) * xStep, yAxis - prevPoint * yStep)
                     val offset2 = Offset(i * xStep, yAxis - point * yStep)
-                    Log.d("Cardiogram", "drawline: offset1 = $offset1, offset2 = $offset2, size: $size")
+                    Log.d(
+                        "Cardiogram",
+                        "drawline: offset1 = $offset1, offset2 = $offset2, size: $size"
+                    )
                     drawLine(
                         color = strokeColor,
                         start = offset1,
-                        end = offset2
+                        end = offset2,
+                        strokeWidth = 2.0f
                     )
                 }
             }
@@ -95,7 +110,7 @@ fun Cardiogram(
 
 @Composable
 fun Signal(modifier: Modifier = Modifier, strokeColor: Color, cardiogramState: CardiogramState) {
-    Canvas(modifier = modifier.background(MaterialTheme.colorScheme.surface)) {
+    Canvas(modifier = modifier.background(MaterialTheme.colorScheme.secondaryContainer)) {
         val values = cardiogramState.getValues()
         Log.d(
             "Canvas",
@@ -126,7 +141,7 @@ fun Signal(modifier: Modifier = Modifier, strokeColor: Color, cardiogramState: C
     }
 }
 
-@Preview
+@Preview(showSystemUi = false)
 @Composable
 private fun SignalPreview() {
     val scope = LocalLifecycleOwner.current.lifecycleScope
