@@ -45,7 +45,7 @@ fun PickerView(
     viewAction: PickerAction?,
     onEvent: (PickerEvent) -> Unit
 ) {
-    if (viewState.isDeviceConnected) {
+//    if (viewState.isDeviceConnected) {
         Column(modifier, verticalArrangement = Arrangement.SpaceBetween) {
             Column(Modifier.padding(MaterialTheme.spacing.small)) {
                 Text(
@@ -66,29 +66,30 @@ fun PickerView(
                 onClick = { onEvent(PickerEvent.NextClick) }
             )
         }
-    } else {
-        Box(modifier) {
-            Column(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(MaterialTheme.spacing.small)
-                    .align(Alignment.Center)
-            ) {
-                Text(text = stringResource(R.string.text_disconnected1))
-                Text(text = stringResource(R.string.text_disconnected2))
-            }
-            CardioButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        horizontal = MaterialTheme.spacing.small,
-                        vertical = MaterialTheme.spacing.medium
-                    )
-                    .align(Alignment.BottomCenter),
-                text = stringResource(R.string.label_connect_device),
-                onClick = { onEvent(PickerEvent.ConnectDeviceClick) })
-        }
-    }
+        // TODO
+//    } else {
+//        Box(modifier) {
+//            Column(
+//                Modifier
+//                    .fillMaxWidth()
+//                    .padding(MaterialTheme.spacing.small)
+//                    .align(Alignment.Center)
+//            ) {
+//                Text(text = stringResource(R.string.text_disconnected1))
+//                Text(text = stringResource(R.string.text_disconnected2))
+//            }
+//            CardioButton(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(
+//                        horizontal = MaterialTheme.spacing.small,
+//                        vertical = MaterialTheme.spacing.medium
+//                    )
+//                    .align(Alignment.BottomCenter),
+//                text = stringResource(R.string.label_connect_device),
+//                onClick = { onEvent(PickerEvent.ConnectDeviceClick) })
+//        }
+//    }
 }
 
 @Composable

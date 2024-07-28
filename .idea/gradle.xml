@@ -46,6 +46,7 @@
             <option value="$PROJECT_DIR$/components/core/dialog" />
             <option value="$PROJECT_DIR$/components/core/network" />
             <option value="$PROJECT_DIR$/components/core/notification" />
+            <option value="$PROJECT_DIR$/components/core/room" />
             <option value="$PROJECT_DIR$/components/core/storage" />
             <option value="$PROJECT_DIR$/components/core/ui" />
             <option value="$PROJECT_DIR$/components/core/ui/cardiogram" />
@@ -64,6 +65,7 @@
             <option value="$PROJECT_DIR$/components/idpicker" />
             <option value="$PROJECT_DIR$/components/idpicker/api" />
             <option value="$PROJECT_DIR$/components/idpicker/impl" />
+            <option value="$PROJECT_DIR$/components/idpicker/newemployee" />
             <option value="$PROJECT_DIR$/components/measurement" />
             <option value="$PROJECT_DIR$/components/measurement/api" />
             <option value="$PROJECT_DIR$/components/measurement/electrodetip" />

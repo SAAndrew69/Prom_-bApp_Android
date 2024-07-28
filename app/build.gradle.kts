@@ -35,11 +35,12 @@ dependencies {
 
     implementation(projects.components.core.storage)
     implementation(projects.components.core.util)
+    implementation(projects.components.core.room)
 
     implementation(projects.components.bridge.api)
     implementation(projects.components.bridge.impl)
 
-    implementation(projects.components.singleactivity.api)
+    implementation(projects.components.singleactivity.api
     implementation(projects.components.singleactivity.impl)
 
     implementation(projects.components.authorization.api)
@@ -56,6 +57,7 @@ dependencies {
 
     implementation(projects.components.idpicker.api)
     implementation(projects.components.idpicker.impl)
+    implementation(projects.components.idpicker.newemployee)
 
     implementation(projects.components.measurement.api)
     implementation(projects.components.measurement.impl)
@@ -72,6 +74,7 @@ dependencies {
 
     implementation(projects.components.filemanager.api)
     implementation(projects.components.filemanager.impl)
+
 
     // Libs
     implementation(libs.appcompat)

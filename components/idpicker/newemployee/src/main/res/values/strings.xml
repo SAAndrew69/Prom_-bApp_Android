@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_new_employee">Новый сотрудник</string>
+    <string name="text_date_hint">ДД.ММ.ГГГГ</string>
+    <string name="label_date_label">Введите дату рождения</string>
+    <string name="label_male">Мужской</string>
+    <string name="label_female">Женский</string>
+    <string name="label_pick_gender">Выберите пол</string>
+    <string name="label_proceed">Далее</string>
+</resources>

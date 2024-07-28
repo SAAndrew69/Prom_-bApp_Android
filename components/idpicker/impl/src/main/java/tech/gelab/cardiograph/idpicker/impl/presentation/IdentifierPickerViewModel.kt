@@ -13,6 +13,7 @@ import tech.gelab.cardiograph.idpicker.impl.domain.PickerState
 import tech.gelab.cardiograph.idpicker.impl.domain.usecase.GetInitialStateUseCase
 import tech.gelab.cardiograph.storage.pb.DeviceSettings
 import tech.gelab.cardiograph.ui.ktx.viewmodel.BaseViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -55,7 +56,19 @@ class IdentifierPickerViewModel @Inject constructor(
     }
 
     private fun onNextClick() {
-        identifierPickerFeatureEventHandler.obtainEvent(IdentifierFeatureEvent.StartMeasure)
+        when (viewState.pickedGroupIndex) {
+            0 -> {
+                identifierPickerFeatureEventHandler.obtainEvent(IdentifierFeatureEvent.CreateNewEmployeeRecord)
+            }
+
+            1 -> {
+                identifierPickerFeatureEventHandler.obtainEvent(IdentifierFeatureEvent.StartMeasure)
+            }
+
+            else -> {
+                Timber.e("onNextClick: next button was available while picked group index is ${viewState.pickedGroupIndex}")
+            }
+        }
     }
 
     private fun onConnectDeviceClick() {

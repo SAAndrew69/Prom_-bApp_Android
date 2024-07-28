@@ -74,3 +74,5 @@ include(":components:conclusion:impl")
 
 include(":components:filemanager:api")
 include(":components:filemanager:impl")
+include(":components:idpicker:newemployee")
+include(":components:core:room")

@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import tech.gelab.cardiograph.core.ui.navigation.FeatureEventHandler
 import tech.gelab.cardiograph.core.ui.navigation.LocalNavHostProvider
 import tech.gelab.cardiograph.idpicker.api.IdentifierPickerFeatureEntry
+import tech.gelab.cardiograph.idpicker.api.NewEmployeeFeatureEntry
 import tech.gelab.cardiograph.idpicker.impl.presentation.IdentifierPickerScreen
 import tech.gelab.cardiograph.measurement.api.ElectrodeConnectionFeatureEntry
 import tech.gelab.cardiograph.measurement.api.MeasurementApi
@@ -19,6 +20,7 @@ class IdentifierPickerFeatureEntryImpl @Inject constructor(
     private val measurementFeatureEntry: MeasurementFeatureEntry,
     private val electrodeConnectionFeatureEntry: ElectrodeConnectionFeatureEntry,
     private val pairingFeatureEntry: PairingFeatureEntry,
+    private val newEmployeeFeatureEntry: NewEmployeeFeatureEntry,
     private val measurementApi: MeasurementApi
 ) : IdentifierPickerFeatureEntry, FeatureEventHandler<IdentifierFeatureEvent> {
 
@@ -48,6 +50,11 @@ class IdentifierPickerFeatureEntryImpl @Inject constructor(
                         showCheckBox = true
                     )
                 else measurementFeatureEntry.start()
+            )
+
+            IdentifierFeatureEvent.CreateNewEmployeeRecord -> navController?.navigate(
+                // TODO get id
+                newEmployeeFeatureEntry.start(1234)
             )
         }
     }
